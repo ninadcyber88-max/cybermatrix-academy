@@ -1,16 +1,15 @@
 import { CyberSmokeHeader } from "@/components/CyberSmokeHeader";
 import { StudentAIAssistant } from "@/components/StudentAIAssistant";
 import { CTFTerminal } from "@/components/CTFTerminal";
-import { BookOpen, Terminal, Flag, Award } from "lucide-react";
+import { CTFFlagSubmit } from "@/components/CTFFlagSubmit";
+import { BookOpen, Terminal } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 font-mono">
-      {/* Top Smoke Header */}
       <CyberSmokeHeader />
 
-      {/* Main Grid Content */}
       <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8">
         <div className="flex items-center justify-between border-b border-zinc-800/80 pb-4">
           <div className="flex items-center space-x-2 text-xs text-zinc-400">
@@ -25,7 +24,7 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* Top Grid: Security Tracks & AI Mentor */}
+        {/* 3-Column Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="space-y-6 lg:col-span-1">
             <div className="p-5 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md">
@@ -45,15 +44,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="p-5 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md">
-              <h2 className="text-sm font-bold text-cyan-400 mb-3 flex items-center space-x-2">
-                <Flag className="w-4 h-4" />
-                <span>TARGET OBJECTIVE</span>
-              </h2>
-              <p className="text-xs text-zinc-400 leading-relaxed">
-                Scan target 10.10.14.88 using the CTF terminal below. Exploit the web vector to obtain the root flag.
-              </p>
-            </div>
+            {/* Flag Submission Component */}
+            <CTFFlagSubmit />
           </div>
 
           <div className="lg:col-span-2">
@@ -61,7 +53,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Bottom Section: CTF Terminal */}
+        {/* Terminal Sandbox */}
         <div className="space-y-3">
           <h2 className="text-sm font-bold text-cyan-400 flex items-center space-x-2">
             <Terminal className="w-4 h-4" />
