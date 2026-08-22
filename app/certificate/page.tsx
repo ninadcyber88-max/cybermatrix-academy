@@ -36,7 +36,8 @@ export default function CertificatePage() {
         useCORS: true,
         backgroundColor: '#070d18',
         logging: false,
-        windowWidth: 1000,
+        width: 840,
+        height: 560,
       });
 
       const imgData = canvas.toDataURL('image/png');
@@ -122,12 +123,12 @@ export default function CertificatePage() {
           </button>
         </div>
 
-        {/* ---------------- DEAD CENTERED CERTIFICATE CONTAINER ---------------- */}
+        {/* ---------------- CERTIFICATE CANVAS ---------------- */}
         <div className="w-full flex justify-center items-center py-2 overflow-x-auto">
           <div
             ref={certRef}
-            style={{ width: '840px', minHeight: '560px' }}
-            className="relative rounded-2xl bg-gradient-to-br from-[#0b1528] via-[#08101e] to-[#050b14] border-2 border-[#0284c7] p-8 flex flex-col justify-between items-center text-center shadow-[0_0_40px_rgba(2,132,199,0.25)] box-border font-mono text-slate-100 space-y-4"
+            style={{ width: '840px', height: '560px' }}
+            className="relative rounded-2xl bg-gradient-to-br from-[#0b1528] via-[#08101e] to-[#050b14] border-2 border-[#0284c7] p-8 flex flex-col justify-between items-center text-center shadow-[0_0_40px_rgba(2,132,199,0.25)] box-border font-mono text-slate-100"
           >
             {/* Corner Brackets */}
             <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-400" />
@@ -135,78 +136,111 @@ export default function CertificatePage() {
             <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-cyan-400" />
             <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-cyan-400" />
 
-            {/* 1. Top Sub-Header (Centered) */}
-            <div className="w-full flex justify-center text-center">
-              <div className="inline-flex items-center justify-center gap-1.5 px-4 py-1 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-400 text-[10px] font-bold tracking-widest mx-auto">
+            {/* 1. Top Sub-Header */}
+            <div style={{ width: '100%', textAlign: 'center' }}>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', padding: '4px 16px', borderRadius: '999px', background: 'rgba(14, 165, 233, 0.15)', border: '1px solid rgba(56, 189, 248, 0.4)', color: '#38bdf8', fontSize: '10px', fontWeight: 800, letterSpacing: '0.12em' }}>
                 <ShieldCheck className="w-3.5 h-3.5" />
                 <span>CYBERMATRIX CYBERSECURITY COUNCIL // GLOBAL ACCREDITATION</span>
               </div>
             </div>
 
-            {/* 2. Header Titles (Centered) */}
-            <div className="w-full text-center space-y-1">
-              <h1 className="text-2xl sm:text-3xl font-black text-slate-100 tracking-wider text-center w-full block m-0">
+            {/* 2. Header Titles */}
+            <div style={{ width: '100%', textAlign: 'center' }}>
+              <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#f8fafc', letterSpacing: '0.1em', margin: 0, textAlign: 'center' }}>
                 CERTIFICATE OF TACTICAL EXCELLENCE
               </h1>
-              <p className="text-[10px] text-slate-400 tracking-widest text-center w-full block m-0">
+              <p style={{ fontSize: '10px', color: '#94a3b8', letterSpacing: '0.15em', margin: '4px 0 0 0', textAlign: 'center' }}>
                 SPECIAL OPERATIVE CREDENTIAL // LEVEL 5 SECURITY CLEARANCE
               </p>
             </div>
 
-            {/* 3. Candidate Identity (Dead Center Box) */}
-            <div className="w-full flex flex-col items-center justify-center text-center my-1">
-              <span className="text-[9.5px] tracking-widest text-slate-500 uppercase font-bold text-center block mb-2 w-full">
+            {/* 3. Candidate Identity */}
+            <div style={{ width: '100%', textAlign: 'center' }}>
+              <span style={{ fontSize: '9px', letterSpacing: '0.2em', color: '#64748b', textTransform: 'uppercase', fontWeight: 700, display: 'block', marginBottom: '8px', textAlign: 'center' }}>
                 THIS PROFESSIONAL ACCREDITATION IS CONFERRED UPON
               </span>
-              <div className="inline-flex items-center justify-center px-8 py-2.5 rounded-xl bg-[#040812] border-2 border-cyan-400 shadow-[0_0_25px_rgba(34,211,238,0.35)] mx-auto">
-                <h2 className="text-2xl sm:text-3xl font-black text-cyan-300 tracking-widest uppercase m-0 text-center leading-none">
-                  {certName}
-                </h2>
-              </div>
+              <table style={{ margin: '0 auto', borderCollapse: 'collapse' }}>
+                <tbody>
+                  <tr>
+                    <td style={{
+                      backgroundColor: '#040812',
+                      border: '2px solid #38bdf8',
+                      borderRadius: '12px',
+                      padding: '8px 36px',
+                      textAlign: 'center',
+                      verticalAlign: 'middle',
+                      boxShadow: '0 0 25px rgba(56, 189, 248, 0.35)'
+                    }}>
+                      <h2 style={{
+                        fontSize: '26px',
+                        fontWeight: 900,
+                        color: '#38bdf8',
+                        letterSpacing: '0.15em',
+                        textTransform: 'uppercase',
+                        margin: 0,
+                        padding: 0,
+                        lineHeight: 1,
+                        textAlign: 'center',
+                        display: 'block'
+                      }}>
+                        {certName}
+                      </h2>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            {/* 4. Verification Narrative (Centered) */}
-            <div className="w-full max-w-xl mx-auto text-center space-y-2.5">
-              <p className="text-xs text-slate-300 leading-relaxed text-center m-0">
+            {/* 4. Verification Narrative */}
+            <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto', textAlign: 'center' }}>
+              <p style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: 1.5, margin: '0 0 8px 0', textAlign: 'center' }}>
                 For demonstrating exceptional technical mastery in offensive penetration testing, live exploit weaponization, digital forensic triage, and defense architecture in:
               </p>
-              <div className="w-full flex justify-center text-center">
-                <div className="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-lg bg-sky-500/10 border border-sky-400/40 text-sky-200 text-xs font-bold mx-auto">
-                  <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>{trackName}</span>
-                </div>
-              </div>
+              <table style={{ margin: '0 auto', borderCollapse: 'collapse' }}>
+                <tbody>
+                  <tr>
+                    <td style={{
+                      backgroundColor: 'rgba(14, 165, 233, 0.12)',
+                      border: '1px solid rgba(56, 189, 248, 0.4)',
+                      borderRadius: '8px',
+                      padding: '6px 18px',
+                      textAlign: 'center',
+                      verticalAlign: 'middle'
+                    }}>
+                      <div style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', color: '#bae6fd', fontSize: '11.5px', fontWeight: 800 }}>
+                        <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+                        <span>{trackName}</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
 
-            {/* 5. Signatures & Footer (Balanced Grid) */}
-            <div className="w-full grid grid-cols-3 items-center pt-3 border-t border-cyan-500/25">
-              
-              {/* Left Authority */}
-              <div className="text-left space-y-0.5">
-                <span className="text-[8.5px] text-slate-500 uppercase block">ACADEMIC DIRECTOR</span>
-                <p className="text-[11.5px] font-bold text-slate-100 m-0">Ninad Pawar</p>
-                <p className="text-[10px] text-cyan-400 font-semibold m-0">CyberMatrix Academy India</p>
+            {/* 5. Signatures & Footer */}
+            <div style={{ width: '100%', display: 'grid', gridTemplateColumns: '1fr auto 1fr', alignItems: 'center', paddingTop: '12px', borderTop: '1px solid rgba(56, 189, 248, 0.25)' }}>
+              <div style={{ textAlign: 'left' }}>
+                <span style={{ fontSize: '8.5px', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>ACADEMIC DIRECTOR</span>
+                <p style={{ fontSize: '11.5px', fontWeight: 800, color: '#f8fafc', margin: 0 }}>Ninad Pawar</p>
+                <p style={{ fontSize: '9.5px', color: '#38bdf8', margin: 0 }}>CyberMatrix Academy India</p>
               </div>
 
-              {/* Center Seal */}
-              <div className="flex flex-col items-center justify-center text-center">
-                <div className="w-10 h-10 rounded-xl bg-[#040812] border border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.35)] mx-auto">
-                  <Award className="w-6 h-6 text-cyan-300" />
+              <div style={{ textAlign: 'center' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '10px', backgroundColor: '#040812', border: '1.5px solid #38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', boxShadow: '0 0 12px rgba(56, 189, 248, 0.35)' }}>
+                  <Award className="w-5 h-5 text-cyan-300" />
                 </div>
-                <span className="text-[8px] font-bold text-cyan-400 mt-1 text-center block">VERIFIED CERTIFIED</span>
+                <span style={{ fontSize: '8px', fontWeight: 800, color: '#38bdf8', display: 'block', marginTop: '3px' }}>VERIFIED CERTIFIED</span>
               </div>
 
-              {/* Right Details */}
-              <div className="text-right space-y-0.5">
-                <span className="text-[8.5px] text-slate-500 uppercase block">LEDGER IDENTIFIER</span>
-                <p className="text-[11px] font-bold font-mono text-cyan-300 m-0">{certId}</p>
-                <p className="text-[9.5px] text-slate-400 m-0">ISSUED: {issueDate}</p>
+              <div style={{ textAlign: 'right' }}>
+                <span style={{ fontSize: '8.5px', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>LEDGER IDENTIFIER</span>
+                <p style={{ fontSize: '10.5px', fontWeight: 800, color: '#38bdf8', margin: 0 }}>{certId}</p>
+                <p style={{ fontSize: '9px', color: '#94a3b8', margin: 0 }}>ISSUED: {issueDate}</p>
               </div>
-
             </div>
 
             {/* 6. Signature Hash Bar */}
-            <div className="w-full text-center text-[8px] text-slate-600 font-mono tracking-wider">
+            <div style={{ width: '100%', textAlign: 'center', fontSize: '7.5px', color: '#475569', letterSpacing: '0.04em' }}>
               IMMUTABLE DIGITAL PROOF // SHA-256: {shaSignature}
             </div>
 
