@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { CyberSmokeHeader } from "@/components/CyberSmokeHeader";
 import { StudentAIAssistant } from "@/components/StudentAIAssistant";
@@ -19,7 +19,8 @@ import {
   Clock,
   AlertTriangle,
   PlusCircle,
-  PowerOff
+  PowerOff,
+  Lock
 } from "lucide-react";
 
 interface TargetConfig {
@@ -76,7 +77,6 @@ const TARGET_REGISTRY: Record<string, TargetConfig> = {
 
 export default function DedicatedTargetSandbox() {
   const params = useParams();
-  const router = useRouter();
   const targetId = (params?.targetId as string) || 't1';
   const target = TARGET_REGISTRY[targetId] || TARGET_REGISTRY['t1'];
 
@@ -85,7 +85,7 @@ export default function DedicatedTargetSandbox() {
   const [resetting, setResetting] = useState(false);
   const [vmTerminated, setVmTerminated] = useState(false);
 
-  // 1-Hour Countdown Timer Engine
+  // 1-Hour Countdown Timer
   useEffect(() => {
     if (vmTerminated) return;
 
@@ -103,8 +103,13 @@ export default function DedicatedTargetSandbox() {
     return () => clearInterval(timer);
   }, [vmTerminated]);
 
+  // Is remaining time <= 10 minutes (600s)
+  const isWarning = timeLeft <= 600 && timeLeft > 0;
+  const isContinueEnabled = isWarning && !vmTerminated;
+
   // Extend Time by +30 Minutes
   const handleExtendTime = () => {
+    if (!isContinueEnabled) return;
     setTimeLeft((prev) => prev + 1800); // +30 mins (1800s)
   };
 
@@ -123,14 +128,11 @@ export default function DedicatedTargetSandbox() {
     }, 1500);
   };
 
-  // Format MM:SS
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
   };
-
-  const isWarning = timeLeft <= 600 && timeLeft > 0; // Less than 10 minutes (600s)
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 font-mono pb-16">
@@ -148,7 +150,7 @@ export default function DedicatedTargetSandbox() {
             <span>← RETURN TO TARGET MATRIX</span>
           </Link>
           
-          {/* Live VM Timer HUD */}
+          {/* Live VM Timer & Continue Button */}
           <div className="flex items-center space-x-3 text-xs">
             <div className={`flex items-center space-x-2 px-3 py-1.5 rounded-xl border font-bold ${
               vmTerminated
@@ -158,37 +160,47 @@ export default function DedicatedTargetSandbox() {
                 : 'bg-zinc-900 border-cyan-500/30 text-cyan-300'
             }`}>
               <Clock className="w-4 h-4" />
-              <span>VM TIME REMAINING: {formatTime(timeLeft)}</span>
+              <span>VM TIME: {formatTime(timeLeft)}</span>
             </div>
 
+            {/* CONTINUE BUTTON (Locks until <= 10 minutes) */}
             <button
               onClick={handleExtendTime}
-              disabled={vmTerminated}
-              className="px-3 py-1.5 rounded-xl bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 hover:bg-cyan-500/25 transition text-xs font-bold flex items-center space-x-1.5 cursor-pointer disabled:opacity-30"
+              disabled={!isContinueEnabled}
+              title={!isContinueEnabled ? "Enables only when under 10 minutes remaining" : "Extend lab session by 30 mins"}
+              className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center space-x-1.5 transition ${
+                isContinueEnabled
+                  ? 'bg-cyan-500 text-zinc-950 border-cyan-400 hover:bg-cyan-400 cursor-pointer shadow-[0_0_15px_rgba(6,182,212,0.5)] animate-bounce'
+                  : 'bg-zinc-900/60 border-zinc-800 text-zinc-600 cursor-not-allowed opacity-50'
+              }`}
             >
-              <PlusCircle className="w-3.5 h-3.5" />
+              {isContinueEnabled ? (
+                <PlusCircle className="w-3.5 h-3.5" />
+              ) : (
+                <Lock className="w-3.5 h-3.5" />
+              )}
               <span>CONTINUE (+30 MIN)</span>
             </button>
           </div>
         </div>
 
-        {/* 10-Minute Warning Alert Banner */}
+        {/* 10-Minute Warning Alert Banner (Appears only when <= 10 mins) */}
         {isWarning && !vmTerminated && (
           <div className="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/40 text-amber-300 flex flex-wrap items-center justify-between gap-3 text-xs shadow-[0_0_20px_rgba(245,158,11,0.2)]">
             <div className="flex items-center space-x-2">
               <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0 animate-bounce" />
-              <span><strong>SECURITY WARNING:</strong> Target instance will terminate in less than 10 minutes. Click continue to extend session.</span>
+              <span><strong>WARNING:</strong> Target VM terminates in less than 10 minutes. Continue button is now unlocked!</span>
             </div>
             <button
               onClick={handleExtendTime}
-              className="px-3 py-1 rounded-lg bg-amber-500 text-zinc-950 font-bold hover:bg-amber-400 transition"
+              className="px-3.5 py-1.5 rounded-lg bg-amber-500 text-zinc-950 font-bold hover:bg-amber-400 transition cursor-pointer shadow-[0_0_12px_rgba(245,158,11,0.4)]"
             >
-              CONTINUE SESSION (+30 MIN)
+              EXTEND +30 MIN NOW
             </button>
           </div>
         )}
 
-        {/* VM Terminated Modal Overlay */}
+        {/* VM Terminated State */}
         {vmTerminated ? (
           <div className="p-12 rounded-3xl bg-zinc-900/90 border border-red-500/50 text-center space-y-4 shadow-[0_0_50px_rgba(239,68,68,0.2)]">
             <div className="w-16 h-16 rounded-2xl bg-red-500/10 border border-red-500/40 text-red-400 flex items-center justify-center mx-auto">
@@ -196,7 +208,7 @@ export default function DedicatedTargetSandbox() {
             </div>
             <h2 className="text-xl font-bold text-red-400">LAB SESSION EXPIRED // TARGET OFFLINE</h2>
             <p className="text-xs text-zinc-400 max-w-md mx-auto">
-              The 1-hour target container allocation has concluded. You can restart the virtual instance to continue testing.
+              The 1-hour target container allocation has concluded. You can restart the instance to continue testing.
             </p>
             <button
               onClick={handleResetVM}
@@ -206,13 +218,13 @@ export default function DedicatedTargetSandbox() {
             </button>
           </div>
         ) : (
-          /* 2-Column Split: Controls + Terminal */
+          /* Split Grid */
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
             {/* Left Column (5 Cols) */}
             <div className="lg:col-span-5 space-y-5">
               
-              {/* Target Specs Card */}
+              {/* Target Machine Card */}
               <div className="p-5 rounded-2xl bg-zinc-900/80 border border-cyan-500/30 backdrop-blur-md space-y-4 shadow-[0_0_20px_rgba(6,182,212,0.15)]">
                 <div className="flex items-center justify-between border-b border-cyan-500/20 pb-2">
                   <span className="text-xs font-bold text-cyan-400 flex items-center gap-1.5">
@@ -224,7 +236,7 @@ export default function DedicatedTargetSandbox() {
                   </span>
                 </div>
 
-                {/* IP Copy Box */}
+                {/* IP Box */}
                 <div className="flex items-center justify-between p-3 rounded-xl bg-zinc-950 border border-zinc-800 text-xs">
                   <span className="text-zinc-400">Target IP Address:</span>
                   <button
@@ -236,7 +248,7 @@ export default function DedicatedTargetSandbox() {
                   </button>
                 </div>
 
-                {/* OS & Scenario */}
+                {/* Specs */}
                 <div className="space-y-1.5 text-xs">
                   <p className="text-zinc-400"><strong>OS Architecture:</strong> {target.os}</p>
                   <p className="text-zinc-400 leading-relaxed"><strong>Scenario:</strong> {target.scenario}</p>
@@ -254,18 +266,18 @@ export default function DedicatedTargetSandbox() {
                   </div>
                 </div>
 
-                {/* Reboot Instance */}
+                {/* Reset Button */}
                 <button
                   onClick={handleResetVM}
                   disabled={resetting}
                   className="w-full py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs flex items-center justify-center space-x-2 transition border border-zinc-700"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${resetting ? 'animate-spin text-cyan-400' : ''}`} />
-                  <span>{resetting ? 'Rebooting Sandbox Target...' : 'Reboot VM Instance'}</span>
+                  <span>{resetting ? 'Rebooting Target Sandbox...' : 'Reboot VM Instance'}</span>
                 </button>
               </div>
 
-              {/* Tactical Objectives */}
+              {/* Objectives */}
               <div className="p-5 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md space-y-3">
                 <h3 className="text-xs font-bold text-cyan-400 flex items-center gap-1.5 border-b border-zinc-800 pb-2">
                   <Cpu className="w-3.5 h-3.5" />
@@ -281,11 +293,11 @@ export default function DedicatedTargetSandbox() {
                 </div>
               </div>
 
-              {/* Quick Flag Verification */}
+              {/* Flag Submit */}
               <CTFFlagSubmit />
             </div>
 
-            {/* Right Column (7 Cols): Root Attack Shell */}
+            {/* Right Column: Interactive Terminal Shell */}
             <div className="lg:col-span-7 space-y-3">
               <div className="flex items-center justify-between">
                 <h2 className="text-xs font-bold text-cyan-400 flex items-center space-x-2">
