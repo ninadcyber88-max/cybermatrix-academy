@@ -3,7 +3,7 @@ import { StudentAIAssistant } from "@/components/StudentAIAssistant";
 import { CTFTerminal } from "@/components/CTFTerminal";
 import { CTFFlagSubmit } from "@/components/CTFFlagSubmit";
 import { Leaderboard } from "@/components/Leaderboard";
-import { BookOpen, Terminal, User, Swords, Code2 } from "lucide-react";
+import { BookOpen, Terminal, User, Swords, Code2, Award } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -18,31 +18,38 @@ export default function Home() {
             <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
             <span>CYBER LAB STATUS: OPERATIONAL</span>
           </div>
-          <div className="flex items-center space-x-2.5">
+          <div className="flex items-center space-x-2">
+            <Link
+              href="/certificate"
+              className="text-xs px-2.5 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20 transition flex items-center space-x-1.5 font-bold"
+            >
+              <Award className="w-3.5 h-3.5" />
+              <span>CERTIFICATE</span>
+            </Link>
             <Link
               href="/cheatsheet"
-              className="text-xs px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30 transition flex items-center space-x-1.5"
+              className="text-xs px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30 transition flex items-center space-x-1.5"
             >
               <Code2 className="w-3.5 h-3.5" />
               <span>CHEATSHEET</span>
             </Link>
             <Link
               href="/arena"
-              className="text-xs px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition flex items-center space-x-1.5 font-bold shadow-[0_0_12px_rgba(239,68,68,0.2)]"
+              className="text-xs px-2.5 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition flex items-center space-x-1.5 font-bold shadow-[0_0_12px_rgba(239,68,68,0.2)]"
             >
               <Swords className="w-3.5 h-3.5" />
-              <span>CTF ARENA</span>
+              <span>ARENA</span>
             </Link>
             <Link
               href="/profile"
-              className="text-xs px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30 transition flex items-center space-x-1.5"
+              className="text-xs px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 transition flex items-center space-x-1.5"
             >
               <User className="w-3.5 h-3.5" />
               <span>PROFILE</span>
             </Link>
             <Link
               href="/courses"
-              className="text-xs px-3.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition font-bold"
+              className="text-xs px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition font-bold"
             >
               COURSES →
             </Link>
