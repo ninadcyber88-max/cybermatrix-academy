@@ -1,30 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { Trophy, ChevronDown, ChevronUp, Flame, Shield } from 'lucide-react';
-
-interface Operative {
-  rank: number;
-  name: string;
-  handle: string;
-  badge: string;
-  streak: number;
-  points: number;
-}
-
-const RANKINGS: Operative[] = [
-  { rank: 1, name: 'Ninad Pawar', handle: '@root_ninad', badge: 'ELITE RED TEAM', streak: 7, points: 750 },
-  { rank: 2, name: 'ViperX', handle: '@zero_day_viper', badge: 'EXPLOIT DEV', streak: 4, points: 550 },
-  { rank: 3, name: 'ShadowByte', handle: '@byte_walker', badge: 'BUG HUNTER', streak: 2, points: 400 },
-  { rank: 4, name: 'CipherGhost', handle: '@cipher_g', badge: 'DFIR LEAD', streak: 5, points: 380 },
-  { rank: 5, name: 'NullPointer', handle: '@null_sec', badge: 'CLOUD AUDIT', streak: 1, points: 290 },
-];
+import { Trophy, ChevronDown, ChevronUp, Flame } from 'lucide-react';
+import { useCTF } from '@/context/CTFContext';
 
 export function Leaderboard() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { leaderboard } = useCTF();
 
-  // Default showing top 2 when minimized, full list when expanded
-  const displayList = isExpanded ? RANKINGS : RANKINGS.slice(0, 2);
+  const displayList = isExpanded ? leaderboard : leaderboard.slice(0, 3);
 
   return (
     <div className="p-3.5 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md font-mono shadow-[0_0_20px_rgba(0,0,0,0.3)] transition-all">
@@ -32,13 +16,12 @@ export function Leaderboard() {
       <div className="flex items-center justify-between border-b border-cyan-500/20 pb-2">
         <div className="flex items-center space-x-2">
           <Trophy className="w-4 h-4 text-yellow-400" />
-          <span className="text-xs font-bold text-cyan-400">OPERATIVE RANKINGS</span>
+          <span className="text-xs font-bold text-cyan-400">DYNAMIC OPERATIVE RANKINGS</span>
           <span className="text-[9px] text-zinc-500 bg-zinc-950 px-2 py-0.5 rounded border border-zinc-800">
-            SEASON 2026
+            SEASON 2026 LIVE
           </span>
         </div>
 
-        {/* Toggle Minimize/Expand Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="flex items-center space-x-1 text-[10px] text-cyan-400/80 hover:text-cyan-300 px-2 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/20 transition cursor-pointer"
@@ -48,12 +31,16 @@ export function Leaderboard() {
         </button>
       </div>
 
-      {/* Roster List */}
+      {/* Dynamic List */}
       <div className="space-y-2 mt-2.5">
         {displayList.map((op) => (
           <div
-            key={op.rank}
-            className="flex items-center justify-between p-2 rounded-xl bg-zinc-950/80 border border-zinc-800/80 hover:border-cyan-500/30 transition text-xs"
+            key={op.handle}
+            className={`flex items-center justify-between p-2 rounded-xl border text-xs transition ${
+              op.handle === '@root_ninad'
+                ? 'bg-cyan-950/40 border-cyan-500/50 shadow-[0_0_12px_rgba(6,182,212,0.2)]'
+                : 'bg-zinc-950/80 border-zinc-800/80'
+            }`}
           >
             <div className="flex items-center space-x-2.5">
               <span
