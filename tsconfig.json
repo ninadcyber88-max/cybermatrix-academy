@@ -24,11 +24,3 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
-# सर्व नवीन फाईल्स आणि बदल स्टेज करणे
-git add .
-
-# कमिट मेसेज तयार करणे
-git commit -m "feat: complete base setup with Next.js, AI mentor assistant and config fixes"
-
-# GitHub वरील मेन ब्रांचवर कोड पुश करणे
-git push origin main
