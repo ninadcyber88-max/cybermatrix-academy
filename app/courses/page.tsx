@@ -66,22 +66,21 @@ export default function CoursesPage() {
 
   const filteredCourses = COURSES_DATA.filter((course) => {
     const matchesCat = selectedCategory === 'All' || course.category === selectedCategory;
-    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          course.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesSearch =
+      course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      course.description.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCat && matchesSearch;
   });
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 font-mono pb-16">
-      {/* Top Header */}
       <CyberSmokeHeader />
 
       <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8">
-        
-        {/* Navigation Bar */}
+        {/* Navigation Bar - Fixed back link to / */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
           <Link
-            href={`/courses/${course.id}`}
+            href="/"
             className="flex items-center space-x-2 text-xs text-cyan-400 hover:text-cyan-300 transition group"
           >
             <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition" />
@@ -92,9 +91,8 @@ export default function CoursesPage() {
           </div>
         </div>
 
-        {/* Filter & Search Bar */}
+        {/* Category Filters & Search */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          {/* Category Tabs */}
           <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 no-scrollbar">
             {['All', 'Offensive', 'Forensics', 'Cloud', 'AD'].map((cat) => (
               <button
@@ -111,7 +109,6 @@ export default function CoursesPage() {
             ))}
           </div>
 
-          {/* Search Box */}
           <div className="relative w-full md:w-72">
             <Search className="w-4 h-4 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
@@ -124,7 +121,7 @@ export default function CoursesPage() {
           </div>
         </div>
 
-        {/* Courses Cards Grid */}
+        {/* Courses Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredCourses.map((course) => (
             <div
@@ -151,7 +148,6 @@ export default function CoursesPage() {
                 <h3 className="text-base font-bold text-zinc-100">{course.title}</h3>
                 <p className="text-xs text-zinc-400 leading-relaxed">{course.description}</p>
 
-                {/* Topics Tag List */}
                 <div className="flex flex-wrap gap-1.5 pt-2">
                   {course.topics.map((t, idx) => (
                     <span
@@ -164,7 +160,7 @@ export default function CoursesPage() {
                 </div>
               </div>
 
-              {/* Action Button */}
+              {/* Dynamic Route Button */}
               <div className="pt-4 border-t border-zinc-800 flex items-center justify-between">
                 <div className="flex items-center space-x-1.5 text-xs text-green-400">
                   <CheckCircle2 className="w-3.5 h-3.5" />
@@ -182,7 +178,6 @@ export default function CoursesPage() {
         </div>
       </div>
 
-      {/* Floating AI Mentor on Courses Page */}
       <StudentAIAssistant />
     </main>
   );
