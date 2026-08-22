@@ -81,7 +81,7 @@ export default function CoursesPage() {
         {/* Navigation Bar */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
           <Link
-            href="/"
+            href={`/courses/${course.id}`}
             className="flex items-center space-x-2 text-xs text-cyan-400 hover:text-cyan-300 transition group"
           >
             <ArrowLeft className="w-4 h-4 transform group-hover:-translate-x-1 transition" />
@@ -171,7 +171,7 @@ export default function CoursesPage() {
                   <span className="text-[11px]">Virtual Lab Ready</span>
                 </div>
                 <Link
-                  href="/"
+                  href={`/courses/${course.id}`}
                   className="px-4 py-2 rounded-xl bg-cyan-500 text-zinc-950 font-bold text-xs hover:bg-cyan-400 transition shadow-[0_0_15px_rgba(6,182,212,0.3)]"
                 >
                   Launch Sandbox →
