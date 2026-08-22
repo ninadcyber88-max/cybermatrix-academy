@@ -114,7 +114,7 @@ X-Vulnerability-Hint: Header 'X-Forwarded-For: 127.0.0.1' bypass allowed.`;
   };
 
   return (
-    <div className="w-full rounded-2xl bg-zinc-950 border border-cyan-500/30 overflow-hidden shadow-[0_0_30px_rgba(6,182,212,0.15)] flex flex-col h-[380px] font-mono">
+    <div className="w-full rounded-2xl bg-zinc-950 border border-cyan-500/30 overflow-hidden shadow-[0_0_30px_rgba(6,182,212,0.15)] flex flex-col h-[460px] font-mono">
       <div className="px-4 py-2.5 bg-zinc-900/90 border-b border-cyan-500/20 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <div className="flex space-x-1.5">
