@@ -10,7 +10,6 @@ import {
   Download, 
   Cpu, 
   Sparkles, 
-  Bot,
   Award
 } from "lucide-react";
 
@@ -86,11 +85,11 @@ export default function CertificatePage() {
           </button>
         </div>
 
-        {/* ---------------- PROFESSIONAL SINGLE LANDSCAPE CERTIFICATE ---------------- */}
+        {/* ---------------- PERFECT CENTERED CERTIFICATE ---------------- */}
         <div id="print-zone" className="cert-container">
           <div className="cert-card">
             
-            {/* Guilloche Border & Brackets */}
+            {/* Guilloche Brackets */}
             <div className="corner-bracket top-left" />
             <div className="corner-bracket top-right" />
             <div className="corner-bracket bottom-left" />
@@ -108,11 +107,13 @@ export default function CertificatePage() {
               <p className="cert-subtitle">SPECIAL OPERATIVE CREDENTIAL // LEVEL 5 SECURITY CLEARANCE</p>
             </div>
 
-            {/* Candidate Identity */}
+            {/* Candidate Identity - Dead Center Box */}
             <div className="cert-candidate-section">
               <span className="cert-grant-text">THIS PROFESSIONAL ACCREDITATION IS CONFERRED UPON</span>
-              <div className="cert-name-box">
-                <h2 className="cert-name-text">{certName}</h2>
+              <div className="name-box-wrapper">
+                <div className="cert-name-box">
+                  <h2 className="cert-name-text">{certName}</h2>
+                </div>
               </div>
             </div>
 
@@ -127,7 +128,7 @@ export default function CertificatePage() {
               </div>
             </div>
 
-            {/* Signatures & Footer */}
+            {/* Signatures & Footer Section */}
             <div className="cert-footer-section">
               
               {/* Left Authority */}
@@ -168,16 +169,15 @@ export default function CertificatePage() {
         <StudentAIAssistant />
       </div>
 
-      {/* ---------------- 100% SINGLE PAGE LANDSCAPE PRINT ENGINE ---------------- */}
+      {/* ---------------- CSS ENGINE ---------------- */}
       <style jsx global>{`
-        /* Screen Styles */
         .cert-container {
           width: 100%;
           border-radius: 16px;
           background: linear-gradient(135deg, #0b1528 0%, #08101e 50%, #050b14 100%);
           border: 2px solid #0284c7;
           box-shadow: 0 0 40px rgba(2, 132, 199, 0.25);
-          padding: 2.2rem;
+          padding: 2.5rem 2rem;
           color: #f8fafc;
           font-family: monospace;
           box-sizing: border-box;
@@ -190,8 +190,9 @@ export default function CertificatePage() {
           align-items: center;
           justify-content: space-between;
           text-align: center;
-          gap: 1.1rem;
-          height: 100%;
+          gap: 1.2rem;
+          width: 100%;
+          margin: 0 auto;
         }
 
         .corner-bracket {
@@ -217,15 +218,16 @@ export default function CertificatePage() {
           font-size: 10px;
           font-weight: 800;
           letter-spacing: 0.14em;
+          margin: 0 auto;
         }
 
         .cert-main-title {
-          font-size: 1.6rem;
+          font-size: 1.65rem;
           font-weight: 900;
           color: #f0f9ff;
           letter-spacing: 0.12em;
           text-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-          margin: 0;
+          margin: 0 auto;
         }
 
         .cert-subtitle {
@@ -235,30 +237,60 @@ export default function CertificatePage() {
           margin-top: 3px;
         }
 
+        /* Perfectly Centered Candidate Identity */
+        .cert-candidate-section {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin: 0.2rem 0;
+        }
+
         .cert-grant-text {
           font-size: 9.5px;
           letter-spacing: 0.2em;
           color: #64748b;
           text-transform: uppercase;
+          text-align: center;
+          display: block;
+          margin-bottom: 8px;
+        }
+
+        .name-box-wrapper {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
         }
 
         .cert-name-box {
-          display: inline-block;
-          margin-top: 5px;
-          padding: 6px 28px;
-          border-radius: 10px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 8px 36px;
+          border-radius: 12px;
           background: #040812;
           border: 1.5px solid #38bdf8;
-          box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+          box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
+          margin: 0 auto;
         }
 
         .cert-name-text {
-          font-size: 1.8rem;
+          font-size: 1.85rem;
           font-weight: 900;
           color: #38bdf8;
-          letter-spacing: 0.15em;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           margin: 0;
+          text-align: center;
+        }
+
+        .cert-body-section {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
         .cert-body-text {
@@ -267,14 +299,15 @@ export default function CertificatePage() {
           line-height: 1.5;
           max-width: 620px;
           margin: 0 auto;
+          text-align: center;
         }
 
         .cert-track-tag {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          margin-top: 8px;
-          padding: 5px 16px;
+          margin-top: 10px;
+          padding: 6px 18px;
           border-radius: 8px;
           background: rgba(14, 165, 233, 0.12);
           border: 1px solid rgba(56, 189, 248, 0.4);
@@ -288,7 +321,7 @@ export default function CertificatePage() {
           display: grid;
           grid-template-columns: 1fr auto 1fr;
           align-items: center;
-          padding-top: 0.8rem;
+          padding-top: 1rem;
           border-top: 1px solid rgba(56, 189, 248, 0.2);
         }
 
@@ -297,10 +330,10 @@ export default function CertificatePage() {
         .footer-val-cyan { font-size: 9.5px; color: #38bdf8; }
         .footer-val-gray { font-size: 9px; color: #94a3b8; }
 
-        .footer-center { display: flex; flex-direction: column; align-items: center; }
+        .footer-center { display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .seal-emblem {
-          width: 44px;
-          height: 44px;
+          width: 46px;
+          height: 46px;
           border-radius: 12px;
           background: #040812;
           border: 1.5px solid #38bdf8;
@@ -316,9 +349,10 @@ export default function CertificatePage() {
           color: #475569;
           letter-spacing: 0.04em;
           word-break: break-all;
+          text-align: center;
         }
 
-        /* ---------------- PRINT MEDIA OVERRIDES (EXACT 1 PAGE LANDSCAPE) ---------------- */
+        /* ---------------- 1-PAGE LANDSCAPE PRINT ENGINE ---------------- */
         @media print {
           @page {
             size: landscape;
@@ -340,7 +374,6 @@ export default function CertificatePage() {
             display: none !important;
           }
 
-          /* Force exact full viewport fit on single page without overflow */
           .cert-container {
             position: fixed !important;
             inset: 0 !important;
@@ -351,7 +384,7 @@ export default function CertificatePage() {
             border: 8px solid #0369a1 !important;
             background: linear-gradient(135deg, #0b1528 0%, #08101e 50%, #050b14 100%) !important;
             box-shadow: none !important;
-            padding: 2.5cm 3cm !important;
+            padding: 2cm 2.5cm !important;
             margin: 0 !important;
             box-sizing: border-box !important;
             display: flex !important;
