@@ -39,13 +39,6 @@ export default function CertificatePage() {
         logging: false,
         scrollX: 0,
         scrollY: 0,
-        onclone: (clonedDoc) => {
-          const clonedElem = clonedDoc.getElementById('cert-render-box');
-          if (clonedElem) {
-            clonedElem.style.display = 'block';
-            clonedElem.style.margin = '0 auto';
-          }
-        }
       });
 
       const imgData = canvas.toDataURL('image/png');
@@ -131,7 +124,7 @@ export default function CertificatePage() {
           </button>
         </div>
 
-        {/* ---------------- BULLETPROOF CENTERED CERTIFICATE CANVAS ---------------- */}
+        {/* ---------------- CENTERED CERTIFICATE CANVAS ---------------- */}
         <div className="w-full flex justify-center items-center py-2 overflow-x-auto">
           <div
             id="cert-render-box"
@@ -153,7 +146,7 @@ export default function CertificatePage() {
             {/* Corner Brackets */}
             <div style={{ position: 'absolute', top: '12px', left: '12px', width: '22px', height: '22px', borderTop: '3px solid #38bdf8', borderLeft: '3px solid #38bdf8' }} />
             <div style={{ position: 'absolute', top: '12px', right: '12px', width: '22px', height: '22px', borderTop: '3px solid #38bdf8', borderRight: '3px solid #38bdf8' }} />
-            <div style={{ position: 'absolute', bottom: '12px', left: '12px', width: '22px', height: '22px', border-bottom: '3px solid #38bdf8', borderLeft: '3px solid #38bdf8' }} />
+            <div style={{ position: 'absolute', bottom: '12px', left: '12px', width: '22px', height: '22px', borderBottom: '3px solid #38bdf8', borderLeft: '3px solid #38bdf8' }} />
             <div style={{ position: 'absolute', bottom: '12px', right: '12px', width: '22px', height: '22px', borderBottom: '3px solid #38bdf8', borderRight: '3px solid #38bdf8' }} />
 
             {/* 1. Top Sub-Header */}
@@ -195,7 +188,7 @@ export default function CertificatePage() {
               </div>
             </div>
 
-            {/* 5. Signatures & Footer (Table layout guarantees 100% exact alignment in canvas) */}
+            {/* 5. Signatures & Footer */}
             <table style={{ width: '100%', borderCollapse: 'collapse', borderTop: '1px solid rgba(56, 189, 248, 0.25)', paddingTop: '10px', marginTop: '10px' }}>
               <tbody>
                 <tr>
