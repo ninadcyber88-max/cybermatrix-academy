@@ -68,23 +68,21 @@ const INITIAL_CHALLENGES: Challenge[] = [
   },
 ];
 
-const INITIAL_LEADERBOARD: LeaderboardUser[] = [
-  { rank: 1, name: 'Ninad Pawar (You)', handle: '@root_ninad', badge: 'ELITE RED TEAM', streak: 7, points: 0 },
-  { rank: 2, name: 'ViperX', handle: '@zero_day_viper', badge: 'EXPLOIT DEV', streak: 4, points: 550 },
-  { rank: 3, name: 'ShadowByte', handle: '@byte_walker', badge: 'BUG HUNTER', streak: 2, points: 400 },
-  { rank: 4, name: 'CipherGhost', handle: '@cipher_g', badge: 'DFIR LEAD', streak: 5, points: 380 },
-  { rank: 5, name: 'NullPointer', handle: '@null_sec', badge: 'CLOUD AUDIT', streak: 1, points: 290 },
+const OTHER_OPERATIVES: Omit<LeaderboardUser, 'rank'>[] = [
+  { name: 'ViperX', handle: '@zero_day_viper', badge: 'EXPLOIT DEV', streak: 4, points: 550 },
+  { name: 'ShadowByte', handle: '@byte_walker', badge: 'BUG HUNTER', streak: 2, points: 400 },
+  { name: 'CipherGhost', handle: '@cipher_g', badge: 'DFIR LEAD', streak: 5, points: 380 },
+  { name: 'NullPointer', handle: '@null_sec', badge: 'CLOUD AUDIT', streak: 1, points: 290 },
 ];
 
 const CTFContext = createContext<CTFContextType | undefined>(undefined);
 
 export function CTFProvider({ children }: { children: React.ReactNode }) {
-  const [score, setScore] = useState<number>(0);
+  const [score, setScore] = useState<number>(750);
   const [streak] = useState<number>(7);
   const [challenges, setChallenges] = useState<Challenge[]>(INITIAL_CHALLENGES);
-  const [leaderboard, setLeaderboard] = useState<LeaderboardUser[]>(INITIAL_LEADERBOARD);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardUser[]>([]);
 
-  // Load from LocalStorage if available
   useEffect(() => {
     const savedScore = localStorage.getItem('cmx_ctf_score');
     const savedChallenges = localStorage.getItem('cmx_ctf_challenges');
@@ -92,12 +90,25 @@ export function CTFProvider({ children }: { children: React.ReactNode }) {
     if (savedChallenges) setChallenges(JSON.parse(savedChallenges));
   }, []);
 
-  // Recalculate leaderboard positions dynamically
+  // Guarantee NINAD PAWAR is always #1 Rank
   useEffect(() => {
-    setLeaderboard((prev) => {
-      const updated = prev.map((u) => (u.handle === '@root_ninad' ? { ...u, points: score } : u));
-      return updated.sort((a, b) => b.points - a.points).map((u, idx) => ({ ...u, rank: idx + 1 }));
-    });
+    const ninadUser: LeaderboardUser = {
+      rank: 1,
+      name: 'Ninad Pawar (Lead Operative)',
+      handle: '@root_ninad',
+      badge: 'TOP GUN // ROOT ARCHITECT',
+      streak: 7,
+      points: Math.max(score, 750),
+    };
+
+    const sortedOthers = [...OTHER_OPERATIVES]
+      .sort((a, b) => b.points - a.points)
+      .map((user, idx) => ({
+        ...user,
+        rank: idx + 2, // Rank 2, 3, 4, 5...
+      }));
+
+    setLeaderboard([ninadUser, ...sortedOthers]);
   }, [score]);
 
   const submitFlag = (flagInput: string) => {
@@ -112,9 +123,8 @@ export function CTFProvider({ children }: { children: React.ReactNode }) {
       return { success: false, message: 'FLAG ALREADY CAPTURED PREVIOUSLY' };
     }
 
-    // Mark as solved
     const updatedChallenges = challenges.map((c) => (c.id === matched.id ? { ...c, solved: true } : c));
-    const newScore = score + matched.points;
+    const newScore = Math.max(score, 750) + matched.points;
 
     setChallenges(updatedChallenges);
     setScore(newScore);
