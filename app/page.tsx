@@ -3,12 +3,12 @@ import { StudentAIAssistant } from "@/components/StudentAIAssistant";
 import { CTFTerminal } from "@/components/CTFTerminal";
 import { CTFFlagSubmit } from "@/components/CTFFlagSubmit";
 import { Leaderboard } from "@/components/Leaderboard";
-import { BookOpen, Terminal } from "lucide-react";
+import { BookOpen, Terminal, ShieldAlert } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 font-mono">
+    <main className="min-h-screen bg-zinc-950 text-zinc-100 font-mono relative pb-16">
       <CyberSmokeHeader />
 
       <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-8">
@@ -25,36 +25,30 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* 3-Column Top Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="space-y-6 lg:col-span-1">
-            <div className="p-5 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md">
-              <h2 className="text-sm font-bold text-cyan-400 mb-4 flex items-center space-x-2">
-                <BookOpen className="w-4 h-4" />
-                <span>SECURITY TRACKS</span>
-              </h2>
-              <div className="space-y-3">
-                <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800">
-                  <p className="text-xs font-bold text-zinc-200">Offensive Security & VAPT</p>
-                  <p className="text-[10px] text-zinc-500 mt-1">Burp Suite, SQLi, Buffer Overflow</p>
-                </div>
-                <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800">
-                  <p className="text-xs font-bold text-zinc-200">Cloud & Defense Hardening</p>
-                  <p className="text-[10px] text-zinc-500 mt-1">AWS IAM, SIEM, DFIR Playbooks</p>
-                </div>
+        {/* Top Grid: Tracks & Flag Engine */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="p-5 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md space-y-3">
+            <h2 className="text-sm font-bold text-cyan-400 flex items-center space-x-2">
+              <BookOpen className="w-4 h-4" />
+              <span>SECURITY TRACKS</span>
+            </h2>
+            <div className="space-y-2.5">
+              <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800">
+                <p className="text-xs font-bold text-zinc-200">Offensive Security & VAPT</p>
+                <p className="text-[10px] text-zinc-500 mt-0.5">Burp Suite, SQLi, Buffer Overflow</p>
+              </div>
+              <div className="p-3.5 rounded-xl bg-zinc-950 border border-zinc-800">
+                <p className="text-xs font-bold text-zinc-200">Cloud & Defense Hardening</p>
+                <p className="text-[10px] text-zinc-500 mt-0.5">AWS IAM, SIEM, DFIR Playbooks</p>
               </div>
             </div>
-
-            <CTFFlagSubmit />
           </div>
 
-          <div className="lg:col-span-2">
-            <StudentAIAssistant />
-          </div>
+          <CTFFlagSubmit />
         </div>
 
-        {/* 2-Column Bottom Grid: Terminal & Live Leaderboard */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Bottom Grid: CTF Terminal & Leaderboard */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-3">
             <h2 className="text-sm font-bold text-cyan-400 flex items-center space-x-2">
               <Terminal className="w-4 h-4" />
@@ -68,6 +62,9 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      {/* Floating AI Mentor Button & Window */}
+      <StudentAIAssistant />
     </main>
   );
 }
