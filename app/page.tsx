@@ -3,7 +3,7 @@ import { StudentAIAssistant } from "@/components/StudentAIAssistant";
 import { CTFTerminal } from "@/components/CTFTerminal";
 import { CTFFlagSubmit } from "@/components/CTFFlagSubmit";
 import { Leaderboard } from "@/components/Leaderboard";
-import { BookOpen, Terminal, User } from "lucide-react";
+import { BookOpen, Terminal, User, Swords } from "lucide-react";
 import Link from "next/link";
 
 export default function Home() {
@@ -13,12 +13,19 @@ export default function Home() {
 
       <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-6">
         {/* Status & Navigation Bar */}
-        <div className="flex items-center justify-between border-b border-zinc-800/80 pb-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800/80 pb-3">
           <div className="flex items-center space-x-2 text-xs text-zinc-400">
             <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
             <span>CYBER LAB STATUS: OPERATIONAL</span>
           </div>
           <div className="flex items-center space-x-2.5">
+            <Link
+              href="/arena"
+              className="text-xs px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition flex items-center space-x-1.5 font-bold shadow-[0_0_12px_rgba(239,68,68,0.2)]"
+            >
+              <Swords className="w-3.5 h-3.5" />
+              <span>CTF ARENA</span>
+            </Link>
             <Link
               href="/profile"
               className="text-xs px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30 transition flex items-center space-x-1.5"
@@ -30,7 +37,7 @@ export default function Home() {
               href="/courses"
               className="text-xs px-3.5 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition font-bold"
             >
-              VIEW COURSES →
+              COURSES →
             </Link>
           </div>
         </div>
