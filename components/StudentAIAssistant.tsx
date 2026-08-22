@@ -1,19 +1,49 @@
 'use client';
 
 import { useState } from 'react';
-import { Bot, Send, Terminal, Sparkles, User, Globe, ShieldAlert, Cpu, Lock, X } from 'lucide-react';
+import { Bot, Send, Terminal, Sparkles, User, X } from 'lucide-react';
 
 interface Message {
   role: 'assistant' | 'user';
   content: string;
 }
 
-type Language = 'en' | 'mr' | 'hi';
+type Language = 'mr' | 'hi' | 'en';
 
 const QUICK_PROMPTS: Record<Language, string[]> = {
-  en: ['SQL Injection Payloads', 'Privilege Escalation Steps', 'Bypass 403 Forbidden', 'Burp Suite Setup'],
-  mr: ['एसक्यूएल इंजेक्शन पेलोड्स', 'लिनक्स प्रिव्हिलेज एस्केलेशन', '403 फॉरबिडन बायपास', 'बर्प सूट कसा वापरावा?'],
-  hi: ['एसक्यूएल इंजेक्शन पेलोड्स', 'लिनक्स प्रिविलेज एस्केलेशन', '403 फॉरबिडन बायपास', 'बर्प सूट कैसे सेटअप करें?'],
+  mr: [
+    'डिजिटल फॉरेन्सिक्स (Digital Forensics)',
+    'मेमरी फॉरेन्सिक्स (Volatility)',
+    'क्लाउड सिक्युरिटी (AWS/S3)',
+    'SSRF & Cloud Metadata',
+    'Active Directory (Kerberoast)',
+    'SOC & SIEM Logs',
+    'रिव्हर्स इंजिनिअरिंग & Pwn',
+    'एसक्यूएल इंजेक्शन पेलोड्स',
+    'लिनक्स प्रिव्हिलेज एस्केलेशन',
+  ],
+  hi: [
+    'डिजिटल फोरेंसिक्स (Digital Forensics)',
+    'मेमोरी फोरेंसिक्स (Volatility)',
+    'क्लाउड सिक्योरिटी (AWS IAM)',
+    'SSRF & Cloud Metadata',
+    'Active Directory (Kerberos)',
+    'SOC व SIEM लॉग विश्लेषण',
+    'रिवर्स इंजीनियरिंग (Buffer Overflow)',
+    'एसक्यूएल इंजेक्शन पेलोड्स',
+    'लिनक्स प्रिविलेज एस्केलेशन',
+  ],
+  en: [
+    'Digital Forensics Artifacts',
+    'Memory Forensics (Volatility)',
+    'Cloud Security & S3 IAM',
+    'SSRF & AWS Metadata',
+    'Active Directory & Kerberoast',
+    'SOC / SIEM Event IDs',
+    'Buffer Overflow & Ghidra',
+    'SQL Injection Payloads',
+    'Linux Privilege Escalation',
+  ],
 };
 
 export function StudentAIAssistant() {
@@ -22,7 +52,8 @@ export function StudentAIAssistant() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'नमस्कार Operative! मी तुमचा CyberMatrix AI Mentor आहे. VAPT, CTF फ्लॅग्स, पेलोड्स किंवा टूल्सबद्दल काहीही विचारा.',
+      content:
+        'नमस्कार Operative! CyberMatrix AI Mentor (V2.0) सक्रिय आहे. Digital Forensics, Cloud DevSecOps, Active Directory, Bug Bounty, Malware Analysis, किंवा CTF Labs बद्दल विचारा.',
     },
   ]);
   const [input, setInput] = useState('');
@@ -31,62 +62,156 @@ export function StudentAIAssistant() {
   const getAIResponse = (query: string, currentLang: Language): string => {
     const q = query.toLowerCase();
 
-    // Responses based on selected language
+    // ---------------- MARATHI RESPONSES ----------------
     if (currentLang === 'mr') {
+      if (q.includes('forensic') || q.includes('फॉरेन्सिक') || q.includes('autopsy') || q.includes('artifact')) {
+        return `🔍 **डिजिटल फॉरेन्सिक्स (Digital Forensics) मार्गदर्शक:**
+1. **Evidence Integrity:** Disk Image घेताना नेहमी Write-blocker वापरा आणि SHA-256 Hash पडताळून पहा.
+2. **Windows Artifacts:**
+   • **Prefetch (.pf):** प्रोग्राम कधी आणि किती वेळा रन झाला हे तपासण्यासाठी.
+   • **Shimcache / Amcache:** मालवेअरची एक्सीक्यूशन हिस्ट्री ट्रॅक करणे.
+   • **Shellbags & LNK Files:** युझरने कोणते फोल्डर्स/फाईल्स उघडले ते शोधणे.
+   • **Registry:** USBSTOR की तपासून कोणती USB कनेक्ट केली होती ते ट्रॅक करणे.
+3. **टूल्स:** Autopsy, FTK Imager, KAPE, Eric Zimmerman's Tools.`;
+      }
+      if (q.includes('volatility') || q.includes('मेमरी') || q.includes('memory') || q.includes('dump')) {
+        return `🧠 **Memory Forensics (Volatility 3):**
+1. **रनिंग प्रोसेस तपासा:** \`vol -f dump.raw windows.pslist\` किंवा \`windows.pstree\`
+2. **Hidden/Injected Code शोधणे:** \`vol -f dump.raw windows.malfind\`
+3. **नेटवर्क कनेक्शन्स (C2 Beacons):** \`vol -f dump.raw windows.netscan\`
+4. **संशयास्पद प्रोसेस मेमरी डंप करणे:** \`vol -f dump.raw -o ./dump windows.dumpfiles --pid <PID>\``;
+      }
+      if (q.includes('cloud') || q.includes('aws') || q.includes('क्लाउड') || q.includes('s3') || q.includes('iam')) {
+        return `☁️ **Cloud Security & DevSecOps:**
+1. **S3 Bucket Enumeration:** \`aws s3 ls s3://target-bucket --no-sign-request\`
+2. **AWS IAM PrivEsc:** \`iam:PassRole\`, \`iam:CreateAccessKey\`, \`sts:AssumeRole\` परवानग्यांचा गैरवापर तपासणे.
+3. **CI/CD Security:** Git repos मधील Hardcoded API Keys आणि Tokens शोधण्यासाठी TruffleHog / GitGuardian वापरा.`;
+      }
+      if (q.includes('ssrf') || q.includes('metadata') || q.includes('169.254')) {
+        return `🎯 **SSRF (Server-Side Request Forgery) & Cloud Metadata:**
+• AWS IMDSv1 Endpoint: \`http://169.254.169.254/latest/meta-data/iam/security-credentials/\`
+• GCP Metadata Header: \`http://metadata.google.internal/computeMetadata/v1/\` (Header: \`Metadata-Flavor: Google\`)
+• SSRF द्वारे थेट Cloud IAM Secret Keys मिळवून AWS ॲक्सेस केला जाऊ शकतो.`;
+      }
+      if (q.includes('ad') || q.includes('active directory') || q.includes('kerberos') || q.includes('kerberoast')) {
+        return `🏰 **Active Directory (AD) हॅकिंग:**
+1. **Recon:** BloodHound + SharpHound वापरून डोमेन ॲडमिन पर्यंतचा शॉर्टेस्ट पाथ शोधा.
+2. **Kerberoasting:** SPN अकाऊंट्सचे TGS तिकिट्स मिळवून ऑफलाइन क्रॅक करणे: \`GetUserSPNs.py domain/user:pass -request\`
+3. **Lateral Movement:** Pass-the-Hash (PtH) साठी \`impacket-psexec\` किंवा \`wmiexec\` वापरा.`;
+      }
+      if (q.includes('siem') || q.includes('soc') || q.includes('log') || q.includes('लॉग')) {
+        return `🛡️ **SOC / SIEM Event IDs (Windows Security):**
+• **Event ID 4624:** यशस्वी लॉगिन (Logon Type 10 = RDP, Type 3 = Network)
+• **Event ID 4688:** नवीन प्रोसेस सुरू होणे (Process Creation with Command Line)
+• **Event ID 4720:** नवीन युझर अकाऊंट तयार होणे
+• **Event ID 7045:** नवीन सर्व्हिस इन्स्टॉल होणे (Persistence Indicator).`;
+      }
+      if (q.includes('buffer overflow') || q.includes('pwn') || q.includes('ghidra') || q.includes('रिव्हर्स')) {
+        return `⚙️ **Reverse Engineering & Buffer Overflow:**
+1. **Fuzzing & EIP Overwrite:** युनिक पॅटर्न जनरेट करा (\`msf-pattern_create -l 1000\`)
+2. **Bad Characters शोधणे:** \`\\x00\` आणि इतर ड्रॉप होणारे बाईट्स तपासणे.
+3. **Decompilation:** Ghidra किंवा IDA Pro वापरून हार्डकोडेड पासवर्ड किंवा व्हल्नेरेबल \`strcpy/gets\` फंक्शन्स शोधणे.`;
+      }
       if (q.includes('flag') || q.includes('फ्लॅग') || q.includes('root')) {
-        return 'टिप (CTF Hint): खालील CTF सँडबॉक्स टर्मिनलमध्ये "cat flag.txt" किंवा "sqlmap" रन करा. मिळालेला फ्लॅग वर सबमिट करून ५०० पॉइंट्स मिळवा!';
-      }
-      if (q.includes('sql') || q.includes('injection') || q.includes('पेलोड')) {
-        return 'SQL Injection: \n1. Auth Bypass: \' OR 1=1 --\n2. Union Extraction: \' UNION SELECT null, username, password FROM users--\n3. ऑटोमेशनसाठी सँडबॉक्समध्ये "sqlmap" कमांड चालवा.';
-      }
-      if (q.includes('privilege') || q.includes('एस्केलेशन') || q.includes('suid') || q.includes('linux')) {
-        return 'Linux PrivEsc चेकलिस्ट:\n1. SUID फाईल्स शोधा: find / -perm -u=s -type f 2>/dev/null\n2. Sudo परवानग्या तपासा: sudo -l\n3. Cron jobs तपासा: cat /etc/crontab\n4. GTFOBins चा वापर करा.';
-      }
-      if (q.includes('403') || q.includes('bypass') || q.includes('फॉरबिडन')) {
-        return '403 Forbidden बायपास ट्रिक्स:\n1. Headers वापरा: X-Forwarded-For: 127.0.0.1 किंवा X-Custom-IP-Authorization: 127.0.0.1\n2. Path rewriting: /admin -> /admin/ किंवा /admin/.\n3. HTTP Methods बदला: GET वरून POST किंवा HEAD करा.';
-      }
-      if (q.includes('nmap') || q.includes('स्कॅन')) {
-        return 'Nmap कमांड्स:\n• संपूर्ण पोर्ट स्कॅन: nmap -p- -sV -sC 10.10.14.88\n• वल्नेरेबिलिटी स्कॅन: nmap --script vuln 10.10.14.88\n• जलद स्कॅन: nmap -T4 -F 10.10.14.88';
-      }
-      if (q.includes('burp') || q.includes('बर्प')) {
-        return 'Burp Suite मार्गदर्शक:\n1. Proxy -> Intercept चालू करा.\n2. ब्राउझरमध्ये 127.0.0.1:8080 सेट करा आणि Burp CA Certificate इन्स्टॉल करा.\n3. Requests मॉडिफाय करण्यासाठी Repeater (Ctrl+R) वापरा.';
-      }
-      return `मी तुमचे विश्लेषण केले आहे: "${query}". हा एक महत्त्वाचा सायबर सिक्युरिटी विषय आहे. OWASP मार्गदर्शक तत्त्वे किंवा नेटवर्क लॉग तपासा. सँडबॉक्समध्ये सराव करण्यासाठी "help" टाईप करा.`;
-    }
-
-    if (currentLang === 'hi') {
-      if (q.includes('flag') || q.includes('फ्लैग') || q.includes('root')) {
-        return 'सलाह (CTF Hint): नीचे टर्मिनल में "cat flag.txt" या "sqlmap" चलाएं और मिला हुआ टोकन ऊपर सबमिट करें!';
+        return '🚩 **CTF Hint:** खालील CTF सँडबॉक्स टर्मिनलमध्ये "cat flag.txt" किंवा "sqlmap" रन करा आणि टोकन वर सबमिट करा!';
       }
       if (q.includes('sql') || q.includes('पेलोड')) {
-        return 'SQL Injection तकनीकें:\n1. Auth Bypass: \' OR 1=1 --\n2. टेबल डंपिंग के लिए टर्मिनल में "sqlmap" का उपयोग करें।';
+        return '💉 **SQL Injection:** \n• Auth Bypass: \' OR 1=1 --\n• Union: \' UNION SELECT null, version() --\n• सँडबॉक्समध्ये स्वयंचलित चाचणीसाठी "sqlmap" वापरा.';
       }
       if (q.includes('privilege') || q.includes('एस्केलेशन')) {
-        return 'Linux PrivEsc चेकलिस्ट:\n1. SUID बाइनरी खोजें: find / -perm -u=s -type f 2>/dev/null\n2. Sudo राइट्स देखें: sudo -l\n3. GTFOBins का संदर्भ लें।';
+        return '🐧 **Linux PrivEsc:** \n1. SUID: \`find / -perm -u=s -type f 2>/dev/null\`\n2. Sudo: \`sudo -l\`\n3. GTFOBins चा संदर्भ घ्या.';
       }
-      if (q.includes('403') || q.includes('bypass')) {
-        return '403 Forbidden बायपास:\n1. Request Header: X-Forwarded-For: 127.0.0.1\n2. URL Fuzzing: /admin/./ या /ADMIN/';
-      }
-      return `आपके सवाल "${query}" का विश्लेषण किया गया है। सही टूल्स (Nmap/Burp) का उपयोग करें और लैब का अभ्यास करें।`;
+      return `मी तुमचे विश्लेषण केले आहे: "${query}". Digital Forensics, VAPT, AD, किंवा Cloud बद्दल अधिक विचारण्यासाठी वरील चिप्स वापरा.`;
     }
 
-    // Default English
+    // ---------------- HINDI RESPONSES ----------------
+    if (currentLang === 'hi') {
+      if (q.includes('forensic') || q.includes('फोरेंसिक') || q.includes('autopsy')) {
+        return `🔍 **डिजिटल फोरेंसिक्स (Digital Forensics):**
+1. **एविडेंस सुरक्षा:** डिस्क इमेजिंग के दौरान Write-blocker का इस्तेमाल करें और SHA-256 हैश मैच करें।
+2. **विंडोज आर्टिफैक्ट्स:**
+   • **Prefetch (.pf):** रन हुए प्रोग्राम्स की टाइमलाइन।
+   • **Shimcache / Amcache:** मालवेयर एग्जीक्यूशन हिस्ट्री।
+   • **Registry (USBSTOR):** कनेक्टेड USB डिवाइसेस की जानकारी।
+3. **टूल्स:** Autopsy, FTK Imager, KAPE, Volatility.`;
+      }
+      if (q.includes('volatility') || q.includes('मेमोरी') || q.includes('memory')) {
+        return `🧠 **मेमोरी फोरेंसिक्स (Volatility 3):**
+1. प्रोसेस लिस्टिंग: \`vol -f mem.raw windows.pslist\`
+2. इन्जेक्टेड मालवेयर कोड: \`vol -f mem.raw windows.malfind\`
+3. एक्टिव नेटवर्क पोर्ट्स: \`vol -f mem.raw windows.netscan\``;
+      }
+      if (q.includes('cloud') || q.includes('aws') || q.includes('s3') || q.includes('ssrf')) {
+        return `☁️ **Cloud Security & SSRF:**
+• AWS Metadata: \`http://169.254.169.254/latest/meta-data/iam/security-credentials/\`
+• S3 Misconfig: \`aws s3 ls s3://bucket-name --no-sign-request\`
+• लीक्ड सीक्रेट्स खोजने के लिए TruffleHog चलाएं।`;
+      }
+      if (q.includes('ad') || q.includes('active directory') || q.includes('kerberos')) {
+        return `🏰 **Active Directory Attacks:**
+1. BloodHound से Domain Admin का रूट खोजें।
+2. Kerberoasting: Impacket GetUserSPNs.py से सर्विस टिकट डंप करके हैशकैट से क्रैक करें।
+3. Pass-the-Hash (PtH) के लिए psexec का उपयोग करें।`;
+      }
+      if (q.includes('soc') || q.includes('siem') || q.includes('log')) {
+        return `🛡️ **SOC Event IDs:**
+• 4624: सफल लॉगिन (Type 10 = RDP)
+• 4688: नई प्रोसेस तैयार होना (Malware execution)
+• 7045: नई सर्विस इन्स्टॉल होना।`;
+      }
+      return `विश्लेषण पूरा हुआ: "${query}". डिजिटल फोरेंसिक्स, क्लाउड, AD या CTF पर अधिक जानकारी के लिए त्वरित चिप्स का उपयोग करें।`;
+    }
+
+    // ---------------- ENGLISH RESPONSES ----------------
+    if (q.includes('forensic') || q.includes('artifact') || q.includes('autopsy')) {
+      return `🔍 **Digital Forensics & Incident Response (DFIR):**
+1. **Chain of Custody & Preservation:** Physical write-blockers + SHA-256 hash verification.
+2. **Key Windows Artifacts:**
+   • **Prefetch (.pf):** Application execution timestamp & run count.
+   • **Amcache.hve / Shimcache:** Evidence of binary execution & paths.
+   • **Shellbags & JumpLists:** User directory traversal proof.
+   • **NTUSER.DAT (UserAssist / RunMRU):** GUI executions and recently accessed files.
+3. **Essential Tools:** FTK Imager, Autopsy, KAPE, Eric Zimmerman Suite.`;
+    }
+    if (q.includes('volatility') || q.includes('memory') || q.includes('dump')) {
+      return `🧠 **Memory Forensics (Volatility 3):**
+• Process Tree: \`vol -f mem.raw windows.pstree\`
+• Code Injection: \`vol -f mem.raw windows.malfind\`
+• Network Connections: \`vol -f mem.raw windows.netscan\`
+• Extract Malware: \`vol -f mem.raw windows.dumpfiles --pid <PID>\``;
+    }
+    if (q.includes('cloud') || q.includes('aws') || q.includes('s3') || q.includes('ssrf')) {
+      return `☁️ **Cloud Security & DevSecOps:**
+• **SSRF to AWS IMDS:** \`curl http://169.254.169.254/latest/meta-data/iam/security-credentials/<Role>\`
+• **S3 Bucket Probe:** \`aws s3 sync s3://target-bucket ./dump --no-sign-request\`
+• **Secrets Audit:** TruffleHog / Gitleaks in CI/CD pipelines.`;
+    }
+    if (q.includes('ad') || q.includes('active directory') || q.includes('kerberos')) {
+      return `🏰 **Active Directory Security:**
+1. **BloodHound/SharpHound:** Graph analysis for ACL misconfigurations.
+2. **Kerberoasting:** Extract & crack Service Principal Name (SPN) tickets offline.
+3. **Lateral Movement:** Pass-the-Hash (PtH) & WMIexec.`;
+    }
+    if (q.includes('siem') || q.includes('soc') || q.includes('event id')) {
+      return `🛡️ **SOC & Threat Hunting Event IDs:**
+• **Event ID 4624:** Successful Logon (Type 3: Network, Type 10: RDP)
+• **Event ID 4688:** Process Creation with Command Line logging
+• **Event ID 4720:** User Account Created
+• **Event ID 7045:** New Service Installed (Persistence).`;
+    }
+    if (q.includes('buffer overflow') || q.includes('pwn') || q.includes('ghidra')) {
+      return `⚙️ **Binary Exploitation & Reverse Engineering:**
+• Fuzz input to determine offset (\`msf-pattern_create / msf-pattern_offset\`)
+• Overwrite EIP/RIP -> Find JMP ESP -> Generate bad-char clean shellcode
+• Decompile binaries using Ghidra / IDA Pro.`;
+    }
     if (q.includes('flag') || q.includes('root')) {
-      return 'CTF Tactical Hint: Execute "cat flag.txt" or "sqlmap" in the sandbox terminal below to claim +500 PTS.';
+      return '🚩 **CTF Tactical Hint:** Run "cat flag.txt" or "sqlmap" in the sandbox terminal below to claim +500 PTS.';
     }
-    if (q.includes('sql') || q.includes('payload')) {
-      return 'SQL Injection Vectors:\n• Auth Bypass: \' OR \'1\'=\'1\' --\n• Error Based: \' AND 1=CONVERT(int, (SELECT @@version))--\n• Automation: Run "sqlmap" in sandbox.';
+    if (q.includes('sql')) {
+      return '💉 **SQL Injection:** \n• Auth Bypass: \' OR 1=1 --\n• Union Extraction: \' UNION SELECT null, table_name FROM information_schema.tables --';
     }
-    if (q.includes('privilege') || q.includes('privesc') || q.includes('linux')) {
-      return 'Linux Privilege Escalation:\n1. Check SUID: find / -perm -4000 2>/dev/null\n2. Check sudo: sudo -l\n3. Search writable /etc/passwd or cronjobs.';
-    }
-    if (q.includes('403') || q.includes('bypass')) {
-      return '403 Forbidden Bypass Headers:\n• X-Forwarded-For: 127.0.0.1\n• X-Original-URL: /admin\n• X-Rewrite-URL: /admin';
-    }
-    if (q.includes('nmap') || q.includes('scan')) {
-      return 'Nmap Probes:\n• Service Detection: nmap -sV -sC -Pn target\n• Fast Recon: nmap -T4 -F target';
-    }
-    return `Analysis complete for: "${query}". Follow OWASP testing guidelines or use the interactive CTF terminal below.`;
+    return `Security analysis completed for: "${query}". Select the tactical chips above to explore Forensics, Cloud, AD, or CTF labs.`;
   };
 
   const handleSendMessage = (e?: React.FormEvent, customQuery?: string) => {
@@ -102,14 +227,14 @@ export function StudentAIAssistant() {
       const reply = getAIResponse(query, lang);
       setMessages((prev) => [...prev, { role: 'assistant', content: reply }]);
       setLoading(false);
-    }, 700);
+    }, 600);
   };
 
   const changeLanguage = (newLang: Language) => {
     setLang(newLang);
-    let welcomeMsg = 'Greetings, Operative! Ready to assist with offensive and defensive operations.';
-    if (newLang === 'mr') welcomeMsg = 'नमस्कार Operative! भाषा मराठीवर सेट केली आहे. VAPT व CTF बद्दल विचारा.';
-    if (newLang === 'hi') welcomeMsg = 'नमस्ते Operative! भाषा हिंदी पर सेट कर दी गई है। साइबर सुरक्षा सवाल पूछें।';
+    let welcomeMsg = 'Greetings, Operative! Digital Forensics, Cloud & VAPT modules loaded.';
+    if (newLang === 'mr') welcomeMsg = 'नमस्कार Operative! भाषा मराठीवर सेट केली आहे. Digital Forensics व इतर विषयांबद्दल विचारा.';
+    if (newLang === 'hi') welcomeMsg = 'नमस्ते Operative! डिजिटल फोरेंसिक्स, क्लाउड एवं VAPT मॉड्यूल्स सक्रिय हैं।';
 
     setMessages((prev) => [...prev, { role: 'assistant', content: welcomeMsg }]);
   };
@@ -137,9 +262,9 @@ export function StudentAIAssistant() {
 
       {/* Cyber AI Modal Popup */}
       {isOpen && (
-        <div className="fixed bottom-20 right-4 sm:right-6 z-50 w-[94vw] sm:w-[440px] h-[520px] rounded-2xl bg-zinc-950/95 border border-cyan-500/40 backdrop-blur-xl shadow-[0_0_40px_rgba(6,182,212,0.3)] flex flex-col overflow-hidden font-mono text-xs">
+        <div className="fixed bottom-20 right-4 sm:right-6 z-50 w-[94vw] sm:w-[460px] h-[550px] rounded-2xl bg-zinc-950/95 border border-cyan-500/40 backdrop-blur-xl shadow-[0_0_40px_rgba(6,182,212,0.3)] flex flex-col overflow-hidden font-mono text-xs">
           
-          {/* Header with Language Selector */}
+          {/* Header */}
           <div className="px-4 py-3 bg-zinc-900/90 border-b border-cyan-500/20 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <div className="p-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400">
@@ -150,11 +275,11 @@ export function StudentAIAssistant() {
                   CYBER AI MENTOR
                   <Sparkles className="w-3 h-3 text-cyan-400" />
                 </h4>
-                <p className="text-[9px] text-cyan-400/80">TACTICAL ADVISOR // MULTILINGUAL</p>
+                <p className="text-[9px] text-cyan-400/80">TACTICAL & FORENSICS GUIDE</p>
               </div>
             </div>
 
-            {/* Language Switcher Buttons */}
+            {/* Language Switcher */}
             <div className="flex items-center space-x-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800">
               <button
                 onClick={() => changeLanguage('mr')}
@@ -183,7 +308,7 @@ export function StudentAIAssistant() {
             </div>
           </div>
 
-          {/* Quick Prompts Chips */}
+          {/* Quick Prompts Scrollable Chips */}
           <div className="px-3 py-2 bg-zinc-900/40 border-b border-zinc-800/80 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
             {QUICK_PROMPTS[lang].map((p, idx) => (
               <button
@@ -213,7 +338,7 @@ export function StudentAIAssistant() {
                   {msg.role === 'user' ? <User className="w-3 h-3" /> : <Terminal className="w-3 h-3" />}
                 </div>
                 <div
-                  className={`max-w-[82%] p-3 rounded-xl leading-relaxed whitespace-pre-wrap ${
+                  className={`max-w-[84%] p-3 rounded-xl leading-relaxed whitespace-pre-wrap ${
                     msg.role === 'user'
                       ? 'bg-zinc-800 text-zinc-200 rounded-tr-none'
                       : 'bg-zinc-900 border border-cyan-500/20 text-zinc-300 rounded-tl-none shadow-[0_0_10px_rgba(0,0,0,0.4)]'
@@ -228,7 +353,7 @@ export function StudentAIAssistant() {
                 <div className="p-1 rounded bg-cyan-500/10 animate-pulse">
                   <Bot className="w-3 h-3" />
                 </div>
-                <span>Analyzing threat vectors...</span>
+                <span>Analyzing forensics & security artifacts...</span>
               </div>
             )}
           </div>
@@ -241,10 +366,10 @@ export function StudentAIAssistant() {
               onChange={(e) => setInput(e.target.value)}
               placeholder={
                 lang === 'mr'
-                  ? 'सायबर सिक्युरिटीबद्दल विचारा...'
+                  ? 'फॉरेन्सिक्स, क्लाउड, किंवा टूल्सबद्दल विचारा...'
                   : lang === 'hi'
-                  ? 'साइबर सुरक्षा के बारे में पूछें...'
-                  : 'Ask about exploits, labs, payloads...'
+                  ? 'फोरेंसिक्स, क्लाउड या टूल्स के बारे में पूछें...'
+                  : 'Ask about Forensics, Memory, Cloud, AD...'
               }
               className="flex-1 px-3 py-2 rounded-xl bg-zinc-950 border border-zinc-800 text-xs text-zinc-100 placeholder-zinc-600 focus:outline-none focus:border-cyan-500"
             />
