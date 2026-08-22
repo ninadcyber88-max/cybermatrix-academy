@@ -651,11 +651,20 @@ video {
 .h-\[460px\] {
   height: 460px;
 }
+.h-full {
+  height: 100%;
+}
 .min-h-screen {
   min-height: 100vh;
 }
 .min-h-\[22px\] {
   min-height: 22px;
+}
+.min-h-0 {
+  min-height: 0px;
+}
+.min-h-\[440px\] {
+  min-height: 440px;
 }
 .w-3\.5 {
   width: 0.875rem;
@@ -728,6 +737,9 @@ video {
 }
 .items-center {
   align-items: center;
+}
+.items-stretch {
+  align-items: stretch;
 }
 .justify-end {
   justify-content: flex-end;
@@ -841,6 +853,9 @@ video {
 .truncate {
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.whitespace-nowrap {
   white-space: nowrap;
 }
 .whitespace-pre-wrap {
