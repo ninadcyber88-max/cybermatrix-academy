@@ -36,6 +36,7 @@ export default function CertificatePage() {
         useCORS: true,
         backgroundColor: '#070d18',
         logging: false,
+        windowWidth: 1000,
       });
 
       const imgData = canvas.toDataURL('image/png');
@@ -121,86 +122,91 @@ export default function CertificatePage() {
           </button>
         </div>
 
-        {/* ---------------- SCALED & COMPACT TO FIT SCREEN ---------------- */}
-        <div className="w-full flex justify-center items-center py-2">
+        {/* ---------------- DEAD CENTERED CERTIFICATE CONTAINER ---------------- */}
+        <div className="w-full flex justify-center items-center py-2 overflow-x-auto">
           <div
             ref={certRef}
-            className="relative w-full max-w-[820px] rounded-2xl bg-gradient-to-br from-[#0b1528] via-[#08101e] to-[#050b14] border-2 border-[#0284c7] p-5 sm:p-7 flex flex-col justify-between items-center text-center shadow-[0_0_40px_rgba(2,132,199,0.25)] box-border font-mono text-slate-100 space-y-4"
+            style={{ width: '840px', minHeight: '560px' }}
+            className="relative rounded-2xl bg-gradient-to-br from-[#0b1528] via-[#08101e] to-[#050b14] border-2 border-[#0284c7] p-8 flex flex-col justify-between items-center text-center shadow-[0_0_40px_rgba(2,132,199,0.25)] box-border font-mono text-slate-100 space-y-4"
           >
             {/* Corner Brackets */}
-            <div className="absolute top-2.5 left-2.5 w-5 h-5 border-t-2 border-l-2 border-cyan-400" />
-            <div className="absolute top-2.5 right-2.5 w-5 h-5 border-t-2 border-r-2 border-cyan-400" />
-            <div className="absolute bottom-2.5 left-2.5 w-5 h-5 border-b-2 border-l-2 border-cyan-400" />
-            <div className="absolute bottom-2.5 right-2.5 w-5 h-5 border-b-2 border-r-2 border-cyan-400" />
+            <div className="absolute top-3 left-3 w-6 h-6 border-t-2 border-l-2 border-cyan-400" />
+            <div className="absolute top-3 right-3 w-6 h-6 border-t-2 border-r-2 border-cyan-400" />
+            <div className="absolute bottom-3 left-3 w-6 h-6 border-b-2 border-l-2 border-cyan-400" />
+            <div className="absolute bottom-3 right-3 w-6 h-6 border-b-2 border-r-2 border-cyan-400" />
 
-            {/* Top Sub-Header */}
-            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-400 text-[9.5px] font-bold tracking-widest">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>CYBERMATRIX CYBERSECURITY COUNCIL // GLOBAL ACCREDITATION</span>
+            {/* 1. Top Sub-Header (Centered) */}
+            <div className="w-full flex justify-center text-center">
+              <div className="inline-flex items-center justify-center gap-1.5 px-4 py-1 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-400 text-[10px] font-bold tracking-widest mx-auto">
+                <ShieldCheck className="w-3.5 h-3.5" />
+                <span>CYBERMATRIX CYBERSECURITY COUNCIL // GLOBAL ACCREDITATION</span>
+              </div>
             </div>
 
-            {/* Header Titles */}
-            <div className="space-y-0.5">
-              <h1 className="text-xl sm:text-2xl font-black text-slate-100 tracking-wider">
+            {/* 2. Header Titles (Centered) */}
+            <div className="w-full text-center space-y-1">
+              <h1 className="text-2xl sm:text-3xl font-black text-slate-100 tracking-wider text-center w-full block m-0">
                 CERTIFICATE OF TACTICAL EXCELLENCE
               </h1>
-              <p className="text-[10px] text-slate-400 tracking-widest">
+              <p className="text-[10px] text-slate-400 tracking-widest text-center w-full block m-0">
                 SPECIAL OPERATIVE CREDENTIAL // LEVEL 5 SECURITY CLEARANCE
               </p>
             </div>
 
-            {/* Candidate Identity (Centered Box) */}
-            <div className="flex flex-col items-center justify-center w-full my-0.5">
-              <span className="text-[9px] tracking-widest text-slate-500 uppercase font-bold block mb-1.5">
+            {/* 3. Candidate Identity (Dead Center Box) */}
+            <div className="w-full flex flex-col items-center justify-center text-center my-1">
+              <span className="text-[9.5px] tracking-widest text-slate-500 uppercase font-bold text-center block mb-2 w-full">
                 THIS PROFESSIONAL ACCREDITATION IS CONFERRED UPON
               </span>
-              <div className="px-7 py-2 rounded-xl bg-[#040812] border-1.5 border-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
-                <h2 className="text-xl sm:text-2xl font-black text-cyan-300 tracking-widest uppercase m-0">
+              <div className="inline-flex items-center justify-center px-8 py-2.5 rounded-xl bg-[#040812] border-2 border-cyan-400 shadow-[0_0_25px_rgba(34,211,238,0.35)] mx-auto">
+                <h2 className="text-2xl sm:text-3xl font-black text-cyan-300 tracking-widest uppercase m-0 text-center leading-none">
                   {certName}
                 </h2>
               </div>
             </div>
 
-            {/* Verification Narrative */}
-            <div className="max-w-xl mx-auto space-y-2">
-              <p className="text-[11px] text-slate-300 leading-relaxed">
+            {/* 4. Verification Narrative (Centered) */}
+            <div className="w-full max-w-xl mx-auto text-center space-y-2.5">
+              <p className="text-xs text-slate-300 leading-relaxed text-center m-0">
                 For demonstrating exceptional technical mastery in offensive penetration testing, live exploit weaponization, digital forensic triage, and defense architecture in:
               </p>
-              <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-sky-500/10 border border-sky-400/40 text-sky-200 text-[11px] font-bold">
-                <Cpu className="w-3.5 h-3.5 text-cyan-400" />
-                <span>{trackName}</span>
+              <div className="w-full flex justify-center text-center">
+                <div className="inline-flex items-center justify-center gap-1.5 px-4 py-1.5 rounded-lg bg-sky-500/10 border border-sky-400/40 text-sky-200 text-xs font-bold mx-auto">
+                  <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>{trackName}</span>
+                </div>
               </div>
             </div>
 
-            {/* Signatures & Footer */}
+            {/* 5. Signatures & Footer (Balanced Grid) */}
             <div className="w-full grid grid-cols-3 items-center pt-3 border-t border-cyan-500/25">
               
               {/* Left Authority */}
               <div className="text-left space-y-0.5">
                 <span className="text-[8.5px] text-slate-500 uppercase block">ACADEMIC DIRECTOR</span>
-                <p className="text-[11px] font-bold text-slate-100">Ninad Pawar</p>
-                <p className="text-[9.5px] text-cyan-400 font-semibold">CyberMatrix Academy India</p>
+                <p className="text-[11.5px] font-bold text-slate-100 m-0">Ninad Pawar</p>
+                <p className="text-[10px] text-cyan-400 font-semibold m-0">CyberMatrix Academy India</p>
               </div>
 
               {/* Center Seal */}
-              <div className="flex flex-col items-center justify-center">
-                <div className="w-9 h-9 rounded-lg bg-[#040812] border border-cyan-400 flex items-center justify-center shadow-[0_0_12px_rgba(34,211,238,0.35)]">
-                  <Award className="w-5 h-5 text-cyan-300" />
+              <div className="flex flex-col items-center justify-center text-center">
+                <div className="w-10 h-10 rounded-xl bg-[#040812] border border-cyan-400 flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.35)] mx-auto">
+                  <Award className="w-6 h-6 text-cyan-300" />
                 </div>
-                <span className="text-[7.5px] font-bold text-cyan-400 mt-1">VERIFIED CERTIFIED</span>
+                <span className="text-[8px] font-bold text-cyan-400 mt-1 text-center block">VERIFIED CERTIFIED</span>
               </div>
 
               {/* Right Details */}
               <div className="text-right space-y-0.5">
                 <span className="text-[8.5px] text-slate-500 uppercase block">LEDGER IDENTIFIER</span>
-                <p className="text-[10.5px] font-bold font-mono text-cyan-300">{certId}</p>
-                <p className="text-[9px] text-slate-400">ISSUED: {issueDate}</p>
+                <p className="text-[11px] font-bold font-mono text-cyan-300 m-0">{certId}</p>
+                <p className="text-[9.5px] text-slate-400 m-0">ISSUED: {issueDate}</p>
               </div>
 
             </div>
 
-            {/* Signature Hash Bar */}
-            <div className="text-[7.5px] text-slate-600 font-mono tracking-wider">
+            {/* 6. Signature Hash Bar */}
+            <div className="w-full text-center text-[8px] text-slate-600 font-mono tracking-wider">
               IMMUTABLE DIGITAL PROOF // SHA-256: {shaSignature}
             </div>
 
