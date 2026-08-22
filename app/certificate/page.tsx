@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { CyberSmokeHeader } from "@/components/CyberSmokeHeader";
 import { StudentAIAssistant } from "@/components/StudentAIAssistant";
@@ -10,18 +10,12 @@ import {
   Download, 
   Cpu, 
   Sparkles, 
-  QrCode, 
-  Binary, 
-  Terminal, 
-  Zap, 
-  Bot, 
-  Scan
+  Bot
 } from "lucide-react";
 
 export default function CertificatePage() {
   const [certName, setCertName] = useState('NINAD PAWAR');
   const [trackName, setTrackName] = useState('Offensive Security & Advanced VAPT');
-  const certRef = useRef<HTMLDivElement>(null);
 
   const certId = 'CMX-AI-2026-9842-ROOT';
   const issueDate = '23/08/2026';
@@ -33,12 +27,15 @@ export default function CertificatePage() {
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100 font-mono pb-16">
-      <CyberSmokeHeader />
+      {/* 1. Elements hidden during print */}
+      <div className="no-print">
+        <CyberSmokeHeader />
+      </div>
 
       <div className="max-w-5xl mx-auto p-4 md:p-8 space-y-8">
         
-        {/* Navigation Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
+        {/* Navigation Bar - Hidden on print */}
+        <div className="no-print flex flex-wrap items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
           <Link
             href="/"
             className="flex items-center space-x-2 text-xs text-cyan-400 hover:text-cyan-300 transition group"
@@ -52,8 +49,8 @@ export default function CertificatePage() {
           </div>
         </div>
 
-        {/* Configuration Toolbar */}
-        <div className="p-4 rounded-2xl bg-zinc-900/80 border border-cyan-500/30 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4 shadow-[0_0_20px_rgba(6,182,212,0.1)]">
+        {/* Configuration Toolbar - Hidden on print */}
+        <div className="no-print p-4 rounded-2xl bg-zinc-900/80 border border-cyan-500/30 backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-4 shadow-[0_0_20px_rgba(6,182,212,0.1)]">
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
             <div className="w-full sm:w-auto">
               <label className="text-[10px] text-zinc-500 block mb-1">OPERATIVE IDENTITY</label>
@@ -71,10 +68,10 @@ export default function CertificatePage() {
                 onChange={(e) => setTrackName(e.target.value)}
                 className="px-3 py-1.5 rounded-lg bg-zinc-950 border border-cyan-500/40 text-xs text-zinc-200 focus:outline-none focus:border-cyan-400"
               >
-                <option value="Offensive Security & Advanced VAPT">Offensive Security & VAPT</option>
-                <option value="Digital Forensics & Incident Response (DFIR)">Digital Forensics & DFIR</option>
-                <option value="Cloud DevSecOps & Container Defense">Cloud DevSecOps Hardening</option>
-                <option value="Active Directory Red Teaming & Pwn">Active Directory Red Teaming</option>
+                <option value="Offensive Security & Advanced VAPT">Offensive Security & Advanced VAPT</option>
+                <option value="Digital Forensics & Incident Response (DFIR)">Digital Forensics & Incident Response (DFIR)</option>
+                <option value="Cloud DevSecOps & Container Defense">Cloud DevSecOps & Container Defense</option>
+                <option value="Active Directory Red Teaming & Pwn">Active Directory Red Teaming & Pwn</option>
               </select>
             </div>
           </div>
@@ -88,122 +85,313 @@ export default function CertificatePage() {
           </button>
         </div>
 
-        {/* ---------------- CYBER DIGITAL AI CERTIFICATE CANVAS ---------------- */}
-        <div
-          ref={certRef}
-          className="relative p-6 sm:p-12 rounded-3xl bg-zinc-950 border-2 border-cyan-500/60 shadow-[0_0_60px_rgba(6,182,212,0.25)] overflow-hidden text-center select-none"
-        >
-          {/* Cyber Scanning Laser Line */}
-          <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse opacity-75" />
-
-          {/* Matrix Circuit Lines & Background Grid */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#083344_1px,transparent_1px),linear-gradient(to_bottom,#083344_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-30 pointer-events-none" />
-
-          {/* Corner Cyber HUD Brackets */}
-          <div className="absolute top-4 left-4 w-10 h-10 border-t-2 border-l-2 border-cyan-400" />
-          <div className="absolute top-4 right-4 w-10 h-10 border-t-2 border-r-2 border-cyan-400" />
-          <div className="absolute bottom-4 left-4 w-10 h-10 border-b-2 border-l-2 border-cyan-400" />
-          <div className="absolute bottom-4 right-4 w-10 h-10 border-b-2 border-r-2 border-cyan-400" />
-
-          {/* Side Binary Stream Watermark */}
-          <div className="absolute left-6 top-1/2 -translate-y-1/2 hidden md:block text-[9px] text-cyan-500/20 font-mono space-y-1 text-left select-none pointer-events-none">
-            <p>01000011 01011001</p>
-            <p>01000010 01000101</p>
-            <p>01010010 01001101</p>
-            <p>01000001 01010100</p>
-            <p>01010010 01001001</p>
-            <p>01011000 00100000</p>
-          </div>
-
-          <div className="relative z-10 space-y-6">
+        {/* ---------------- 2. ONLY THIS CERTIFICATE PRINTS ---------------- */}
+        <div id="printable-certificate" className="cyber-certificate-wrapper">
+          <div className="cyber-certificate-box">
             
-            {/* Header Badge */}
-            <div className="flex items-center justify-center space-x-2">
-              <div className="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/40 text-cyan-400 text-[10px] font-extrabold tracking-[0.25em] flex items-center gap-1.5 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
-                <Bot className="w-3.5 h-3.5" />
-                <span>CYBERMATRIX AI PROTOCOL // RECON VERIFIED</span>
-              </div>
+            {/* Corner Cyber HUD Brackets */}
+            <div className="corner-hud top-left" />
+            <div className="corner-hud top-right" />
+            <div className="corner-hud bottom-left" />
+            <div className="corner-hud bottom-right" />
+
+            {/* Top Badge */}
+            <div className="cert-top-badge">
+              <Bot className="w-3.5 h-3.5" />
+              <span>CYBERMATRIX AI PROTOCOL // RECON VERIFIED</span>
             </div>
 
-            {/* Main Title */}
-            <div className="space-y-1.5">
-              <h1 className="text-xl sm:text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-sky-200 to-cyan-400 tracking-wider drop-shadow-[0_0_20px_rgba(34,211,238,0.6)]">
-                AI CYBER OPERATIVE CREDENTIAL
-              </h1>
-              <p className="text-[10px] sm:text-xs text-zinc-400 tracking-widest font-mono">
-                SEC_CLEARANCE: LEVEL 5 // ADVANCED RED-BLUE SPECIALIST
-              </p>
-            </div>
+            {/* Main Header */}
+            <h1 className="cert-main-title">
+              AI CYBER OPERATIVE CREDENTIAL
+            </h1>
+            <p className="cert-sub-title">
+              SEC_CLEARANCE: LEVEL 5 // ADVANCED RED-BLUE SPECIALIST
+            </p>
 
-            {/* Candidate Hologram Block */}
-            <div className="py-4">
-              <span className="text-[11px] text-zinc-500 uppercase tracking-widest block font-bold">
-                THIS AUTONOMOUS RECORD IS GRANTED TO
-              </span>
-              <div className="inline-block relative mt-2 group">
-                <div className="absolute -inset-1 rounded-2xl bg-cyan-400/30 blur-md animate-pulse" />
-                <div className="relative px-6 py-2 rounded-xl bg-zinc-950/90 border border-cyan-400/60 shadow-[0_0_30px_rgba(6,182,212,0.35)]">
-                  <h2 className="text-2xl sm:text-4xl md:text-5xl font-black text-cyan-300 tracking-widest uppercase drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]">
-                    {certName}
-                  </h2>
-                </div>
+            {/* Candidate Identity */}
+            <div className="cert-candidate-section">
+              <span className="cert-grant-text">THIS AUTONOMOUS RECORD IS GRANTED TO</span>
+              <div className="cert-name-plate">
+                <h2 className="cert-operative-name">{certName}</h2>
               </div>
             </div>
 
             {/* Description & Track */}
-            <div className="max-w-2xl mx-auto space-y-3">
-              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed font-mono">
+            <div className="cert-desc-block">
+              <p className="cert-desc-text">
                 For demonstrating advanced tactical proficiency in offensive exploitation, digital forensic artifact extraction, memory triaging, and bypassing security defenses in:
               </p>
-              <div className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-cyan-500/10 border border-cyan-400/40 text-cyan-300 text-xs sm:text-sm font-bold shadow-[0_0_20px_rgba(6,182,212,0.15)]">
+              <div className="cert-track-badge">
                 <Cpu className="w-4 h-4 text-cyan-400" />
                 <span>{trackName}</span>
               </div>
             </div>
 
-            {/* Digital AI Seal & QR Verification Grid */}
-            <div className="pt-6 border-t border-cyan-500/20 grid grid-cols-1 sm:grid-cols-3 gap-6 items-center text-left">
+            {/* Verification Footer */}
+            <div className="cert-footer-grid">
               
               {/* Left Authority */}
-              <div className="space-y-1 text-xs">
-                <span className="text-[9px] text-zinc-500 block uppercase">ISSUING AUTHORITY</span>
-                <p className="font-bold text-zinc-200">CyberMatrix AI Engine</p>
-                <p className="text-[10px] text-cyan-400 flex items-center gap-1 font-bold">
-                  <ShieldCheck className="w-3.5 h-3.5" /> Ninad Pawar (Lead Architect)
+              <div className="cert-footer-left">
+                <span className="footer-label">ISSUING AUTHORITY</span>
+                <p className="footer-val-main">CyberMatrix AI Engine</p>
+                <p className="footer-val-sub">
+                  <ShieldCheck className="w-3.5 h-3.5 text-cyan-400 inline mr-1" />
+                  Ninad Pawar (Lead Architect)
                 </p>
               </div>
 
               {/* Center 3D AI Holographic Badge */}
-              <div className="flex flex-col items-center justify-center">
-                <div className="relative w-16 h-16 rounded-2xl bg-zinc-950 border-2 border-cyan-400 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.6)] group">
-                  <div className="absolute inset-0 rounded-2xl bg-cyan-400/20 animate-ping opacity-30" />
-                  <Bot className="w-9 h-9 text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.9)]" />
+              <div className="cert-footer-center">
+                <div className="ai-seal-icon">
+                  <Bot className="w-8 h-8 text-cyan-300" />
                 </div>
-                <span className="text-[9px] text-cyan-400/80 font-bold mt-1.5 tracking-wider">
-                  AI DIGITAL SEAL
-                </span>
+                <span className="ai-seal-label">AI DIGITAL SEAL</span>
               </div>
 
               {/* Right ID & Date */}
-              <div className="sm:text-right space-y-1 text-xs">
-                <span className="text-[9px] text-zinc-500 block uppercase">CREDENTIAL HASH ID</span>
-                <p className="font-mono font-bold text-cyan-300 text-xs">{certId}</p>
-                <p className="text-[10px] text-zinc-400 font-mono">TIMESTAMP: {issueDate}</p>
+              <div className="cert-footer-right">
+                <span className="footer-label">CREDENTIAL HASH ID</span>
+                <p className="footer-hash-id">{certId}</p>
+                <p className="footer-timestamp">TIMESTAMP: {issueDate}</p>
               </div>
             </div>
 
-            {/* Cryptographic SHA-256 Ledger Hash */}
-            <div className="pt-2">
-              <div className="p-2 rounded-lg bg-zinc-900/60 border border-zinc-800 text-[8px] text-zinc-500 font-mono break-all text-center">
-                BLOCKCHAIN LEDGER SIGNATURE // SHA256: {shaSignature}
-              </div>
+            {/* Blockchain SHA256 Signature */}
+            <div className="cert-blockchain-stamp">
+              BLOCKCHAIN LEDGER SIGNATURE // SHA256: {shaSignature}
             </div>
 
           </div>
         </div>
+
       </div>
 
-      <StudentAIAssistant />
+      <div className="no-print">
+        <StudentAIAssistant />
+      </div>
+
+      {/* ---------------- 3. PRINT STYLES ---------------- */}
+      <style jsx global>{`
+        .cyber-certificate-wrapper {
+          position: relative;
+          width: 100%;
+          border-radius: 24px;
+          background: #030712;
+          border: 2px solid rgba(34, 211, 238, 0.4);
+          padding: 2.5rem 2rem;
+          box-shadow: 0 0 50px rgba(6, 182, 212, 0.2);
+          overflow: hidden;
+          font-family: monospace;
+          color: #f3f4f6;
+        }
+
+        .cyber-certificate-box {
+          position: relative;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          min-height: 480px;
+          gap: 1.25rem;
+        }
+
+        .corner-hud {
+          position: absolute;
+          width: 24px;
+          height: 24px;
+          border-color: #22d3ee;
+        }
+        .top-left { top: -20px; left: -10px; border-top: 3px solid #22d3ee; border-left: 3px solid #22d3ee; }
+        .top-right { top: -20px; right: -10px; border-top: 3px solid #22d3ee; border-right: 3px solid #22d3ee; }
+        .bottom-left { bottom: -20px; left: -10px; border-bottom: 3px solid #22d3ee; border-left: 3px solid #22d3ee; }
+        .bottom-right { bottom: -20px; right: -10px; border-bottom: 3px solid #22d3ee; border-right: 3px solid #22d3ee; }
+
+        .cert-top-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          padding: 4px 14px;
+          border-radius: 999px;
+          background: rgba(34, 211, 238, 0.1);
+          border: 1px solid rgba(34, 211, 238, 0.4);
+          color: #22d3ee;
+          font-size: 11px;
+          font-weight: 800;
+          letter-spacing: 0.15em;
+        }
+
+        .cert-main-title {
+          font-size: 1.85rem;
+          font-weight: 900;
+          color: #22d3ee;
+          letter-spacing: 0.1em;
+          text-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+          margin: 0;
+        }
+
+        .cert-sub-title {
+          font-size: 11px;
+          color: #94a3b8;
+          letter-spacing: 0.15em;
+        }
+
+        .cert-candidate-section {
+          margin: 0.5rem 0;
+        }
+        .cert-grant-text {
+          font-size: 10px;
+          letter-spacing: 0.2em;
+          color: #64748b;
+          text-transform: uppercase;
+          display: block;
+        }
+        .cert-name-plate {
+          display: inline-block;
+          margin-top: 6px;
+          padding: 8px 32px;
+          border-radius: 12px;
+          background: #020617;
+          border: 1.5px solid rgba(34, 211, 238, 0.6);
+          box-shadow: 0 0 25px rgba(34, 211, 238, 0.35);
+        }
+        .cert-operative-name {
+          font-size: 2rem;
+          font-weight: 900;
+          color: #67e8f9;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          margin: 0;
+        }
+
+        .cert-desc-block {
+          max-width: 680px;
+          margin: 0 auto;
+        }
+        .cert-desc-text {
+          font-size: 11px;
+          color: #cbd5e1;
+          line-height: 1.6;
+        }
+        .cert-track-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 10px;
+          padding: 6px 16px;
+          border-radius: 10px;
+          background: rgba(34, 211, 238, 0.08);
+          border: 1px solid rgba(34, 211, 238, 0.4);
+          color: #67e8f9;
+          font-size: 12px;
+          font-weight: 800;
+        }
+
+        .cert-footer-grid {
+          width: 100%;
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          align-items: center;
+          padding-top: 1.25rem;
+          border-top: 1px solid rgba(34, 211, 238, 0.2);
+          text-align: left;
+        }
+
+        .footer-label {
+          font-size: 9px;
+          color: #64748b;
+          display: block;
+          text-transform: uppercase;
+        }
+        .footer-val-main {
+          font-size: 12px;
+          font-weight: 700;
+          color: #f1f5f9;
+        }
+        .footer-val-sub {
+          font-size: 10px;
+          color: #22d3ee;
+          font-weight: 700;
+        }
+
+        .cert-footer-center {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .ai-seal-icon {
+          width: 52px;
+          height: 52px;
+          border-radius: 14px;
+          background: #020617;
+          border: 2px solid #22d3ee;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 20px rgba(34, 211, 238, 0.4);
+        }
+        .ai-seal-label {
+          font-size: 9px;
+          font-weight: 800;
+          color: #22d3ee;
+          margin-top: 4px;
+        }
+
+        .cert-footer-right {
+          text-align: right;
+        }
+        .footer-hash-id {
+          font-size: 11px;
+          font-weight: 800;
+          color: #67e8f9;
+        }
+        .footer-timestamp {
+          font-size: 10px;
+          color: #94a3b8;
+        }
+
+        .cert-blockchain-stamp {
+          font-size: 8px;
+          color: #475569;
+          letter-spacing: 0.05em;
+          word-break: break-all;
+        }
+
+        /* ---------------- PRINT ONLY ISOLATION ---------------- */
+        @media print {
+          @page {
+            size: landscape;
+            margin: 0;
+          }
+
+          body, html {
+            background-color: #030712 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            margin: 0 !important;
+            padding: 0 !important;
+          }
+
+          .no-print {
+            display: none !important;
+          }
+
+          .cyber-certificate-wrapper {
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            width: 95vw !important;
+            max-width: 1000px !important;
+            border: 2px solid #22d3ee !important;
+            background: #030712 !important;
+            box-shadow: none !important;
+            margin: 0 auto !important;
+            padding: 2rem !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }
