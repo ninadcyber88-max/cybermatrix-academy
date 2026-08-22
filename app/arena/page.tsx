@@ -9,15 +9,10 @@ import { CTFFlagSubmit } from "@/components/CTFFlagSubmit";
 import { 
   ArrowLeft, 
   Terminal, 
-  ShieldAlert, 
-  Cpu, 
-  Activity, 
-  Zap, 
   Server, 
-  Network, 
-  Play, 
+  Activity, 
   RefreshCw, 
-  CheckCircle2 
+  Play
 } from "lucide-react";
 
 interface TargetMachine {
@@ -160,8 +155,15 @@ export default function CTFArenaPage() {
                   className="flex-1 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-bold text-xs flex items-center justify-center space-x-1.5 transition cursor-pointer border border-zinc-700"
                 >
                   <RefreshCw className={`w-3.5 h-3.5 ${resetting ? 'animate-spin text-cyan-400' : ''}`} />
-                  <span>{resetting ? 'Rebooting VM...' : 'Reset Target'}</span>
+                  <span>{resetting ? 'Rebooting...' : 'Reset Target'}</span>
                 </button>
+                <Link
+                  href={`/arena/${selectedTarget.id}`}
+                  className="px-4 py-2 rounded-xl bg-cyan-500 text-zinc-950 font-bold text-xs hover:bg-cyan-400 transition flex items-center space-x-1 shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+                >
+                  <span>Launch</span>
+                  <Play className="w-3 h-3 fill-current" />
+                </Link>
               </div>
             </div>
 
