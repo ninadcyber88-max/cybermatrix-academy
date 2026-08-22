@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { CyberSmokeHeader } from "@/components/CyberSmokeHeader";
 import { StudentAIAssistant } from "@/components/StudentAIAssistant";
@@ -13,35 +13,175 @@ import {
   Award,
   Loader2
 } from "lucide-react";
-import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 export default function CertificatePage() {
   const [certName, setCertName] = useState('NINAD PAWAR');
   const [trackName, setTrackName] = useState('Offensive Security & Advanced VAPT');
   const [generating, setGenerating] = useState(false);
-  const certRef = useRef<HTMLDivElement>(null);
 
   const certId = 'CMX-AI-2026-9842-ROOT';
   const issueDate = '23/08/2026';
   const shaSignature = '9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08';
 
   const handleDownloadPDF = async () => {
-    if (!certRef.current) return;
     setGenerating(true);
 
     try {
-      const element = certRef.current;
-      const canvas = await html2canvas(element, {
-        scale: 2.5,
-        useCORS: true,
-        backgroundColor: '#08101e',
-        logging: false,
-        scrollX: 0,
-        scrollY: 0,
-      });
+      // 1. Create Pure Canvas with strict 1920x1080 resolution (Zero CSS alignment bugs)
+      const canvas = document.createElement('canvas');
+      canvas.width = 1920;
+      canvas.height = 1080;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
 
-      const imgData = canvas.toDataURL('image/png');
+      // Background Gradient
+      const grad = ctx.createLinearGradient(0, 0, 1920, 1080);
+      grad.addColorStop(0, '#0b1528');
+      grad.addColorStop(0.5, '#08101e');
+      grad.addColorStop(1, '#050b14');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, 1920, 1080);
+
+      // Outer Glow Border
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 6;
+      ctx.strokeRect(60, 60, 1800, 960);
+
+      // Corner Brackets
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 8;
+      // Top Left
+      ctx.beginPath(); ctx.moveTo(90, 150); ctx.lineTo(90, 90); ctx.lineTo(150, 90); ctx.stroke();
+      // Top Right
+      ctx.beginPath(); ctx.moveTo(1830, 150); ctx.lineTo(1830, 90); ctx.lineTo(1770, 90); ctx.stroke();
+      // Bottom Left
+      ctx.beginPath(); ctx.moveTo(90, 930); ctx.lineTo(90, 990); ctx.lineTo(150, 990); ctx.stroke();
+      // Bottom Right
+      ctx.beginPath(); ctx.moveTo(1830, 930); ctx.lineTo(1830, 990); ctx.lineTo(1770, 990); ctx.stroke();
+
+      // Top Badge
+      ctx.fillStyle = 'rgba(14, 165, 233, 0.15)';
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(560, 120, 800, 48, 24);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = 'bold 20px monospace';
+      ctx.fillStyle = '#38bdf8';
+      ctx.textAlign = 'center';
+      ctx.fillText('CYBERMATRIX CYBERSECURITY COUNCIL // GLOBAL ACCREDITATION', 960, 152);
+
+      // Certificate Title
+      ctx.font = '900 50px monospace';
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillText('CERTIFICATE OF TACTICAL EXCELLENCE', 960, 235);
+
+      ctx.font = '20px monospace';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('SPECIAL OPERATIVE CREDENTIAL // LEVEL 5 SECURITY CLEARANCE', 960, 275);
+
+      // Sub-label
+      ctx.font = 'bold 18px monospace';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('THIS PROFESSIONAL ACCREDITATION IS CONFERRED UPON', 960, 360);
+
+      // Name Neon Box (Dead Centered)
+      const nameWidth = Math.max(650, ctx.measureText(certName).width * 2.5);
+      const nameBoxX = (1920 - nameWidth) / 2;
+
+      ctx.fillStyle = '#040812';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.roundRect(nameBoxX, 395, nameWidth, 100, 20);
+      ctx.fill();
+      ctx.stroke();
+
+      // Candidate Name (Dead Center in Box)
+      ctx.font = '900 52px monospace';
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText(certName.toUpperCase(), 960, 465);
+
+      // Description text
+      ctx.font = '22px monospace';
+      ctx.fillStyle = '#cbd5e1';
+      ctx.fillText('For demonstrating exceptional technical mastery in offensive penetration testing, live', 960, 560);
+      ctx.fillText('exploit weaponization, digital forensic triage, and defense architecture in:', 960, 595);
+
+      // Track Tag Box
+      const trackWidth = ctx.measureText(trackName).width * 1.5 + 80;
+      const trackBoxX = (1920 - trackWidth) / 2;
+      ctx.fillStyle = 'rgba(14, 165, 233, 0.12)';
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.4)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.roundRect(trackBoxX, 630, trackWidth, 54, 14);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.font = 'bold 24px monospace';
+      ctx.fillStyle = '#bae6fd';
+      ctx.fillText(trackName, 960, 666);
+
+      // Divider Line
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.25)';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(120, 750);
+      ctx.lineTo(1800, 750);
+      ctx.stroke();
+
+      // Footer - Left (Academic Director)
+      ctx.textAlign = 'left';
+      ctx.font = '16px monospace';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('ACADEMIC DIRECTOR', 150, 795);
+      ctx.font = 'bold 24px monospace';
+      ctx.fillStyle = '#f8fafc';
+      ctx.fillText('Ninad Pawar', 150, 830);
+      ctx.font = '18px monospace';
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('CyberMatrix Academy India', 150, 860);
+
+      // Footer - Center (Seal)
+      ctx.fillStyle = '#040812';
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(915, 770, 90, 90, 18);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.textAlign = 'center';
+      ctx.font = '36px monospace';
+      ctx.fillText('🛡️', 960, 825);
+      ctx.font = 'bold 16px monospace';
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText('VERIFIED CERTIFIED', 960, 890);
+
+      // Footer - Right (Ledger Identifier)
+      ctx.textAlign = 'right';
+      ctx.font = '16px monospace';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('LEDGER IDENTIFIER', 1770, 795);
+      ctx.font = 'bold 22px monospace';
+      ctx.fillStyle = '#38bdf8';
+      ctx.fillText(certId, 1770, 830);
+      ctx.font = '18px monospace';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText(`ISSUED: ${issueDate}`, 1770, 860);
+
+      // SHA256 Signature Stamp at Bottom
+      ctx.textAlign = 'center';
+      ctx.font = '16px monospace';
+      ctx.fillStyle = '#475569';
+      ctx.fillText(`IMMUTABLE DIGITAL PROOF // SHA-256: ${shaSignature}`, 960, 960);
+
+      // 2. Export Exactly 1 Landscape A4 Page
+      const imgData = canvas.toDataURL('image/png', 1.0);
       const pdf = new jsPDF({
         orientation: 'landscape',
         unit: 'mm',
@@ -78,7 +218,7 @@ export default function CertificatePage() {
           </div>
         </div>
 
-        {/* Controls Toolbar */}
+        {/* Configuration Controls */}
         <div className="p-3.5 rounded-2xl bg-slate-900/90 border border-slate-800 flex flex-col md:flex-row items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-3 w-full md:w-auto">
             <div>
@@ -124,98 +264,67 @@ export default function CertificatePage() {
           </button>
         </div>
 
-        {/* ---------------- CENTERED CERTIFICATE CANVAS ---------------- */}
-        <div className="w-full flex justify-center items-center py-2 overflow-x-auto">
-          <div
-            id="cert-render-box"
-            ref={certRef}
-            style={{
-              width: '840px',
-              height: '560px',
-              backgroundColor: '#08101e',
-              border: '2px solid #0284c7',
-              borderRadius: '16px',
-              padding: '24px 36px',
-              boxSizing: 'border-box',
-              position: 'relative',
-              textAlign: 'center',
-              fontFamily: 'monospace',
-              color: '#f8fafc',
-            }}
-          >
-            {/* Corner Brackets */}
-            <div style={{ position: 'absolute', top: '12px', left: '12px', width: '22px', height: '22px', borderTop: '3px solid #38bdf8', borderLeft: '3px solid #38bdf8' }} />
-            <div style={{ position: 'absolute', top: '12px', right: '12px', width: '22px', height: '22px', borderTop: '3px solid #38bdf8', borderRight: '3px solid #38bdf8' }} />
-            <div style={{ position: 'absolute', bottom: '12px', left: '12px', width: '22px', height: '22px', borderBottom: '3px solid #38bdf8', borderLeft: '3px solid #38bdf8' }} />
-            <div style={{ position: 'absolute', bottom: '12px', right: '12px', width: '22px', height: '22px', borderBottom: '3px solid #38bdf8', borderRight: '3px solid #38bdf8' }} />
-
-            {/* 1. Top Sub-Header */}
-            <div style={{ width: '100%', textAlign: 'center', marginBottom: '14px' }}>
-              <div style={{ display: 'inline-block', padding: '4px 18px', borderRadius: '999px', backgroundColor: 'rgba(14, 165, 233, 0.15)', border: '1px solid rgba(56, 189, 248, 0.4)', color: '#38bdf8', fontSize: '9.5px', fontWeight: 'bold', letterSpacing: '0.14em' }}>
-                CYBERMATRIX CYBERSECURITY COUNCIL // GLOBAL ACCREDITATION
-              </div>
+        {/* Web Preview Box */}
+        <div className="w-full flex justify-center items-center py-2">
+          <div className="relative w-full max-w-[800px] rounded-2xl bg-gradient-to-br from-[#0b1528] via-[#08101e] to-[#050b14] border-2 border-[#0284c7] p-6 flex flex-col justify-between items-center text-center shadow-[0_0_40px_rgba(2,132,199,0.25)] box-border font-mono text-slate-100 space-y-4">
+            
+            <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-sky-500/15 border border-sky-400/40 text-sky-400 text-[9.5px] font-bold tracking-widest">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>CYBERMATRIX CYBERSECURITY COUNCIL // GLOBAL ACCREDITATION</span>
             </div>
 
-            {/* 2. Header Titles */}
-            <div style={{ width: '100%', textAlign: 'center', marginBottom: '16px' }}>
-              <h1 style={{ fontSize: '24px', fontWeight: 900, color: '#f8fafc', letterSpacing: '0.1em', margin: '0 0 4px 0', textAlign: 'center' }}>
+            <div className="space-y-0.5">
+              <h1 className="text-xl sm:text-2xl font-black text-slate-100 tracking-wider">
                 CERTIFICATE OF TACTICAL EXCELLENCE
               </h1>
-              <p style={{ fontSize: '10px', color: '#94a3b8', letterSpacing: '0.15em', margin: 0, textAlign: 'center' }}>
+              <p className="text-[10px] text-slate-400 tracking-widest">
                 SPECIAL OPERATIVE CREDENTIAL // LEVEL 5 SECURITY CLEARANCE
               </p>
             </div>
 
-            {/* 3. Candidate Identity */}
-            <div style={{ width: '100%', textAlign: 'center', marginBottom: '16px' }}>
-              <span style={{ fontSize: '9px', letterSpacing: '0.2em', color: '#64748b', textTransform: 'uppercase', fontWeight: 'bold', display: 'block', marginBottom: '8px', textAlign: 'center' }}>
+            <div className="flex flex-col items-center justify-center w-full my-0.5">
+              <span className="text-[9px] tracking-widest text-slate-500 uppercase font-bold block mb-1.5">
                 THIS PROFESSIONAL ACCREDITATION IS CONFERRED UPON
               </span>
-              <div style={{ display: 'inline-block', backgroundColor: '#040812', border: '2px solid #38bdf8', borderRadius: '12px', padding: '8px 36px', boxShadow: '0 0 20px rgba(56, 189, 248, 0.3)' }}>
-                <h2 style={{ fontSize: '26px', fontWeight: 900, color: '#38bdf8', letterSpacing: '0.15em', textTransform: 'uppercase', margin: 0, padding: 0, textAlign: 'center', lineHeight: 1 }}>
+              <div className="px-8 py-2 rounded-xl bg-[#040812] border-2 border-cyan-400 shadow-[0_0_20px_rgba(34,211,238,0.35)]">
+                <h2 className="text-xl sm:text-2xl font-black text-cyan-300 tracking-widest uppercase m-0">
                   {certName}
                 </h2>
               </div>
             </div>
 
-            {/* 4. Verification Narrative */}
-            <div style={{ width: '100%', maxWidth: '600px', margin: '0 auto 16px auto', textAlign: 'center' }}>
-              <p style={{ fontSize: '11px', color: '#cbd5e1', lineHeight: '1.5', margin: '0 0 10px 0', textAlign: 'center' }}>
+            <div className="max-w-xl mx-auto space-y-2">
+              <p className="text-[11px] text-slate-300 leading-relaxed">
                 For demonstrating exceptional technical mastery in offensive penetration testing, live exploit weaponization, digital forensic triage, and defense architecture in:
               </p>
-              <div style={{ display: 'inline-block', backgroundColor: 'rgba(14, 165, 233, 0.12)', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '8px', padding: '6px 20px', color: '#bae6fd', fontSize: '11.5px', fontWeight: 'bold' }}>
-                {trackName}
+              <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-lg bg-sky-500/10 border border-sky-400/40 text-sky-200 text-[11px] font-bold">
+                <Cpu className="w-3.5 h-3.5 text-cyan-400" />
+                <span>{trackName}</span>
               </div>
             </div>
 
-            {/* 5. Signatures & Footer */}
-            <table style={{ width: '100%', borderCollapse: 'collapse', borderTop: '1px solid rgba(56, 189, 248, 0.25)', paddingTop: '10px', marginTop: '10px' }}>
-              <tbody>
-                <tr>
-                  <td style={{ width: '33%', textAlign: 'left', verticalAlign: 'middle', padding: '8px 0' }}>
-                    <span style={{ fontSize: '8.5px', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>ACADEMIC DIRECTOR</span>
-                    <p style={{ fontSize: '11.5px', fontWeight: 800, color: '#f8fafc', margin: '2px 0 0 0' }}>Ninad Pawar</p>
-                    <p style={{ fontSize: '9.5px', color: '#38bdf8', margin: '1px 0 0 0' }}>CyberMatrix Academy India</p>
-                  </td>
+            <div className="w-full grid grid-cols-3 items-center pt-3 border-t border-cyan-500/25">
+              <div className="text-left space-y-0.5">
+                <span className="text-[8.5px] text-slate-500 uppercase block">ACADEMIC DIRECTOR</span>
+                <p className="text-[11px] font-bold text-slate-100">Ninad Pawar</p>
+                <p className="text-[9.5px] text-cyan-400 font-semibold">CyberMatrix Academy India</p>
+              </div>
 
-                  <td style={{ width: '34%', textAlign: 'center', verticalAlign: 'middle', padding: '8px 0' }}>
-                    <div style={{ width: '38px', height: '38px', borderRadius: '10px', backgroundColor: '#040812', border: '1.5px solid #38bdf8', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto', boxShadow: '0 0 12px rgba(56, 189, 248, 0.35)' }}>
-                      <Award className="w-5 h-5 text-cyan-300" />
-                    </div>
-                    <span style={{ fontSize: '8px', fontWeight: 800, color: '#38bdf8', display: 'block', marginTop: '3px' }}>VERIFIED CERTIFIED</span>
-                  </td>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-9 h-9 rounded-lg bg-[#040812] border border-cyan-400 flex items-center justify-center shadow-[0_0_12px_rgba(34,211,238,0.35)]">
+                  <Award className="w-5 h-5 text-cyan-300" />
+                </div>
+                <span className="text-[7.5px] font-bold text-cyan-400 mt-1">VERIFIED CERTIFIED</span>
+              </div>
 
-                  <td style={{ width: '33%', textAlign: 'right', verticalAlign: 'middle', padding: '8px 0' }}>
-                    <span style={{ fontSize: '8.5px', color: '#64748b', textTransform: 'uppercase', display: 'block' }}>LEDGER IDENTIFIER</span>
-                    <p style={{ fontSize: '10.5px', fontWeight: 800, color: '#38bdf8', margin: '2px 0 0 0' }}>{certId}</p>
-                    <p style={{ fontSize: '9px', color: '#94a3b8', margin: '1px 0 0 0' }}>ISSUED: {issueDate}</p>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+              <div className="text-right space-y-0.5">
+                <span className="text-[8.5px] text-slate-500 uppercase block">LEDGER IDENTIFIER</span>
+                <p className="text-[10.5px] font-bold font-mono text-cyan-300">{certId}</p>
+                <p className="text-[9px] text-slate-400">ISSUED: {issueDate}</p>
+              </div>
+            </div>
 
-            {/* 6. Signature Hash Bar */}
-            <div style={{ position: 'absolute', bottom: '10px', left: 0, right: 0, textAlign: 'center', fontSize: '7.5px', color: '#475569', letterSpacing: '0.04em' }}>
+            <div className="text-[7.5px] text-slate-600 font-mono tracking-wider">
               IMMUTABLE DIGITAL PROOF // SHA-256: {shaSignature}
             </div>
 
