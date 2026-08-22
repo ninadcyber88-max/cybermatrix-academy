@@ -11,7 +11,10 @@ export function CTFFlagSubmit() {
 
   const validFlags: Record<string, { challenge: string; points: number }> = {
     'FLAG{NINAD_PAWAR_CYBERMATRIX_ROOT_ACCESS}': { challenge: 'Root Privilege Escalation', points: 500 },
+    'NINAD_PAWAR_CYBERMATRIX_ROOT_ACCESS': { challenge: 'Root Privilege Escalation', points: 500 },
+    '{NINAD_PAWAR_CYBERMATRIX_ROOT_ACCESS}': { challenge: 'Root Privilege Escalation', points: 500 },
     'FLAG{CYBER_MATRIX_SQLI_PWNED_2026}': { challenge: 'SQL Injection Database Dump', points: 300 },
+    'CYBER_MATRIX_SQLI_PWNED_2026': { challenge: 'SQL Injection Database Dump', points: 300 },
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -36,7 +39,7 @@ export function CTFFlagSubmit() {
           <Flag className="w-4 h-4" />
           <span>FLAG VERIFICATION ENGINE</span>
         </h3>
-        <div className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs">
+        <div className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-bold">
           <Trophy className="w-3.5 h-3.5" />
           <span>{score} PTS</span>
         </div>
@@ -55,7 +58,7 @@ export function CTFFlagSubmit() {
         />
         <button
           type="submit"
-          className="px-4 py-2.5 rounded-xl bg-cyan-500 text-zinc-950 font-bold text-xs hover:bg-cyan-400 transition"
+          className="px-4 py-2.5 rounded-xl bg-cyan-500 text-zinc-950 font-bold text-xs hover:bg-cyan-400 transition cursor-pointer"
         >
           Submit
         </button>
@@ -64,7 +67,7 @@ export function CTFFlagSubmit() {
       {status === 'success' && (
         <div className="flex items-center space-x-2 text-[11px] text-green-400 bg-green-500/10 border border-green-500/30 p-2.5 rounded-lg">
           <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-          <span>Flag Captured! Points awarded and added to your operative profile.</span>
+          <span>Flag Captured! +500 PTS added to your operative profile.</span>
         </div>
       )}
 

@@ -2,6 +2,7 @@ import { CyberSmokeHeader } from "@/components/CyberSmokeHeader";
 import { StudentAIAssistant } from "@/components/StudentAIAssistant";
 import { CTFTerminal } from "@/components/CTFTerminal";
 import { CTFFlagSubmit } from "@/components/CTFFlagSubmit";
+import { Leaderboard } from "@/components/Leaderboard";
 import { BookOpen, Terminal } from "lucide-react";
 import Link from "next/link";
 
@@ -24,7 +25,7 @@ export default function Home() {
           </Link>
         </div>
 
-        {/* 3-Column Grid */}
+        {/* 3-Column Top Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="space-y-6 lg:col-span-1">
             <div className="p-5 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md">
@@ -44,7 +45,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Flag Submission Component */}
             <CTFFlagSubmit />
           </div>
 
@@ -53,13 +53,19 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Terminal Sandbox */}
-        <div className="space-y-3">
-          <h2 className="text-sm font-bold text-cyan-400 flex items-center space-x-2">
-            <Terminal className="w-4 h-4" />
-            <span>LIVE CTF ATTACK SANDBOX</span>
-          </h2>
-          <CTFTerminal />
+        {/* 2-Column Bottom Grid: Terminal & Live Leaderboard */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-3">
+            <h2 className="text-sm font-bold text-cyan-400 flex items-center space-x-2">
+              <Terminal className="w-4 h-4" />
+              <span>LIVE CTF ATTACK SANDBOX</span>
+            </h2>
+            <CTFTerminal />
+          </div>
+
+          <div className="lg:col-span-1 space-y-3">
+            <Leaderboard />
+          </div>
         </div>
       </div>
     </main>
