@@ -18,7 +18,7 @@ export function CyberSmokeHeader() {
       const year = now.getFullYear();
       setDateStr(`${day}/${month}/${year}`);
 
-      // Format: HH:MM:SS (24-Hour Military Format)
+      // Format: HH:MM:SS
       const hours = String(now.getHours()).padStart(2, '0');
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -93,7 +93,7 @@ export function CyberSmokeHeader() {
         </div>
       </div>
 
-      {/* 2. Center Content: Title + Embossed Name */}
+      {/* 2. Center Content */}
       <div className="smoke-header-content">
         <div className="header-flex-wrapper">
           <h1 className="cyber-main-title">
@@ -107,17 +107,20 @@ export function CyberSmokeHeader() {
         </div>
       </div>
 
-      {/* 3. Right Glowing Live Time & Date HUD Widget */}
+      {/* 3. Right HUD Widget (Increased Date Size) */}
       <div className="absolute right-4 sm:right-10 top-1/2 -translate-y-1/2 z-20 hidden md:flex flex-col items-end">
         <div className="hud-clock-card">
-          <div className="flex items-center space-x-2 text-[11px] font-bold text-cyan-400 tracking-wider">
-            <Calendar className="w-3.5 h-3.5 text-cyan-300" />
-            <span>{dateStr || 'DD/MM/YYYY'}</span>
+          {/* Increased Date Display */}
+          <div className="flex items-center space-x-2 text-sm sm:text-base font-extrabold text-cyan-300 tracking-wider">
+            <Calendar className="w-4 h-4 text-cyan-400" />
+            <span className="drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]">{dateStr || '23/08/2026'}</span>
           </div>
-          <div className="flex items-center space-x-2 text-sm font-black text-zinc-100 tracking-widest mt-0.5">
+          
+          {/* Live Time Display */}
+          <div className="flex items-center space-x-2 text-xs sm:text-sm font-bold text-zinc-300 tracking-widest mt-1">
             <Clock className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-            <span className="text-cyan-200">{timeStr || '00:00:00'}</span>
-            <span className="text-[9px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">IST</span>
+            <span className="text-zinc-100">{timeStr || '00:00:00'}</span>
+            <span className="text-[9px] px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 font-mono">IST</span>
           </div>
         </div>
       </div>
@@ -227,14 +230,13 @@ export function CyberSmokeHeader() {
           text-shadow: 0 -1px 0 rgba(255,255,255,0.7), 0 2px 0 #000, 0 0 4px rgba(34,211,238,0.8);
         }
 
-        /* Clock HUD Box */
         .hud-clock-card {
-          padding: 6px 14px;
+          padding: 8px 16px;
           border-radius: 12px;
-          background: rgba(2, 6, 23, 0.85);
-          border: 1px solid rgba(34, 211, 238, 0.35);
-          box-shadow: inset 0 0 12px rgba(34, 211, 238, 0.15), 0 0 18px rgba(6, 182, 212, 0.25);
-          backdrop-blur: 8px;
+          background: rgba(2, 6, 23, 0.9);
+          border: 1.5px solid rgba(34, 211, 238, 0.45);
+          box-shadow: inset 0 0 15px rgba(34, 211, 238, 0.2), 0 0 20px rgba(6, 182, 212, 0.3);
+          backdrop-blur: 10px;
         }
 
         .smoke-bottom-glow {
