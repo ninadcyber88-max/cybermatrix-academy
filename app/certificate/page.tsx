@@ -45,7 +45,7 @@ export default function CertificatePage() {
             className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-black text-xs tracking-wider transition shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer"
           >
             <Printer className="w-4 h-4" />
-            <span>PRINT LANDSCAPE CERTIFICATE</span>
+            <span>PRINT / SAVE SINGLE PAGE PDF</span>
           </button>
         </div>
 
@@ -76,8 +76,8 @@ export default function CertificatePage() {
         </div>
 
         {/* 2. THE OFFICIAL CERTIFICATE TEMPLATE */}
-        <div className="cert-wrapper">
-          <div className="certificate-page relative bg-gradient-to-br from-[#05070d] via-[#091122] to-[#04060a] border-4 border-cyan-500/60 p-8 md:p-10 flex flex-col justify-between overflow-hidden text-center select-none shadow-[0_0_50px_rgba(6,182,212,0.15)]">
+        <div className="cert-outer-wrapper">
+          <div className="certificate-card relative bg-gradient-to-br from-[#05070d] via-[#091122] to-[#04060a] border-4 border-cyan-500/60 p-6 sm:p-8 md:p-10 flex flex-col justify-between overflow-hidden text-center select-none shadow-[0_0_50px_rgba(6,182,212,0.15)]">
             
             {/* Cyber Decorative Patterns */}
             <div className="absolute inset-0 bg-[radial-gradient(#06b6d4_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none"></div>
@@ -99,7 +99,7 @@ export default function CertificatePage() {
               </p>
             </div>
 
-            {/* Main Certificate Title */}
+            {/* Main Certificate Content */}
             <div className="relative z-10 my-auto py-2">
               <p className="text-[11px] md:text-xs text-zinc-400 uppercase tracking-widest font-semibold">
                 This is to cryptographically verify that
@@ -152,27 +152,25 @@ export default function CertificatePage() {
 
       </main>
 
-      {/* STRICT SINGLE PAGE LANDSCAPE PRINT CSS */}
+      {/* STRICT 1-PAGE AUTO FIT PRINT STYLING */}
       <style jsx global>{`
-        .cert-wrapper {
+        .cert-outer-wrapper {
           width: 100%;
           max-width: 900px;
           margin: 0 auto;
         }
-        .certificate-page {
+        .certificate-card {
           width: 100%;
-          min-height: 520px;
+          min-height: 480px;
           border-radius: 1.5rem;
         }
 
         @media print {
           @page {
-            size: A4 landscape !important;
             margin: 0 !important;
           }
           html, body {
-            width: 297mm !important;
-            height: 210mm !important;
+            height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
             background: #000000 !important;
@@ -180,26 +178,28 @@ export default function CertificatePage() {
             print-color-adjust: exact !important;
             overflow: hidden !important;
           }
-          .cert-wrapper {
+          .cert-outer-wrapper {
+            width: 100% !important;
             max-width: none !important;
-            width: 297mm !important;
-            height: 210mm !important;
+            height: 100vh !important;
             margin: 0 !important;
-            padding: 0 !important;
+            padding: 8mm !important;
+            box-sizing: border-box !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
-          }
-          .certificate-page {
-            width: 285mm !important;
-            height: 198mm !important;
-            border-radius: 0px !important;
-            border: 5px solid #06b6d4 !important;
-            margin: auto !important;
-            padding: 18mm !important;
             page-break-inside: avoid !important;
             page-break-after: avoid !important;
-            page-break-before: avoid !important;
+          }
+          .certificate-card {
+            width: 100% !important;
+            max-height: 96vh !important;
+            border-radius: 8px !important;
+            border: 4px solid #06b6d4 !important;
+            padding: 12mm !important;
+            box-sizing: border-box !important;
+            page-break-inside: avoid !important;
+            page-break-after: avoid !important;
           }
         }
       `}</style>
