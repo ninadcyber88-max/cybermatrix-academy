@@ -32,13 +32,13 @@ export function CyberSmokeHeader() {
     <header className="relative w-full border-b border-cyan-500/20 bg-zinc-950/90 backdrop-blur-md font-mono select-none z-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
         
-        {/* 1. LEFT: LOGO & BRANDING WITH EMBOSSED GLOWING SUBTEXT */}
+        {/* 1. LEFT: OFFICIAL LOGO (Ninadcyber.jpg) & EMBOSSED BRANDING */}
         <Link href="/" className="flex items-center space-x-3 group cursor-pointer">
           <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-zinc-950 border border-cyan-400/60 shadow-[0_0_20px_rgba(6,182,212,0.4)] overflow-hidden group-hover:border-cyan-300 transition shrink-0">
             {!imgError ? (
               <img
-                src="/logo.png"
-                alt="CyberMatrix Logo"
+                src="/Ninadcyber.jpg"
+                alt="CyberMatrix Official Logo"
                 className="w-full h-full object-cover"
                 onError={() => setImgError(true)}
               />
