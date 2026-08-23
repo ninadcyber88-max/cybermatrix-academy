@@ -1,15 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { Shield, Radio, Terminal, Cpu, Zap } from 'lucide-react';
+import { Shield, Radio, Cpu, Zap } from 'lucide-react';
 
-export default function CyberSmokeHeader() {
-  return <CyberSmokeHeaderComponent />;
-}
-
-export function CyberSmokeHeaderComponent() {
+export function CyberSmokeHeader() {
   const [timeString, setTimeString] = useState('');
   const [dateString, setDateString] = useState('');
   const [imgError, setImgError] = useState(false);
@@ -61,7 +56,7 @@ export function CyberSmokeHeaderComponent() {
           </div>
         </Link>
 
-        {/* 2. CENTER: CYBER STATUS / DIRECT ACCESS BAR */}
+        {/* 2. CENTER: CYBER TELEMETRY STATUS BAR */}
         <div className="hidden lg:flex items-center gap-2 px-4 py-1.5 rounded-full bg-zinc-900/90 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.15)] text-[11px]">
           <div className="flex items-center space-x-1.5 text-cyan-300 font-bold">
             <Zap className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
@@ -91,3 +86,5 @@ export function CyberSmokeHeaderComponent() {
     </header>
   );
 }
+
+export default CyberSmokeHeader;
