@@ -32,9 +32,9 @@ export function CyberSmokeHeader() {
     <header className="relative w-full border-b border-cyan-500/20 bg-zinc-950/90 backdrop-blur-md font-mono select-none z-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
         
-        {/* 1. LEFT: LOGO & BRANDING */}
+        {/* 1. LEFT: LOGO & BRANDING WITH EMBOSSED GLOWING SUBTEXT */}
         <Link href="/" className="flex items-center space-x-3 group cursor-pointer">
-          <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-zinc-950 border border-cyan-400/60 shadow-[0_0_20px_rgba(6,182,212,0.4)] overflow-hidden group-hover:border-cyan-300 transition">
+          <div className="relative flex items-center justify-center w-11 h-11 rounded-xl bg-zinc-950 border border-cyan-400/60 shadow-[0_0_20px_rgba(6,182,212,0.4)] overflow-hidden group-hover:border-cyan-300 transition shrink-0">
             {!imgError ? (
               <img
                 src="/logo.png"
@@ -50,7 +50,9 @@ export function CyberSmokeHeader() {
             <h1 className="text-sm md:text-base font-black tracking-wider text-cyan-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.5)] group-hover:text-cyan-200 transition">
               CYBERMATRIX ACADEMY
             </h1>
-            <p className="text-[9.5px] text-zinc-400 tracking-widest uppercase">
+            
+            {/* 3D EMBOSSED CYAN GLOWING TEXT */}
+            <p className="emboss-glow-subtext">
               BY NINAD PAWAR // LEAD ARCHITECT
             </p>
           </div>
@@ -83,6 +85,23 @@ export function CyberSmokeHeader() {
         </div>
 
       </div>
+
+      {/* EMBOSSED CYAN NEON GLOW STYLING */}
+      <style jsx>{`
+        .emboss-glow-subtext {
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: #22d3ee;
+          text-shadow:
+            -1px -1px 0px rgba(255, 255, 255, 0.4),
+            1px 1px 1px rgba(0, 0, 0, 0.9),
+            0 0 6px rgba(34, 211, 238, 0.9),
+            0 0 14px rgba(6, 182, 212, 0.6);
+          margin-top: 1px;
+        }
+      `}</style>
     </header>
   );
 }
