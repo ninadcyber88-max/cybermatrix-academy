@@ -13,7 +13,6 @@ export function CyberSmokeHeader() {
     const updateTime = () => {
       const now = new Date();
       
-      // Live Time with AM/PM
       let hours = now.getHours();
       const minutes = String(now.getMinutes()).padStart(2, '0');
       const seconds = String(now.getSeconds()).padStart(2, '0');
@@ -23,7 +22,6 @@ export function CyberSmokeHeader() {
       const formattedHours = String(hours).padStart(2, '0');
       setTimeString(`${formattedHours}:${minutes}:${seconds} ${ampm}`);
 
-      // Strict DD-MM-YYYY Format
       const day = String(now.getDate()).padStart(2, '0');
       const month = String(now.getMonth() + 1).padStart(2, '0');
       const year = now.getFullYear();
@@ -37,13 +35,13 @@ export function CyberSmokeHeader() {
 
   return (
     <header className="relative w-full border-b border-cyan-500/25 bg-zinc-950/95 backdrop-blur-md font-mono select-none z-50">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
         
-        {/* 1. LEFT: OFFICIAL LOGO & EMBOSSED BRANDING */}
-        <Link href="/" className="flex items-center space-x-3.5 group cursor-pointer shrink-0">
+        {/* 1. LEFT: OFFICIAL LOGO & EMBOSSED BRANDING (TIGHT GAP space-x-2) */}
+        <Link href="/" className="flex items-center space-x-2.5 group cursor-pointer shrink-0">
           <div className="relative">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
-            <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-zinc-950 border-2 border-cyan-300 logo-neon-box overflow-hidden group-hover:scale-105 transition-all duration-300 shrink-0">
+            <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-xl blur-sm opacity-70 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
+            <div className="relative flex items-center justify-center w-12 h-12 rounded-xl bg-zinc-950 border-2 border-cyan-300 logo-neon-box overflow-hidden group-hover:scale-105 transition-all duration-300 shrink-0">
               {!imgError ? (
                 <img
                   src="/Ninadcyber.jpg"
@@ -52,13 +50,13 @@ export function CyberSmokeHeader() {
                   onError={() => setImgError(true)}
                 />
               ) : (
-                <Shield className="w-8 h-8 text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
+                <Shield className="w-7 h-7 text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.9)]" />
               )}
             </div>
           </div>
 
-          <div className="space-y-0.5">
-            <h1 className="text-base sm:text-lg md:text-xl font-black tracking-wider text-cyan-300 drop-shadow-[0_0_16px_rgba(6,182,212,0.6)] group-hover:text-cyan-200 transition leading-tight">
+          <div className="space-y-0 text-left pl-1">
+            <h1 className="text-sm sm:text-base md:text-lg font-black tracking-wider text-cyan-300 drop-shadow-[0_0_12px_rgba(6,182,212,0.6)] group-hover:text-cyan-200 transition leading-none">
               CYBERMATRIX ACADEMY
             </h1>
             <p className="emboss-glow-subtext">
@@ -67,36 +65,32 @@ export function CyberSmokeHeader() {
           </div>
         </Link>
 
-        {/* 2. RIGHT SIDE STACK: ENLARGED TIME & LARGE DATE */}
-        <div className="flex flex-col items-end space-y-1.5 shrink-0">
+        {/* 2. RIGHT SIDE STACK: TIME/DATE ON TOP + COMPACT STATUS BAR BELOW */}
+        <div className="flex flex-col items-end space-y-1 shrink-0">
           
           {/* Top: Large Live Time + Large Date Widget */}
-          <div className="flex items-center gap-3 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-cyan-400/50 shadow-[0_0_18px_rgba(6,182,212,0.25)]">
-            
-            {/* Live Clock */}
+          <div className="flex items-center gap-2.5 px-3 py-1 rounded-xl bg-zinc-900/90 border border-cyan-400/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
             <div className="flex items-center space-x-1.5">
-              <Clock className="w-4 h-4 text-cyan-400 animate-pulse" />
+              <Clock className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
               <span className="text-xs sm:text-sm font-black text-cyan-300 tracking-wider drop-shadow-[0_0_8px_rgba(34,211,238,0.7)]">
-                {timeString || '12:46:11 PM'}
+                {timeString || '06:46:57 PM'}
               </span>
             </div>
 
-            <span className="text-cyan-500/50 font-bold text-sm">|</span>
+            <span className="text-cyan-500/50 font-bold text-xs">|</span>
 
-            {/* Enlarged Date */}
             <div className="flex items-center space-x-1.5">
-              <Calendar className="w-4 h-4 text-cyan-400" />
-              <span className="text-xs sm:text-sm font-black text-zinc-100 tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">
+              <Calendar className="w-3.5 h-3.5 text-cyan-400" />
+              <span className="text-xs sm:text-sm font-black text-zinc-100 tracking-wider">
                 {dateString || '23-08-2026'}
               </span>
             </div>
-
           </div>
 
-          {/* Bottom: Compact Status Bar Below Time */}
-          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg bg-zinc-900/80 border border-cyan-500/25 text-[9.5px]">
+          {/* Bottom: Compact Status Bar */}
+          <div className="flex items-center gap-1.5 px-2 py-0.5 rounded-lg bg-zinc-900/80 border border-cyan-500/25 text-[9px]">
             <div className="flex items-center space-x-1 text-cyan-400 font-bold">
-              <Zap className="w-3 h-3 text-amber-400 animate-pulse" />
+              <Zap className="w-2.5 h-2.5 text-amber-400 animate-pulse" />
               <span>STATUS:</span>
             </div>
             <span className="text-green-400 font-bold bg-green-500/10 px-1.5 py-0.2 rounded border border-green-500/20">
@@ -104,7 +98,7 @@ export function CyberSmokeHeader() {
             </span>
             <span className="text-zinc-600">|</span>
             <div className="flex items-center space-x-1 text-zinc-400">
-              <Cpu className="w-3 h-3 text-cyan-400" />
+              <Cpu className="w-2.5 h-2.5 text-cyan-400" />
               <span>v5.10 KERNEL</span>
             </div>
           </div>
@@ -117,38 +111,22 @@ export function CyberSmokeHeader() {
       <style jsx>{`
         .logo-neon-box {
           box-shadow: 
-            0 0 15px rgba(34, 211, 238, 0.6),
-            inset 0 0 10px rgba(6, 182, 212, 0.5),
-            0 0 30px rgba(6, 182, 212, 0.35);
-          animation: boxGlow 2.5s ease-in-out infinite alternate;
-        }
-
-        @keyframes boxGlow {
-          0% {
-            box-shadow: 
-              0 0 12px rgba(34, 211, 238, 0.5),
-              inset 0 0 8px rgba(6, 182, 212, 0.4),
-              0 0 25px rgba(6, 182, 212, 0.3);
-          }
-          100% {
-            box-shadow: 
-              0 0 24px rgba(34, 211, 238, 0.9),
-              inset 0 0 14px rgba(6, 182, 212, 0.7),
-              0 0 45px rgba(6, 182, 212, 0.6);
-          }
+            0 0 12px rgba(34, 211, 238, 0.6),
+            inset 0 0 8px rgba(6, 182, 212, 0.5);
         }
 
         .emboss-glow-subtext {
-          font-size: 11.5px;
-          font-weight: 900;
-          letter-spacing: 0.2em;
+          font-size: 10px;
+          font-weight: 800;
+          letter-spacing: 0.16em;
           text-transform: uppercase;
           color: #22d3ee;
           text-shadow:
-            -1px -1px 0px rgba(255, 255, 255, 0.45),
-            1px 1px 2px rgba(0, 0, 0, 0.95),
-            0 0 8px rgba(34, 211, 238, 0.9),
-            0 0 16px rgba(6, 182, 212, 0.7);
+            -1px -1px 0px rgba(255, 255, 255, 0.4),
+            1px 1px 1px rgba(0, 0, 0, 0.9),
+            0 0 6px rgba(34, 211, 238, 0.8);
+          margin-top: 2px;
+          display: block;
         }
       `}</style>
     </header>
