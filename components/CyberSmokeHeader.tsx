@@ -32,23 +32,29 @@ export function CyberSmokeHeader() {
     <header className="relative w-full border-b border-cyan-500/25 bg-zinc-950/95 backdrop-blur-md font-mono select-none z-50">
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between gap-4">
         
-        {/* 1. LEFT: INCREASED SIZE LOGO & BIGGER BRANDING */}
-        <Link href="/" className="flex items-center space-x-3.5 group cursor-pointer">
-          {/* Bigger Logo Container (w-14 h-14) */}
-          <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-zinc-950 border-2 border-cyan-400 shadow-[0_0_25px_rgba(6,182,212,0.5)] overflow-hidden group-hover:border-cyan-300 group-hover:scale-105 transition-all duration-300 shrink-0">
-            {!imgError ? (
-              <img
-                src="/Ninadcyber.jpg"
-                alt="CyberMatrix Official Logo"
-                className="w-full h-full object-cover"
-                onError={() => setImgError(true)}
-              />
-            ) : (
-              <Shield className="w-8 h-8 text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]" />
-            )}
+        {/* 1. LEFT: LOGO WITH INTENSE NEON GLOW & BRANDING */}
+        <Link href="/" className="flex items-center space-x-4 group cursor-pointer">
+          
+          {/* Pulsing Neon Logo Container */}
+          <div className="relative">
+            {/* Ambient Background Aura */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-2xl blur-md opacity-70 group-hover:opacity-100 transition duration-500 group-hover:duration-200 animate-pulse"></div>
+            
+            <div className="relative flex items-center justify-center w-14 h-14 rounded-2xl bg-zinc-950 border-2 border-cyan-300 logo-neon-box overflow-hidden group-hover:scale-105 transition-all duration-300 shrink-0">
+              {!imgError ? (
+                <img
+                  src="/Ninadcyber.jpg"
+                  alt="CyberMatrix Official Logo"
+                  className="w-full h-full object-cover"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <Shield className="w-8 h-8 text-cyan-300 drop-shadow-[0_0_12px_rgba(34,211,238,0.9)]" />
+              )}
+            </div>
           </div>
 
-          {/* Bigger Typography Titles */}
+          {/* Typography Titles */}
           <div className="space-y-0.5">
             <h1 className="text-base sm:text-lg md:text-xl font-black tracking-wider text-cyan-300 drop-shadow-[0_0_16px_rgba(6,182,212,0.6)] group-hover:text-cyan-200 transition leading-tight">
               CYBERMATRIX ACADEMY
@@ -67,7 +73,7 @@ export function CyberSmokeHeader() {
             <Zap className="w-4 h-4 text-amber-400 animate-pulse" />
             <span>OPERATIONAL STATUS:</span>
           </div>
-          <span className="text-green-400 font-bold bg-green-500/10 px-2.5 py-0.5 rounded border border-green-500/20">
+          <span className="text-green-400 font-bold bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">
             DEFCON 5 // OPTIMAL
           </span>
           <span className="text-zinc-600">|</span>
@@ -89,8 +95,31 @@ export function CyberSmokeHeader() {
 
       </div>
 
-      {/* EMBOSSED CYAN NEON GLOW STYLING */}
+      {/* NEON GLOW & EMBOSS STYLING */}
       <style jsx>{`
+        .logo-neon-box {
+          box-shadow: 
+            0 0 15px rgba(34, 211, 238, 0.6),
+            inset 0 0 10px rgba(6, 182, 212, 0.5),
+            0 0 30px rgba(6, 182, 212, 0.35);
+          animation: boxGlow 2.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes boxGlow {
+          0% {
+            box-shadow: 
+              0 0 12px rgba(34, 211, 238, 0.5),
+              inset 0 0 8px rgba(6, 182, 212, 0.4),
+              0 0 25px rgba(6, 182, 212, 0.3);
+          }
+          100% {
+            box-shadow: 
+              0 0 24px rgba(34, 211, 238, 0.9),
+              inset 0 0 14px rgba(6, 182, 212, 0.7),
+              0 0 45px rgba(6, 182, 212, 0.6);
+          }
+        }
+
         .emboss-glow-subtext {
           font-size: 11.5px;
           font-weight: 900;
