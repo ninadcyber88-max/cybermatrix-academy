@@ -37,7 +37,7 @@ export function CyberSmokeHeader() {
 
   return (
     <header className="relative w-full border-b border-cyan-500/25 bg-zinc-950/95 backdrop-blur-md font-mono select-none z-50">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3.5 flex items-center justify-between gap-4">
         
         {/* 1. LEFT: OFFICIAL LOGO & EMBOSSED BRANDING */}
         <Link href="/" className="flex items-center space-x-3.5 group cursor-pointer shrink-0">
@@ -67,26 +67,30 @@ export function CyberSmokeHeader() {
           </div>
         </Link>
 
-        {/* 2. RIGHT SIDE STACK: TIME/DATE ON TOP + COMPACT STATUS BAR BELOW */}
+        {/* 2. RIGHT SIDE STACK: ENLARGED TIME & LARGE DATE */}
         <div className="flex flex-col items-end space-y-1.5 shrink-0">
           
-          {/* Top: Live Clock & Date */}
-          <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-zinc-900/90 border border-cyan-400/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+          {/* Top: Large Live Time + Large Date Widget */}
+          <div className="flex items-center gap-3 px-3.5 py-1.5 rounded-xl bg-zinc-900/90 border border-cyan-400/50 shadow-[0_0_18px_rgba(6,182,212,0.25)]">
+            
+            {/* Live Clock */}
             <div className="flex items-center space-x-1.5">
-              <Clock className="w-3.5 h-3.5 text-cyan-400 animate-pulse" />
-              <span className="text-xs font-black text-cyan-300 tracking-wider drop-shadow-[0_0_8px_rgba(34,211,238,0.7)]">
-                {timeString || '12:44:11 PM'}
+              <Clock className="w-4 h-4 text-cyan-400 animate-pulse" />
+              <span className="text-xs sm:text-sm font-black text-cyan-300 tracking-wider drop-shadow-[0_0_8px_rgba(34,211,238,0.7)]">
+                {timeString || '12:46:11 PM'}
               </span>
             </div>
 
-            <span className="text-cyan-500/50 font-bold text-xs">|</span>
+            <span className="text-cyan-500/50 font-bold text-sm">|</span>
 
-            <div className="flex items-center space-x-1 text-zinc-300">
-              <Calendar className="w-3 h-3 text-cyan-400" />
-              <span className="text-[11px] font-bold text-zinc-200 tracking-wider">
+            {/* Enlarged Date */}
+            <div className="flex items-center space-x-1.5">
+              <Calendar className="w-4 h-4 text-cyan-400" />
+              <span className="text-xs sm:text-sm font-black text-zinc-100 tracking-wider drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">
                 {dateString || '23-08-2026'}
               </span>
             </div>
+
           </div>
 
           {/* Bottom: Compact Status Bar Below Time */}
