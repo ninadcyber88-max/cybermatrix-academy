@@ -7,17 +7,17 @@ import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
 
 export default function CertificatePage() {
   const [recipientName, setRecipientName] = useState('Ninad Pawar');
-  const [courseTitle, setCourseTitle] = useState('Certified Ethical Hacker');
+  const [trackName, setTrackName] = useState('Certified Ethical Hacker');
   const [certNumber, setCertNumber] = useState('ECC7498613205');
-  const [issueDate, setIssueDate] = useState('23 August, 2026');
-  const [expiryDate, setExpiryDate] = useState('22 August, 2029');
+  const [issueDate, setIssueDate] = useState('24 August, 2026');
+  const [expiryDate, setExpiryDate] = useState('24 August, 2029');
 
   const handlePrint = () => {
     window.print();
   };
 
   return (
-    <div className="min-h-screen bg-[#06080e] text-zinc-100 font-sans selection:bg-red-500/30 selection:text-red-300 print:bg-black print:min-h-0 print:p-0 print:m-0">
+    <div className="min-h-screen bg-[#070a12] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 print:bg-black print:min-h-0 print:p-0 print:m-0">
       
       {/* 1. Global Header (Print मध्ये लपवले जाईल) */}
       <div className="print:hidden">
@@ -30,178 +30,164 @@ export default function CertificatePage() {
         <div className="print:hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-4 border-b border-zinc-800">
           <Link 
             href="/" 
-            className="flex items-center space-x-2 text-xs font-mono text-zinc-400 hover:text-red-400 transition group"
+            className="flex items-center space-x-2 text-xs font-mono text-zinc-400 hover:text-cyan-300 transition group"
           >
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            <span>RETURN TO DASHBOARD</span>
+            <span>RETURN TO ARENA DASHBOARD</span>
           </Link>
 
           <button
             onClick={handlePrint}
-            className="flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs tracking-wider transition shadow-[0_0_20px_rgba(220,38,38,0.5)] cursor-pointer font-mono"
+            className="flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-black text-xs tracking-wider transition shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer font-mono"
           >
             <Printer className="w-4 h-4" />
-            <span>PRINT / SAVE EC-COUNCIL PDF</span>
+            <span>PRINT OFFICIAL CERTIFICATE</span>
           </button>
         </div>
 
-        {/* Dynamic Controls Bar */}
-        <div className="print:hidden p-5 rounded-2xl bg-zinc-900/60 border border-zinc-800 mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+        {/* Dynamic Controls */}
+        <div className="print:hidden p-5 rounded-2xl bg-zinc-900/60 border border-cyan-500/30 mb-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
           <div>
             <label className="block text-zinc-400 mb-1 font-bold">RECIPIENT NAME:</label>
             <input 
               type="text" 
               value={recipientName} 
               onChange={(e) => setRecipientName(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-white font-bold focus:border-red-500 outline-none"
+              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-cyan-300 font-bold focus:border-cyan-400 outline-none"
             />
           </div>
           <div>
-            <label className="block text-zinc-400 mb-1 font-bold">CERTIFICATION PROGRAM:</label>
-            <select 
-              value={courseTitle} 
-              onChange={(e) => setCourseTitle(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-200 focus:border-red-500 outline-none"
-            >
-              <option value="Certified Ethical Hacker">Certified Ethical Hacker (CEH)</option>
-              <option value="Certified Penetration Testing Professional">Certified Penetration Testing Professional (CPENT)</option>
-              <option value="Computer Hacking Forensic Investigator">Computer Hacking Forensic Investigator (CHFI)</option>
-              <option value="Certified Security Analyst">Certified Security Analyst (ECSA)</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-zinc-400 mb-1 font-bold">CERTIFICATE NUMBER:</label>
+            <label className="block text-zinc-400 mb-1 font-bold">CERTIFICATION TITLE:</label>
             <input 
               type="text" 
-              value={certNumber} 
-              onChange={(e) => setCertNumber(e.target.value)}
-              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-red-400 font-bold focus:border-red-500 outline-none"
+              value={trackName} 
+              onChange={(e) => setTrackName(e.target.value)}
+              className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-200 focus:border-cyan-400 outline-none"
             />
           </div>
         </div>
 
-        {/* 2. EXACT EC-COUNCIL AUTHENTIC CERTIFICATE TEMPLATE */}
-        <div className="ec-cert-wrapper">
-          <div className="ec-certificate relative bg-[#0d0f12] text-white flex flex-col justify-between overflow-hidden select-none border-2 border-zinc-800 shadow-2xl">
+        {/* 2. OFFICIAL CEH / CYBER MATRIX CERTIFICATE TEMPLATE */}
+        <div className="cert-outer-wrapper">
+          <div className="certificate-card relative bg-[#0b0b0d] border border-zinc-800 text-white flex flex-col justify-between overflow-hidden select-none">
             
-            {/* Background Digital Globe Dot Matrix & Curved Grids */}
-            <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1.2px,transparent_1.2px)] [background-size:22px_22px] opacity-15 pointer-events-none"></div>
-            
-            <div className="absolute -left-20 -top-20 w-[420px] h-[420px] rounded-full border border-zinc-700/40 pointer-events-none"></div>
-            <div className="absolute -left-32 -top-32 w-[580px] h-[580px] rounded-full border border-zinc-700/20 pointer-events-none"></div>
+            {/* Dotted Globe / Vector Background Effect */}
+            <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-[0.06] pointer-events-none"></div>
+            <div className="absolute -left-20 top-1/4 w-96 h-96 rounded-full border border-zinc-700/20 pointer-events-none"></div>
+            <div className="absolute -left-10 top-1/4 w-[450px] h-[450px] rounded-full border border-zinc-700/10 pointer-events-none"></div>
 
-            {/* Top Bar: EC-Council Red Header & Certification Number */}
-            <div className="relative z-10 px-8 pt-6 flex items-start justify-between">
+            {/* Background Watermark C|EH Text */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+              <span className="text-[180px] font-black tracking-tighter">C|EH</span>
+            </div>
+
+            {/* TOP BAR: CYBER MATRIX (Red Replacement) & Certification Number */}
+            <div className="relative z-10 flex items-start justify-between px-8 pt-6">
               <div className="w-1/3"></div>
-              
-              {/* Bold Red EC-Council Branding */}
+
+              {/* Bold Red Text replaced with CYBER MATRIX */}
               <div className="w-1/3 text-center">
-                <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-[#e50914] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] font-sans">
-                  EC-Council
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#e61c24] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
+                  CYBER MATRIX
                 </h1>
               </div>
 
-              {/* Top-Right Credential Meta */}
+              {/* Top Right Credential Number */}
               <div className="w-1/3 text-right">
-                <p className="text-[10px] md:text-[11px] text-zinc-400 font-medium">Certification Number</p>
-                <p className="text-xs md:text-sm font-extrabold tracking-wider text-white font-mono">{certNumber}</p>
+                <p className="text-[10px] text-zinc-400 font-sans">Certification Number</p>
+                <p className="text-xs sm:text-sm font-black text-white tracking-wider font-mono">{certNumber}</p>
               </div>
             </div>
 
-            {/* Center Strip: Golden Ribbon & Black CEH Banner */}
-            <div className="relative z-10 my-auto py-2">
-              
-              {/* Golden Metallic Laurel Ring (Top/Bottom Accent) */}
-              <div className="flex justify-center -mb-2 relative z-20">
-                <div className="w-32 h-6 rounded-full border-t-2 border-b-2 border-[#d4af37] bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-600 opacity-90 shadow-[0_0_15px_rgba(212,175,55,0.4)]"></div>
-              </div>
-
-              {/* Solid Black Horizontal Bar */}
-              <div className="bg-[#050608] border-y-2 border-[#d4af37] py-3.5 px-8 flex items-center shadow-lg">
+            {/* BLACK & GOLD ACCENT RIBBON */}
+            <div className="relative z-10 my-2">
+              <div className="w-full bg-[#121214] border-t-2 border-b-2 border-[#b8860b] py-2.5 px-8 flex items-center shadow-md">
                 
-                {/* Left CEH Logo Emblem */}
-                <div className="flex items-center space-x-2 border-r border-zinc-700 pr-6 mr-6">
-                  <span className="text-2xl md:text-3xl font-black tracking-tighter text-white">C</span>
-                  <div className="w-1 h-8 bg-red-600 mx-0.5"></div>
-                  <span className="text-2xl md:text-3xl font-black tracking-tighter text-white">EH</span>
-                  <div className="leading-none text-[7px] text-zinc-400 tracking-tighter uppercase pl-1">
+                {/* CEH Logo Badge */}
+                <div className="flex items-center space-x-2 border-r-2 border-zinc-700 pr-6 mr-6 shrink-0">
+                  <div className="flex items-center font-black tracking-tighter text-lg sm:text-xl">
+                    <span className="text-white">C</span>
+                    <span className="text-[#e61c24] mx-0.5 text-2xl font-light">|</span>
+                    <span className="text-white">EH</span>
+                  </div>
+                  <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans">
                     <p>Certified</p>
-                    <p>Ethical</p>
-                    <p>Hacker</p>
+                    <p>Ethical Hacker</p>
                   </div>
                 </div>
 
-                {/* Right Big Banner Title */}
-                <h2 className="text-xl md:text-2xl font-bold tracking-wide text-white uppercase font-sans">
-                  {courseTitle}
+                {/* Banner Text */}
+                <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white">
+                  {trackName}
                 </h2>
               </div>
 
-              {/* Golden Ribbon Bottom Accent */}
-              <div className="flex justify-center -mt-2 relative z-20">
-                <div className="w-32 h-6 rounded-full border-t-2 border-b-2 border-[#d4af37] bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-600 opacity-90 shadow-[0_0_15px_rgba(212,175,55,0.4)]"></div>
+              {/* Golden Center Ribbon Emblem */}
+              <div className="absolute left-1/2 -translate-x-1/2 -top-2 flex flex-col items-center">
+                <div className="w-16 h-4 bg-gradient-to-r from-amber-600 via-yellow-400 to-amber-600 rounded-b-md shadow-lg border border-amber-300"></div>
               </div>
-
-              {/* Certificate Verification Body Text */}
-              <div className="text-center mt-5 px-6 space-y-2">
-                <p className="text-xs md:text-sm text-zinc-300 font-medium">
-                  This is to acknowledge that
-                </p>
-
-                <h3 className="text-2xl md:text-4xl font-extrabold text-white tracking-wide py-1 font-sans">
-                  {recipientName || 'OPERATIVE'}
-                </h3>
-
-                <p className="text-xs md:text-sm text-zinc-300 font-medium max-w-2xl mx-auto">
-                  has successfully completed all requirements and criteria for
-                </p>
-
-                <p className="text-sm md:text-base font-bold text-white tracking-wide">
-                  {courseTitle}
-                </p>
-
-                <p className="text-[11px] md:text-xs text-zinc-400 font-medium">
-                  certification through examination administered by EC-Council
-                </p>
-              </div>
-
             </div>
 
-            {/* Bottom Footer: ANSI Accredited Logo + Dates + President Signature */}
+            {/* MAIN CERTIFICATE BODY */}
+            <div className="relative z-10 px-8 py-3 text-center">
+              <p className="text-xs sm:text-sm text-zinc-400 font-serif italic">
+                This is to acknowledge that
+              </p>
+
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white my-2 tracking-wide font-sans">
+                {recipientName || 'Candidate Name'}
+              </h3>
+
+              <p className="text-[11px] sm:text-xs text-zinc-400 max-w-xl mx-auto leading-relaxed font-sans">
+                has successfully completed all requirements and criteria for
+              </p>
+
+              <h4 className="text-sm sm:text-base md:text-lg font-bold text-zinc-100 mt-2 mb-1 tracking-wider">
+                {trackName}
+              </h4>
+
+              <p className="text-[11px] sm:text-xs text-zinc-400 font-sans">
+                certification through examination administered by Cyber Matrix
+              </p>
+            </div>
+
+            {/* BOTTOM METRICS & SIGNATURES */}
             <div className="relative z-10 px-8 pb-6 flex items-end justify-between text-xs">
               
-              {/* ANSI ACCREDITED SEAL */}
-              <div className="flex items-center space-x-2">
-                <div className="border-2 border-white rounded-full px-2.5 py-1 text-center bg-black/40">
-                  <p className="text-xs md:text-sm font-black tracking-widest text-white leading-none font-sans">ANSI</p>
-                  <p className="text-[6.5px] uppercase tracking-wider text-zinc-300 font-bold">ACCREDITED</p>
+              {/* Left: ANSI Accredited Stamp & Issue Date */}
+              <div className="flex flex-col space-y-3 text-left">
+                <div className="flex items-center space-x-2">
+                  <div className="w-12 h-6 border-2 border-white rounded-full flex items-center justify-center font-black text-[9px] tracking-tight text-white">
+                    ANSI
+                  </div>
+                  <div className="text-[8px] text-zinc-400 uppercase leading-tight font-mono">
+                    <p className="font-bold text-zinc-200">ACCREDITED</p>
+                    <p>ISO/IEC 17024</p>
+                    <p>Personnel Certification</p>
+                  </div>
                 </div>
-                <div className="text-[7.5px] text-zinc-400 font-mono leading-tight">
-                  <p>#0732</p>
-                  <p>ISO/IEC 17024</p>
-                  <p>Personnel Certification Program</p>
+
+                <div>
+                  <p className="text-[10px] text-zinc-400 font-sans">
+                    Issue Date: <span className="font-bold text-zinc-200">{issueDate}</span>
+                  </p>
                 </div>
               </div>
 
-              {/* Issue Date & Expiry Date */}
-              <div className="text-center font-medium text-[11px] md:text-xs space-y-1">
-                <p className="text-zinc-300">
-                  <span className="text-zinc-400">Issue Date:</span> <span className="font-bold text-white">{issueDate}</span>
+              {/* Right: Expiry Date & President Signature */}
+              <div className="flex flex-col items-end space-y-1 text-right">
+                <p className="text-[10px] text-zinc-400 font-sans mb-1">
+                  Expiry Date: <span className="font-bold text-zinc-200">{expiryDate}</span>
                 </p>
-                <p className="text-zinc-300">
-                  <span className="text-zinc-400">Expiry Date:</span> <span className="font-bold text-white">{expiryDate}</span>
-                </p>
-              </div>
 
-              {/* Official Signature */}
-              <div className="text-right space-y-1">
-                <p className="font-serif italic text-lg md:text-2xl text-zinc-200 leading-none">
-                  Jaybavisi
-                </p>
-                <div className="w-36 h-[1.5px] bg-zinc-600 ml-auto"></div>
-                <p className="text-[10px] md:text-[11px] font-bold text-zinc-200">
-                  Sanjay Bavisi, President
-                </p>
+                {/* Signature Ninad Pawar */}
+                <div className="pt-2 text-center">
+                  <p className="font-serif italic text-base sm:text-lg text-cyan-300 leading-none">
+                    Ninad Pawar
+                  </p>
+                  <div className="w-40 h-[1px] bg-zinc-600 my-1"></div>
+                  <p className="text-[10px] font-bold text-zinc-300 font-sans">Ninad Pawar, President</p>
+                </div>
               </div>
 
             </div>
@@ -211,16 +197,16 @@ export default function CertificatePage() {
 
       </main>
 
-      {/* STRICT 1-PAGE A4 LANDSCAPE PRINT CSS */}
+      {/* STRICT 1-PAGE AUTO-FIT PRINT STYLING */}
       <style jsx global>{`
-        .ec-cert-wrapper {
+        .cert-outer-wrapper {
           width: 100%;
           max-width: 900px;
           margin: 0 auto;
         }
-        .ec-certificate {
+        .certificate-card {
           width: 100%;
-          min-height: 560px;
+          min-height: 520px;
           border-radius: 4px;
         }
 
@@ -230,8 +216,7 @@ export default function CertificatePage() {
             margin: 0 !important;
           }
           html, body {
-            width: 297mm !important;
-            height: 210mm !important;
+            height: 100% !important;
             margin: 0 !important;
             padding: 0 !important;
             background: #000000 !important;
@@ -239,25 +224,25 @@ export default function CertificatePage() {
             print-color-adjust: exact !important;
             overflow: hidden !important;
           }
-          .ec-cert-wrapper {
-            width: 297mm !important;
-            height: 210mm !important;
+          .cert-outer-wrapper {
+            width: 100% !important;
             max-width: none !important;
+            height: 100vh !important;
             margin: 0 !important;
-            padding: 0 !important;
+            padding: 8mm !important;
+            box-sizing: border-box !important;
             display: flex !important;
             align-items: center !important;
             justify-content: center !important;
             page-break-inside: avoid !important;
             page-break-after: avoid !important;
           }
-          .ec-certificate {
-            width: 297mm !important;
-            height: 210mm !important;
-            min-height: 210mm !important;
-            border-radius: 0 !important;
-            border: none !important;
-            padding: 10mm 15mm !important;
+          .certificate-card {
+            width: 100% !important;
+            max-height: 96vh !important;
+            border-radius: 0px !important;
+            border: 2px solid #333338 !important;
+            padding: 0 !important;
             box-sizing: border-box !important;
             page-break-inside: avoid !important;
             page-break-after: avoid !important;
