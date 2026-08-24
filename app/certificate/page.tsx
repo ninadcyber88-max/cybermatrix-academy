@@ -123,7 +123,7 @@ function CertificateContent() {
             {/* TOP BAR: ABSOLUTE CENTERED CYBER MATRIX & RIGHT CERT NUMBER */}
             <div className="relative z-10 w-full px-8 pt-6 flex items-center justify-center min-h-[50px]">
               <div className="text-center">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#e61c24] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
+                <h1 className="text-4xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#e61c24] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
                   CYBER MATRIX
                 </h1>
               </div>
