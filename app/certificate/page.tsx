@@ -105,9 +105,9 @@ export default function CertificatePage() {
                   {/* CEH Logo Badge */}
                   <div className="flex items-center space-x-2 border-r-2 border-zinc-700 pr-6 shrink-0">
                     <div className="flex items-center font-black tracking-tighter text-lg sm:text-xl">
-                      <span className="text-white">C</span>
+                      <span className="text-white">CY</span>
                       <span className="text-[#e61c24] mx-0.5 text-2xl font-light">|</span>
-                      <span className="text-white">YH</span>
+                      <span className="text-white">MATRIX</span>
                     </div>
                     <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans text-left">
                       <p>Certified</p>
