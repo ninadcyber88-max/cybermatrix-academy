@@ -4,412 +4,194 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { 
   Search, 
-  ChevronDown, 
-  Video, 
-  Radio, 
-  BookOpen, 
-  Users, 
-  ShieldCheck, 
-  ExternalLink,
-  Sparkles,
-  ArrowLeft
+  Signal, 
+  ShieldAlert, 
+  Terminal,
+  ArrowRight
 } from 'lucide-react';
 import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
 
-interface Course {
+interface TrackCard {
   id: string;
   title: string;
-  instructor: string;
-  price: string;
-  isFree?: boolean;
-  originalPrice?: string;
-  format: 'RECORDED' | 'LIVE';
-  category: string;
-  badgeColor: string;
-  imageBg: string;
-  topics: string[];
+  description: string;
+  level: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
+  levelColor: string;
+  bannerGradient: string;
+  bannerArtwork: React.ReactNode;
+  link: string;
 }
 
-const COURSES_LIST: Course[] = [
+const COURSES_DATA: TrackCard[] = [
   {
-    id: 'c1',
-    title: 'Ethical Hacking Full Certification Masterclass',
-    instructor: 'Ninad Pawar',
-    price: 'Free',
-    isFree: true,
-    format: 'RECORDED',
-    category: 'Ethical Hacking',
-    badgeColor: 'bg-indigo-600 text-white',
-    imageBg: 'from-blue-900 via-indigo-950 to-slate-950',
-    topics: ['Footprinting & Recon', 'System Hacking', 'Metasploit Pro', 'Privilege Escalation']
+    id: 'win-fund',
+    title: 'WINDOWS FUNDAMENTAL',
+    description: 'Start your journey into the world of hacking. Master core OS internals, registry architecture, and permissions.',
+    level: 'BEGINNER',
+    levelColor: 'text-[#10b981]',
+    bannerGradient: 'bg-gradient-to-b from-[#0062b8] via-[#00519a] to-[#003b70]',
+    bannerArtwork: (
+      <div className="grid grid-cols-2 gap-2.5 w-24 h-24 drop-shadow-[0_12px_24px_rgba(0,0,0,0.6)]">
+        <div className="bg-[#f25022] rounded-sm shadow-md"></div>
+        <div className="bg-[#7fba00] rounded-sm shadow-md"></div>
+        <div className="bg-[#00a4ef] rounded-sm shadow-md"></div>
+        <div className="bg-[#ffb900] rounded-sm shadow-md"></div>
+      </div>
+    ),
+    link: '/courses/win-fund'
   },
   {
-    id: 'c2',
-    title: 'Dark Web Mastery & Intelligence Defense',
-    instructor: 'Ninad Pawar',
-    price: '₹4,999',
-    originalPrice: '₹14,999',
-    format: 'LIVE',
-    category: 'OSINT & Dark Web',
-    badgeColor: 'bg-rose-600 text-white',
-    imageBg: 'from-purple-950 via-slate-900 to-zinc-950',
-    topics: ['Tor Architecture', 'Threat Recon', 'Encrypted Networks', 'OpSec Protocols']
+    id: 'linux-mast',
+    title: 'LINUX MASTERY',
+    description: 'Master Linux from the ground up — the way real hackers do it. From core bash scripts to root privilege escalation.',
+    level: 'BEGINNER',
+    levelColor: 'text-[#10b981]',
+    bannerGradient: 'bg-gradient-to-b from-[#7a0c12] via-[#4d070b] to-[#240306]',
+    bannerArtwork: (
+      <div className="relative flex items-center justify-center">
+        <span className="text-7xl drop-shadow-[0_12px_24px_rgba(0,0,0,0.85)] select-none">
+          🐧
+        </span>
+      </div>
+    ),
+    link: '/courses/linux-mast'
   },
   {
-    id: 'c3',
-    title: 'Practical Web Application Penetration Testing (VAPT)',
-    instructor: 'Ninad Pawar',
-    price: '₹1,499',
-    originalPrice: '₹4,999',
-    format: 'RECORDED',
-    category: 'VAPT',
-    badgeColor: 'bg-cyan-600 text-black',
-    imageBg: 'from-cyan-950 via-slate-900 to-black',
-    topics: ['OWASP Top 10', 'Burp Suite Suite', 'SQL Injection', 'API Pentesting']
+    id: 'eth-hack',
+    title: 'ETHICAL HACKING',
+    description: 'Learn ethical hacking from scratch — recon, exploitation, privilege escalation, and active directory penetration.',
+    level: 'INTERMEDIATE',
+    levelColor: 'text-[#f59e0b]',
+    bannerGradient: 'bg-gradient-to-b from-[#6b0b10] via-[#400609] to-[#1c0204]',
+    bannerArtwork: (
+      <div className="relative flex items-center justify-center">
+        <div className="w-20 h-20 rounded-full bg-black/60 border border-rose-500/30 flex items-center justify-center shadow-[0_0_35px_rgba(225,29,72,0.45)]">
+          <ShieldAlert className="w-11 h-11 text-rose-500 drop-shadow-[0_0_12px_rgba(225,29,72,0.9)]" />
+        </div>
+      </div>
+    ),
+    link: '/courses/eth-hack'
   },
   {
-    id: 'c4',
-    title: 'Bug Bounty Bootcamp: Zero to Hero',
-    instructor: 'Ninad Pawar',
-    price: '₹4,999',
-    originalPrice: '₹12,000',
-    format: 'LIVE',
-    category: 'Bug Bounty',
-    badgeColor: 'bg-rose-600 text-white',
-    imageBg: 'from-rose-950 via-zinc-900 to-black',
-    topics: ['Subdomain Takeover', 'Business Logic Flaws', 'IDOR Exploitation', 'HackerOne Proofs']
-  },
-  {
-    id: 'c5',
-    title: '1-on-1 Elite Mentorship & Offensive Operations',
-    instructor: 'Ninad Pawar',
-    price: '₹79,999',
-    originalPrice: '₹1,20,000',
-    format: 'LIVE',
-    category: 'Mentorship',
-    badgeColor: 'bg-amber-500 text-black',
-    imageBg: 'from-amber-950 via-zinc-900 to-black',
-    topics: ['Custom Exploitation', 'Direct Live Mentorship', 'Job Placement Prep', 'Active Sandboxes']
-  },
-  {
-    id: 'c6',
-    title: 'Cloud Security Hardening & AWS DFIR',
-    instructor: 'Ninad Pawar',
-    price: '₹2,499',
-    originalPrice: '₹6,999',
-    format: 'RECORDED',
-    category: 'Cloud Security',
-    badgeColor: 'bg-indigo-600 text-white',
-    imageBg: 'from-blue-950 via-slate-900 to-zinc-950',
-    topics: ['AWS IAM Security', 'S3 Bucket Leaks', 'SIEM Correlation', 'Incident Forensics']
+    id: 'web-vapt',
+    title: 'WEB APP PENTESTING',
+    description: 'OWASP Top 10 mastery, advanced SQLi, bypass techniques, SSRF exploitation, and Burp Suite automation...',
+    level: 'ADVANCED',
+    levelColor: 'text-[#f43f5e]',
+    bannerGradient: 'bg-gradient-to-b from-[#0b3c4f] via-[#072633] to-[#04141b]',
+    bannerArtwork: (
+      <div className="w-20 h-20 rounded-2xl bg-cyan-950/70 border border-cyan-400/50 flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)]">
+        <Terminal className="w-10 h-10 text-cyan-300 drop-shadow-[0_0_10px_rgba(6,182,212,0.8)]" />
+      </div>
+    ),
+    link: '/courses/win-fund'
   }
 ];
 
-export default function CoursesMarketplacePage() {
+export default function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [priceFilter, setPriceFilter] = useState<'ALL' | 'FREE' | 'PREMIUM'>('ALL');
-  const [formatFilter, setFormatFilter] = useState<string[]>([]);
-  const [activeTab, setActiveTab] = useState<'courses' | 'instructors'>('courses');
 
-  const handleFormatChange = (fmt: 'RECORDED' | 'LIVE') => {
-    if (formatFilter.includes(fmt)) {
-      setFormatFilter(formatFilter.filter((f) => f !== fmt));
-    } else {
-      setFormatFilter([...formatFilter, fmt]);
-    }
-  };
-
-  const filteredCourses = COURSES_LIST.filter((course) => {
-    const matchesSearch =
-      course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      course.instructor.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      course.category.toLowerCase().includes(searchQuery.toLowerCase());
-
-    const matchesPrice =
-      priceFilter === 'ALL'
-        ? true
-        : priceFilter === 'FREE'
-        ? course.isFree
-        : !course.isFree;
-
-    const matchesFormat =
-      formatFilter.length === 0 ? true : formatFilter.includes(course.format);
-
-    return matchesSearch && matchesPrice && matchesFormat;
-  });
+  const filteredCourses = COURSES_DATA.filter(
+    (c) =>
+      c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300">
+    <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300">
       
       {/* 1. Global Header */}
       <CyberSmokeHeader />
 
-      {/* 2. Sub Navigation Bar */}
-      <div className="border-b border-zinc-800/80 bg-[#0d1322]/80 backdrop-blur-md sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between text-xs">
+      {/* 2. Top Blueprint Sub-Header */}
+      <div className="bg-[#0f1422] border-b border-zinc-800/80 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
           
-          <div className="flex items-center space-x-6">
-            <Link href="/" className="text-zinc-400 hover:text-cyan-400 flex items-center space-x-1.5 transition">
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>CTF Sandbox</span>
+          {/* Sub Navigation Links */}
+          <div className="flex items-center space-x-6 sm:space-x-8 text-xs font-mono tracking-wider font-bold">
+            <Link href="/roadmap" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
+              ROADMAP
             </Link>
-            <button className="text-white font-semibold border-b-2 border-cyan-400 pb-4 pt-4">
-              Courses
+            <button className="text-[#38bdf8] font-extrabold py-4 relative cursor-default">
+              COURSES
+              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
             </button>
-            <Link href="/" className="text-zinc-400 hover:text-zinc-200 transition">
-              CCEH Program ↗
+            <Link href="/walkthroughs" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
+              WALKTHROUGHS
             </Link>
-            <Link href="/" className="text-zinc-400 hover:text-zinc-200 transition">
-              Articles
+            <Link href="/cve" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
+              CVE
             </Link>
-            <Link href="/" className="text-zinc-400 hover:text-zinc-200 transition">
-              Verify Certificate
-            </Link>
-          </div>
-
-          <div className="flex items-center space-x-3">
-            <Link
-              href="/"
-              className="px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-medium transition shadow-sm"
-            >
-              Log in
+            <Link href="/certificate" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
+              CERTIFICATES
             </Link>
           </div>
 
-        </div>
-      </div>
-
-      {/* 3. Hero Header Section */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-10 pb-6">
-        <p className="text-[11px] font-bold tracking-widest text-zinc-400 uppercase font-mono">
-          Course Marketplace
-        </p>
-        <h1 className="text-3xl md:text-4xl font-extrabold text-white mt-1">
-          Explore Courses
-        </h1>
-        <p className="text-sm text-zinc-400 mt-2">
-          Hands-on cybersecurity courses from CyberMatrix Academy and industry instructors.
-        </p>
-
-        {/* Tab Selection */}
-        <div className="flex items-center space-x-6 mt-6 border-b border-zinc-800 text-sm">
-          <button
-            onClick={() => setActiveTab('courses')}
-            className={`flex items-center space-x-2 pb-3 font-medium transition border-b-2 ${
-              activeTab === 'courses'
-                ? 'border-blue-500 text-blue-400'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
-            }`}
-          >
-            <BookOpen className="w-4 h-4" />
-            <span>Courses</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-blue-500/20 text-blue-400 text-xs font-semibold">
-              {COURSES_LIST.length}
-            </span>
-          </button>
-
-          <button
-            onClick={() => setActiveTab('instructors')}
-            className={`flex items-center space-x-2 pb-3 font-medium transition border-b-2 ${
-              activeTab === 'instructors'
-                ? 'border-blue-500 text-blue-400'
-                : 'border-transparent text-zinc-400 hover:text-zinc-200'
-            }`}
-          >
-            <Users className="w-4 h-4" />
-            <span>Instructors</span>
-            <span className="px-1.5 py-0.2 rounded-full bg-zinc-800 text-zinc-400 text-xs">
-              1
-            </span>
-          </button>
-        </div>
-
-        {/* Search & Sort Controls */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mt-6">
-          <div className="relative w-full md:w-96">
-            <Search className="w-4 h-4 text-zinc-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          {/* Search Box */}
+          <div className="relative w-48 sm:w-64">
+            <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search courses or instructors..."
-              className="w-full pl-10 pr-4 py-2 bg-[#131b2e] border border-zinc-800 rounded-xl text-xs text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition"
+              placeholder="SEARCH_DB..."
+              className="w-full pl-9 pr-3 py-1.5 bg-[#171e30] border border-zinc-700/60 rounded-md text-xs font-mono text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#38bdf8] transition"
             />
           </div>
 
-          <div className="flex items-center space-x-2 text-xs text-zinc-400 w-full md:w-auto justify-end">
-            <div className="flex items-center space-x-2 px-3 py-2 bg-[#131b2e] border border-zinc-800 rounded-xl cursor-pointer">
-              <span>Newest</span>
-              <ChevronDown className="w-3.5 h-3.5 text-zinc-500" />
-            </div>
-          </div>
         </div>
       </div>
 
-      {/* 4. Main Marketplace Body (Sidebar Filters + Cards Grid) */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pb-16 flex flex-col md:flex-row gap-8">
-        
-        {/* Sidebar Filters */}
-        <aside className="w-full md:w-56 shrink-0 space-y-6">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-bold uppercase tracking-wider text-zinc-300">Filters</span>
-          </div>
-
-          {/* Price Filter */}
-          <div className="space-y-2.5">
-            <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">Price</p>
-            <div className="space-y-2 text-xs">
-              {[
-                { label: 'All courses', val: 'ALL' },
-                { label: 'Free', val: 'FREE' },
-                { label: 'Premium', val: 'PREMIUM' },
-              ].map((opt) => (
-                <label key={opt.val} className="flex items-center space-x-2.5 cursor-pointer text-zinc-300 hover:text-white">
-                  <input
-                    type="radio"
-                    name="priceFilter"
-                    checked={priceFilter === opt.val}
-                    onChange={() => setPriceFilter(opt.val as any)}
-                    className="accent-blue-500 w-3.5 h-3.5"
-                  />
-                  <span>{opt.label}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Format Filter */}
-          <div className="space-y-2.5 pt-4 border-t border-zinc-800">
-            <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">Format</p>
-            <div className="space-y-2 text-xs">
-              {[
-                { label: 'Recorded', val: 'RECORDED' },
-                { label: 'Live', val: 'LIVE' },
-              ].map((fmt) => (
-                <label key={fmt.val} className="flex items-center space-x-2.5 cursor-pointer text-zinc-300 hover:text-white">
-                  <input
-                    type="checkbox"
-                    checked={formatFilter.includes(fmt.val)}
-                    onChange={() => handleFormatChange(fmt.val as any)}
-                    className="accent-blue-500 w-3.5 h-3.5 rounded"
-                  />
-                  <span>{fmt.label}</span>
-                </label>
-              ))}
-            </div>
-          </div>
-
-          {/* Instructor Filter */}
-          <div className="space-y-2.5 pt-4 border-t border-zinc-800">
-            <p className="text-[11px] font-bold text-zinc-500 uppercase tracking-wider">Instructor</p>
-            <div className="space-y-2 text-xs">
-              <label className="flex items-center space-x-2.5 cursor-pointer text-zinc-300 hover:text-white">
-                <input
-                  type="checkbox"
-                  defaultChecked
-                  className="accent-blue-500 w-3.5 h-3.5 rounded"
-                />
-                <span>Ninad Pawar</span>
-              </label>
-            </div>
-          </div>
-        </aside>
-
-        {/* Courses Marketplace Grid */}
-        <section className="flex-1">
-          <p className="text-xs text-zinc-400 mb-4 font-mono">
-            {filteredCourses.length} courses
-          </p>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {filteredCourses.map((course) => (
-              <div
-                key={course.id}
-                className="group flex flex-col justify-between rounded-2xl bg-[#111728] border border-zinc-800/90 overflow-hidden hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] transition-all duration-300 cursor-pointer"
-              >
-                {/* Course Card Banner / Image Area */}
-                <div className={`relative h-44 bg-gradient-to-br ${course.imageBg} p-4 flex flex-col justify-between overflow-hidden border-b border-zinc-800/80`}>
-                  
-                  {/* Top Badges */}
-                  <div className="flex items-center justify-between z-10">
-                    <span className={`inline-flex items-center space-x-1 px-2.5 py-0.5 rounded-md text-[10px] font-bold tracking-wider ${course.badgeColor}`}>
-                      {course.format === 'LIVE' ? (
-                        <>
-                          <Radio className="w-2.5 h-2.5 animate-pulse" />
-                          <span>LIVE</span>
-                        </>
-                      ) : (
-                        <>
-                          <Video className="w-2.5 h-2.5" />
-                          <span>RECORDED</span>
-                        </>
-                      )}
-                    </span>
-
-                    {course.originalPrice && (
-                      <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-black/60 text-zinc-300 border border-white/10 backdrop-blur-sm">
-                        {course.price}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Banner Graphic Content */}
-                  <div className="z-10 mt-auto">
-                    <div className="flex items-center space-x-1.5 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-1 font-mono">
-                      <Sparkles className="w-3.5 h-3.5" />
-                      <span>{course.category}</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-7 h-7 rounded-full bg-cyan-500/20 border border-cyan-400 flex items-center justify-center font-black text-[10px] text-cyan-300">
-                        NP
-                      </div>
-                      <span className="text-[11px] text-zinc-300 font-medium">CYBERMATRIX LAB</span>
-                    </div>
-                  </div>
-
-                  {/* Aesthetic Grid Watermark */}
-                  <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px] opacity-10"></div>
-                </div>
-
-                {/* Course Card Details */}
-                <div className="p-4 flex flex-col justify-between flex-1">
-                  <div>
-                    <h3 className="text-sm font-bold text-white group-hover:text-cyan-300 transition line-clamp-2 leading-snug">
-                      {course.title}
-                    </h3>
-                    <p className="text-xs text-zinc-400 mt-1 font-medium">
-                      {course.instructor}
-                    </p>
-                  </div>
-
-                  {/* Pricing and Action */}
-                  <div className="mt-4 pt-3 border-t border-zinc-800/80 flex items-center justify-between">
-                    <div>
-                      <span className="text-sm font-extrabold text-white">
-                        {course.price}
-                      </span>
-                      {course.originalPrice && (
-                        <span className="text-[10px] text-zinc-500 line-through ml-2">
-                          {course.originalPrice}
-                        </span>
-                      )}
-                    </div>
-
-                    <span className="text-xs text-blue-400 font-semibold group-hover:underline flex items-center space-x-1">
-                      <span>View Course</span>
-                      <span>→</span>
-                    </span>
-                  </div>
-                </div>
+      {/* 3. Main Course Cards 2x2 Grid */}
+      <main className="max-w-6xl mx-auto px-4 md:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+          {filteredCourses.map((course) => (
+            <Link
+              key={course.id}
+              href={course.link}
+              className="group flex flex-col justify-between rounded-2xl bg-[#0f1524] border border-zinc-800/90 overflow-hidden hover:border-[#38bdf8]/40 hover:shadow-[0_0_35px_rgba(0,0,0,0.6)] transition-all duration-300 cursor-pointer"
+            >
+              
+              {/* Top Banner Artwork */}
+              <div className={`h-56 w-full ${course.bannerGradient} flex items-center justify-center relative overflow-hidden border-b border-black/40`}>
+                {course.bannerArtwork}
               </div>
-            ))}
-          </div>
-        </section>
 
-      </div>
+              {/* Bottom Information */}
+              <div className="p-6 flex flex-col justify-between flex-1">
+                <div>
+                  <h3 className="text-base sm:text-lg font-black text-white tracking-wider group-hover:text-[#38bdf8] transition">
+                    {course.title}
+                  </h3>
+                  <p className="text-xs text-zinc-400 mt-2.5 leading-relaxed">
+                    {course.description}
+                  </p>
+                </div>
 
-      {/* 5. Footer */}
-      <footer className="border-t border-zinc-900 bg-[#090d16] py-8 text-center text-xs text-zinc-500">
+                {/* Footer Controls: Start Module & Level Indicator */}
+                <div className="mt-7 pt-4 border-t border-zinc-800/80 flex items-center justify-between">
+                  <span className="text-xs font-mono font-medium text-zinc-400 group-hover:text-[#38bdf8] transition flex items-center space-x-1">
+                    <span>Start Module</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </span>
+
+                  <div className="flex items-center space-x-1.5">
+                    <Signal className={`w-3.5 h-3.5 ${course.levelColor}`} />
+                    <span className={`text-[11px] font-black tracking-wider ${course.levelColor}`}>
+                      {course.level}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+            </Link>
+          ))}
+        </div>
+      </main>
+
+      {/* 4. Footer */}
+      <footer className="border-t border-zinc-800/60 bg-[#0d121e] py-8 text-center text-xs font-mono text-zinc-500">
         CYBERMATRIX ACADEMY // ARCHITECTED BY NINAD PAWAR // DEFENSE MATRIX ACTIVE
       </footer>
 
