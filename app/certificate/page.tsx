@@ -107,7 +107,7 @@ export default function CertificatePage() {
                     <div className="flex items-center font-black tracking-tighter text-lg sm:text-xl">
                       <span className="text-white">C</span>
                       <span className="text-[#e61c24] mx-0.5 text-2xl font-light">|</span>
-                      <span className="text-white">EH</span>
+                      <span className="text-white">YH</span>
                     </div>
                     <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans text-left">
                       <p>Certified</p>
