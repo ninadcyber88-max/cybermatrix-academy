@@ -71,55 +71,56 @@ export default function CertificatePage() {
         <div className="cert-outer-wrapper">
           <div className="certificate-card relative bg-[#0b0b0d] border border-zinc-800 text-white flex flex-col justify-between overflow-hidden select-none">
             
-            {/* Dotted Globe / Vector Background Effect */}
+            {/* Background Texture & Watermark */}
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-[0.06] pointer-events-none"></div>
             <div className="absolute -left-20 top-1/4 w-96 h-96 rounded-full border border-zinc-700/20 pointer-events-none"></div>
             <div className="absolute -left-10 top-1/4 w-[450px] h-[450px] rounded-full border border-zinc-700/10 pointer-events-none"></div>
 
-            {/* Background Watermark */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
               <span className="text-[180px] font-black tracking-tighter">C|EH</span>
             </div>
 
-            {/* TOP BAR: CYBER MATRIX (Red Replacement) & Certification Number */}
-            <div className="relative z-10 flex items-start justify-between px-8 pt-6">
-              <div className="w-1/3"></div>
-
-              {/* Bold Red Text: CYBER MATRIX */}
-              <div className="w-1/3 text-center">
+            {/* TOP BAR: ABSOLUTE CENTERED CYBER MATRIX & RIGHT CERT NUMBER */}
+            <div className="relative z-10 w-full px-8 pt-6 flex items-center justify-center min-h-[50px]">
+              
+              {/* Perfectly Centered Title */}
+              <div className="text-center">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#e61c24] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
                   CYBER MATRIX
                 </h1>
               </div>
 
-              {/* Top Right Credential Number */}
-              <div className="w-1/3 text-right">
+              {/* Right Aligned Credential Number */}
+              <div className="absolute right-8 top-6 text-right">
                 <p className="text-[10px] text-zinc-400 font-sans">Certification Number</p>
                 <p className="text-xs sm:text-sm font-black text-white tracking-wider font-mono">{certNumber}</p>
               </div>
             </div>
 
-            {/* BLACK & GOLD ACCENT RIBBON */}
+            {/* PERFECTLY CENTERED BLACK & GOLD ACCENT RIBBON */}
             <div className="relative z-10 my-2">
-              <div className="w-full bg-[#121214] border-t-2 border-b-2 border-[#b8860b] py-2.5 px-8 flex items-center shadow-md">
+              <div className="w-full bg-[#121214] border-t-2 border-b-2 border-[#b8860b] py-2.5 px-6 flex items-center justify-center shadow-md">
                 
-                {/* CEH Logo Badge */}
-                <div className="flex items-center space-x-2 border-r-2 border-zinc-700 pr-6 mr-6 shrink-0">
-                  <div className="flex items-center font-black tracking-tighter text-lg sm:text-xl">
-                    <span className="text-white">C</span>
-                    <span className="text-[#e61c24] mx-0.5 text-2xl font-light">|</span>
-                    <span className="text-white">EH</span>
+                <div className="flex items-center justify-center space-x-6">
+                  {/* CEH Logo Badge */}
+                  <div className="flex items-center space-x-2 border-r-2 border-zinc-700 pr-6 shrink-0">
+                    <div className="flex items-center font-black tracking-tighter text-lg sm:text-xl">
+                      <span className="text-white">C</span>
+                      <span className="text-[#e61c24] mx-0.5 text-2xl font-light">|</span>
+                      <span className="text-white">EH</span>
+                    </div>
+                    <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans text-left">
+                      <p>Certified</p>
+                      <p>Ethical Hacker</p>
+                    </div>
                   </div>
-                  <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans">
-                    <p>Certified</p>
-                    <p>Ethical Hacker</p>
-                  </div>
+
+                  {/* Centered Track Title */}
+                  <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white uppercase text-center">
+                    {trackName}
+                  </h2>
                 </div>
 
-                {/* Banner Text */}
-                <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white uppercase">
-                  {trackName}
-                </h2>
               </div>
 
               {/* Golden Center Ribbon Emblem */}
@@ -154,7 +155,7 @@ export default function CertificatePage() {
             {/* BOTTOM METRICS & SIGNATURES */}
             <div className="relative z-10 px-8 pb-6 flex items-end justify-between text-xs">
               
-              {/* Left: ANSI Accredited Stamp & Issue Date */}
+              {/* Left: ANSI Stamp & Issue Date */}
               <div className="flex flex-col space-y-3 text-left">
                 <div className="flex items-center space-x-2">
                   <div className="w-12 h-6 border-2 border-white rounded-full flex items-center justify-center font-black text-[9px] tracking-tight text-white">
@@ -180,7 +181,6 @@ export default function CertificatePage() {
                   Expiry Date: <span className="font-bold text-zinc-200">{expiryDate}</span>
                 </p>
 
-                {/* Signature Ninad Pawar */}
                 <div className="pt-2 text-center">
                   <p className="font-serif italic text-base sm:text-lg text-cyan-300 leading-none">
                     Ninad Pawar
