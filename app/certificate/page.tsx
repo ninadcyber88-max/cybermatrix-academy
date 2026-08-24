@@ -124,7 +124,7 @@ export default function CertificatePage() {
               </div>
 
               {/* Golden Center Ribbon Emblem */}
-              <div className="absolute left-1/2 -translate-x-1/2 -top-2 flex flex-col items-center">
+              <div className="absolute centre-1/2 -translate-x-1/2 -top-2 flex flex-col items-center">
                 <div className="w-16 h-4 bg-gradient-to-r from-amber-600 via-yellow-400 to-amber-600 rounded-b-md shadow-lg border border-amber-300"></div>
               </div>
             </div>
