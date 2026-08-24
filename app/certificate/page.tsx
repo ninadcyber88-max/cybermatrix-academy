@@ -147,8 +147,8 @@ function CertificateContent() {
                       <span className="text-white">MATRIX</span>
                     </div>
                     <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans text-left">
-                      <p>Certified</p>
-                      <p>Ethical Hacker</p>
+                      <p>Cyber</p>
+                      <p>Matrix</p>
                     </div>
                   </div>
 
