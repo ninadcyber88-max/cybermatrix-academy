@@ -117,7 +117,7 @@ function CertificateContent() {
             <div className="absolute -left-10 top-1/4 w-[450px] h-[450px] rounded-full border border-zinc-700/10 pointer-events-none"></div>
 
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
-              <span className="text-[180px] font-black tracking-tighter">C|EH</span>
+              <span className="text-[180px] font-black tracking-tighter">CYBER|MATRIX</span>
             </div>
 
             {/* TOP BAR: ABSOLUTE CENTERED CYBER MATRIX & RIGHT CERT NUMBER */}
@@ -144,7 +144,7 @@ function CertificateContent() {
                     <div className="flex items-center font-black tracking-tighter text-lg sm:text-xl">
                       <span className="text-white">C</span>
                       <span className="text-[#e61c24] mx-0.5 text-2xl font-light">|</span>
-                      <span className="text-white">EH</span>
+                      <span className="text-white">MATRIX</span>
                     </div>
                     <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans text-left">
                       <p>Certified</p>
