@@ -10,7 +10,7 @@ export default function CertificatePage() {
   const [trackName, setTrackName] = useState('Certified Ethical Hacker');
   const [certNumber, setCertNumber] = useState('ECC7498613205');
   const [issueDate, setIssueDate] = useState('24 August, 2026');
-  const [expiryDate, setExpiryDate] = useState('24 August, 2029');
+  const [expiryDate, setExpiryDate] = useState('23 August, 2029');
 
   const handlePrint = () => {
     window.print();
@@ -67,7 +67,7 @@ export default function CertificatePage() {
           </div>
         </div>
 
-        {/* 2. OFFICIAL CEH / CYBER MATRIX CERTIFICATE TEMPLATE */}
+        {/* 2. OFFICIAL CYBER MATRIX CERTIFICATE TEMPLATE */}
         <div className="cert-outer-wrapper">
           <div className="certificate-card relative bg-[#0b0b0d] border border-zinc-800 text-white flex flex-col justify-between overflow-hidden select-none">
             
@@ -76,7 +76,7 @@ export default function CertificatePage() {
             <div className="absolute -left-20 top-1/4 w-96 h-96 rounded-full border border-zinc-700/20 pointer-events-none"></div>
             <div className="absolute -left-10 top-1/4 w-[450px] h-[450px] rounded-full border border-zinc-700/10 pointer-events-none"></div>
 
-            {/* Background Watermark C|EH Text */}
+            {/* Background Watermark */}
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
               <span className="text-[180px] font-black tracking-tighter">C|EH</span>
             </div>
@@ -85,7 +85,7 @@ export default function CertificatePage() {
             <div className="relative z-10 flex items-start justify-between px-8 pt-6">
               <div className="w-1/3"></div>
 
-              {/* Bold Red Text replaced with CYBER MATRIX */}
+              {/* Bold Red Text: CYBER MATRIX */}
               <div className="w-1/3 text-center">
                 <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#e61c24] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
                   CYBER MATRIX
@@ -117,7 +117,7 @@ export default function CertificatePage() {
                 </div>
 
                 {/* Banner Text */}
-                <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white">
+                <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white uppercase">
                   {trackName}
                 </h2>
               </div>
