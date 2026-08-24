@@ -85,7 +85,7 @@ export default function CertificatePage() {
               
               {/* Perfectly Centered Title */}
               <div className="text-center">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#e61c24] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#05CDF0] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
                   CYBER MATRIX
                 </h1>
               </div>
