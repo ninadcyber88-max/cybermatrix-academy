@@ -1,217 +1,203 @@
-import { CyberSmokeHeader } from "@/components/CyberSmokeHeader";
-import { StudentAIAssistant } from "@/components/StudentAIAssistant";
-import { CTFTerminal } from "@/components/CTFTerminal";
-import { CTFFlagSubmit } from "@/components/CTFFlagSubmit";
-import { Leaderboard } from "@/components/Leaderboard";
-import { BookOpen, Terminal, User, Swords, Code2, Award } from "lucide-react";
-import Link from "next/link";
+'use client';
 
-export default function Home() {
+import { useState } from 'react';
+import Link from 'next/link';
+import { 
+  Search, 
+  Filter, 
+  Signal, 
+  Terminal, 
+  ShieldAlert, 
+  Cpu, 
+  ArrowLeft,
+  Flame
+} from 'lucide-react';
+import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
+
+interface TrackCard {
+  id: string;
+  title: string;
+  category: 'COURSES' | 'ROADMAP' | 'WALKTHROUGHS' | 'CVE';
+  description: string;
+  level: 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED';
+  levelColor: string;
+  bannerGradient: string;
+  bannerIcon: React.ReactNode;
+}
+
+const COURSES_DATA: TrackCard[] = [
+  {
+    id: 'win-fund',
+    title: 'WINDOWS FUNDAMENTAL',
+    category: 'COURSES',
+    description: 'Start your journey into the world of hacking. Master core OS internals, registry architecture, and permissions.',
+    level: 'BEGINNER',
+    levelColor: 'text-emerald-400',
+    bannerGradient: 'bg-gradient-to-b from-[#0078d4] to-[#004e8c]',
+    bannerIcon: (
+      <div className="grid grid-cols-2 gap-1.5 w-16 h-16 drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+        <div className="bg-[#f25022] rounded-tl-sm"></div>
+        <div className="bg-[#7fba00] rounded-tr-sm"></div>
+        <div className="bg-[#00a4ef] round
+      </div>
+    )
+  },
+  {
+    id: 'linux-mast',
+    title: 'LINUX MASTERY',
+    category: 'COURSES',
+    description: 'Master Linux from the ground up — the way real hackers do it. From core bash scripts to root privilege escalation.',
+    level: 'BEGINNER',
+    levelColor: 'text-emerald-400',
+    bannerGradient: 'bg-gradient-to-b from-[#8b151b] via-[#590d12] to-[#2b0507]',
+    bannerIcon: (
+      <div className="relative flex items-center justify-center">
+        <span className="text-6xl drop-shadow-[0_6px_14px_rgba(0,0,0,0.8)] select-none">🐧</span>
+      </div>
+    )
+  },
+  {
+    id: 'eth-hack',
+    title: 'ETHICAL HACKING',
+    category: 'COURSES',
+    description: 'Learn ethical hacking from scratch — recon, exploitation, privilege escalation, and active directory penetration.',
+    level: 'INTERMEDIATE',
+    levelColor: 'text-amber-500',
+    bannerGradient: 'bg-gradient-to-b from-[#800c15] via-[#4d070d] to-[#240306]',
+    bannerIcon: (
+      <div className="relative flex flex-col items-center justify-center">
+        <div className="w-16 h-16 rounded-full bg-black/40 border border-rose-500/40 flex items-center justify-center shadow-[0_0_20px_rgba(244,63,94,0.4)]">
+          <ShieldAlert className="w-9 h-9 text-rose-500 drop-shadow-[0_0_10px_rgba(244,63,94,0.8)]" />
+        </div>
+      </div>
+    )
+  },
+  {
+    id: 'web-vapt',
+    title: 'WEB APP PENTESTING',
+    category: 'COURSES',
+    description: 'OWASP Top 10 mastery, advanced SQLi, bypass techniques, SSRF exploitation, and Burp Suite automation protocols.',
+    level: 'ADVANCED',
+    levelColor: 'text-rose-500',
+    bannerGradient: 'bg-gradient-to-b from-[#0e4d64] via-[#092d3b] to-[#04131a]',
+    bannerIcon: (
+      <div className="w-16 h-16 rounded-2xl bg-cyan-950/60 border border-cyan-400/50 flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.4)]">
+        <Terminal className="w-8 h-8 text-cyan-300" />
+      </div>
+    )
+  }
+];
+
+export default function LearnCoursesPage() {
+  const [activeNav, setActiveNav] = useState<'ROADMAP' | 'COURSES' | 'WALKTHROUGHS' | 'CVE'>('COURSES');
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredData = COURSES_DATA.filter(item => 
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    item.description.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100 font-mono pb-12">
+    <div className="min-h-screen bg-[#1b2234] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300">
+      
+      {/* 1. Main Header */}
       <CyberSmokeHeader />
 
-      <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-6">
-        {/* Navigation Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800/80 pb-3">
-          <div className="flex items-center space-x-2 text-xs text-zinc-400">
-            <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
-            <span>CYBER LAB STATUS: OPERATIONAL</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Link
-              href="/certificate"
-              className="text-xs px-2.5 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20 transition flex items-center space-x-1.5 font-bold"
-            >
-              <Award className="w-3.5 h-3.5" />
-              <span>CERTIFICATE</span>
-            </Link>
-            <Link
-              href="/cheatsheet"
-              className="text-xs px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30 transition flex items-center space-x-1.5"
-            >
-              <Code2 className="w-3.5 h-3.5" />
-              <span>CHEATSHEET</span>
-            </Link>
-            <Link
-              href="/arena"
-              className="text-xs px-2.5 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition flex items-center space-x-1.5 font-bold shadow-[0_0_12px_rgba(239,68,68,0.2)]"
-            >
-              <Swords className="w-3.5 h-3.5" />
-              <span>ARENA</span>
-            </Link>
-            <Link
-              href="/profile"
-              className="text-xs px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 transition flex items-center space-x-1.5"
-            >
-              <User className="w-3.5 h-3.5" />
-              <span>PROFILE</span>
-            </Link>
-            <Link
-              href="/courses"
-              className="text-xs px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition font-bold"
-            >
-              COURSES →
-            </Link>
-          </div>
-        </div>
-
-        {/* 2-Column Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+      {/* 2. Dark Navy Navigation & Search Sub-Header */}
+      <div className="bg-[#141b2b] border-b border-zinc-800/80 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
           
-          {/* Left Column (5 Cols) */}
-          <div className="lg:col-span-5 flex flex-col gap-5">
-            <div className="p-4 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md space-y-3 flex-1 flex flex-col justify-between">
-              <h2 className="text-xs font-bold text-cyan-400 flex items-center space-x-1.5 border-b border-cyan-500/20 pb-2">
-                <BookOpen className="w-3.5 h-3.5" />
-                <span>SECURITY TRACKS</span>
-              </h2>
-              <div className="space-y-2.5 flex-1 flex flex-col justify-center">
-                <Link href="/courses/vapt-101" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-cyan-500/40 transition cursor-pointer block">
-                  <p className="text-xs font-bold text-zinc-200">Offensive Security & VAPT</p>
-                  <p className="text-[10px] text-zinc-500 mt-0.5">Burp Suite, SQLi, Buffer Overflow</p>
-                </Link>
-                <Link href="/courses/dfir-201" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-cyan-500/40 transition cursor-pointer block">
-                  <p className="text-xs font-bold text-zinc-200">Cloud & Defense Hardening</p>
-                  <p className="text-[10px] text-zinc-500 mt-0.5">AWS IAM, SIEM, DFIR Playbooks</p>
-                </Link>
-              </div>
-            </div>
-
-            <div className="flex-1">
-              <CTFFlagSubmit />
-            </div>
+          {/* Tabs */}
+          <div className="flex items-center space-x-6 sm:space-x-8 text-xs font-mono tracking-wider font-bold">
+            {(['ROADMAP', 'COURSES', 'WALKTHROUGHS', 'CVE'] as const).map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveNav(tab)}
+                className={`py-4 transition-all relative ${
+                  activeNav === tab
+                    ? 'text-cyan-400 font-extrabold'
+                    : 'text-zinc-400 hover:text-zinc-200'
+                }`}
+              >
+                {tab}
+                {activeNav === tab && (
+                  <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"></div>
+                )}
+              </button>
+            ))}
           </div>
 
-          {/* Right Column (7 Cols) */}
-          <div className="lg:col-span-7 flex flex-col">
-            <h2 className="text-xs font-bold text-cyan-400 flex items-center space-x-2 mb-3">
-              <Terminal className="w-4 h-4" />
-              <span>LIVE CTF ATTACK SANDBOX</span>
-            </h2>
-            <div className="flex-1 min-h-[440px]">
-              <CTFTerminal />
+          {/* Search Box + Filter Icon */}
+          <div className="flex items-center space-x-2">
+            <div className="relative w-48 sm:w-64 md:w-80">
+              <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="SEARCH_DB..."
+                className="w-full pl-9 pr-3 py-1.5 bg-[#1a2338] border border-zinc-700/60 rounded-md text-xs font-mono text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-cyan-500 transition"
+              />
             </div>
+
+            <button className="p-2 rounded-md bg-[#1a2338] border border-zinc-700/60 hover:border-cyan-500/50 text-zinc-400 hover:text-cyan-300 transition">
+              <Filter className="w-3.5 h-3.5" />
+            </button>
           </div>
 
-        </div>
-
-        {/* Leaderboard Section */}
-        <div className="pt-2">
-          <Leaderboard />
         </div>
       </div>
 
-      <StudentAIAssistant />
-    </main>
+      {/* 3. Main Courses Grid Content */}
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-10">
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredData.map((course) => (
+            <div
+              key={course.id}
+              className="group flex flex-col justify-between rounded-xl bg-[#131929] border border-zinc-800/90 overflow-hidden hover:border-cyan-500/40 hover:shadow-[0_0_25px_rgba(0,0,0,0.4)] transition-all duration-300 cursor-pointer"
+            >
+              
+              {/* Top Vibrant Artwork Banner */}
+              <div className={`h-48 w-full ${course.bannerGradient} flex items-center justify-center relative overflow-hidden border-b border-black/30`}>
+                {course.bannerIcon}
+                <div className="absolute inset-0 bg-black/10 backdrop-brightness-95"></div>
+              </div>
+
+              {/* Bottom Information Content */}
+              <div className="p-5 flex flex-col justify-between flex-1">
+                <div>
+                  <h3 className="text-base font-extrabold text-white tracking-wide group-hover:text-cyan-300 transition">
+                    {course.title}
+                  </h3>
+                  <p className="text-xs text-zinc-400 mt-2 line-clamp-2 leading-relaxed">
+                    {course.description}
+                  </p>
+                </div>
+
+                {/* Level Indicator Footer */}
+                <div className="mt-6 pt-3 border-t border-zinc-800/80 flex items-center justify-end">
+                  <div className="flex items-center space-x-1.5">
+                    <Signal className={`w-3.5 h-3.5 ${course.levelColor}`} />
+                    <span className={`text-[11px] font-black tracking-wider ${course.levelColor}`}>
+                      {course.level}
+                    </span>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          ))}
+        </div>
+
+      </main>
+
+      {/* Footer */}
+      <footer className="border-t border-zinc-800/60 bg-[#141b2b] py-6 text-center text-xs font-mono text-zinc-500">
+        CYBERMATRIX ACADEMY // ARCHITECTED BY NINAD PAWAR // DEFENSE MATRIX ACTIVE
+      </footer>
+
+    </div>
   );
 }
-import { CyberSmokeHeader } from "@/components/CyberSmokeHeader";
-import { StudentAIAssistant } from "@/components/StudentAIAssistant";
-import { CTFTerminal } from "@/components/CTFTerminal";
-import { CTFFlagSubmit } from "@/components/CTFFlagSubmit";
-import { Leaderboard } from "@/components/Leaderboard";
-import { BookOpen, Terminal, User, Swords, Code2, Award } from "lucide-react";
-import Link from "next/link";
-
-export default function Home() {
-  return (
-      <main className="min-h-screen bg-zinc-950 text-zinc-100 font-mono pb-12">
-            <CyberSmokeHeader />
-
-                  <div className="max-w-6xl mx-auto p-4 md:p-8 space-y-6">
-                          {/* Navigation Bar */}
-                                  <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-800/80 pb-3">
-                                            <div className="flex items-center space-x-2 text-xs text-zinc-400">
-                                                        <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse"></span>
-                                                                    <span>CYBER LAB STATUS: OPERATIONAL</span>
-                                                                              </div>
-                                                                                        <div className="flex items-center space-x-2">
-                                                                                                    <Link
-                                                                                                                  href="/certificate"
-                                                                                                                                className="text-xs px-2.5 py-1.5 rounded-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 hover:bg-yellow-500/20 transition flex items-center space-x-1.5 font-bold"
-                                                                                                                                            >
-                                                                                                                                                          <Award className="w-3.5 h-3.5" />
-                                                                                                                                                                        <span>CERTIFICATE</span>
-                                                                                                                                                                                    </Link>
-                                                                                                                                                                                                <Link
-                                                                                                                                                                                                              href="/cheatsheet"
-                                                                                                                                                                                                                            className="text-xs px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 hover:border-cyan-500/30 transition flex items-center space-x-1.5"
-                                                                                                                                                                                                                                        >
-                                                                                                                                                                                                                                                      <Code2 className="w-3.5 h-3.5" />
-                                                                                                                                                                                                                                                                    <span>CHEATSHEET</span>
-                                                                                                                                                                                                                                                                                </Link>
-                                                                                                                                                                                                                                                                                            <Link
-                                                                                                                                                                                                                                                                                                          href="/arena"
-                                                                                                                                                                                                                                                                                                                        className="text-xs px-2.5 py-1.5 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 hover:bg-red-500/20 transition flex items-center space-x-1.5 font-bold shadow-[0_0_12px_rgba(239,68,68,0.2)]"
-                                                                                                                                                                                                                                                                                                                                    >
-                                                                                                                                                                                                                                                                                                                                                  <Swords className="w-3.5 h-3.5" />
-                                                                                                                                                                                                                                                                                                                                                                <span>ARENA</span>
-                                                                                                                                                                                                                                                                                                                                                                            </Link>
-                                                                                                                                                                                                                                                                                                                                                                                        <Link
-                                                                                                                                                                                                                                                                                                                                                                                                      href="/profile"
-                                                                                                                                                                                                                                                                                                                                                                                                                    className="text-xs px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-cyan-400 transition flex items-center space-x-1.5"
-                                                                                                                                                                                                                                                                                                                                                                                                                                >
-                                                                                                                                                                                                                                                                                                                                                                                                                                              <User className="w-3.5 h-3.5" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                            <span>PROFILE</span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </Link>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <Link
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  href="/courses"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                className="text-xs px-3 py-1.5 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 hover:bg-cyan-500/20 transition font-bold"
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            >
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          COURSES →
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </Link>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {/* 2-Column Grid */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {/* Left Column (5 Cols) */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      <div className="lg:col-span-5 flex flex-col gap-5">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <div className="p-4 rounded-2xl bg-zinc-900/80 border border-cyan-500/20 backdrop-blur-md space-y-3 flex-1 flex flex-col justify-between">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <h2 className="text-xs font-bold text-cyan-400 flex items-center space-x-1.5 border-b border-cyan-500/20 pb-2">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <BookOpen className="w-3.5 h-3.5" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <span>SECURITY TRACKS</span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </h2>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <div className="space-y-2.5 flex-1 flex flex-col justify-center">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <Link href="/courses/vapt-101" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-cyan-500/40 transition cursor-pointer block">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <p className="text-xs font-bold text-zinc-200">Offensive Security & VAPT</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <p className="text-[10px] text-zinc-500 mt-0.5">Burp Suite, SQLi, Buffer Overflow</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </Link>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <Link href="/courses/dfir-201" className="p-3 rounded-xl bg-zinc-950 border border-zinc-800 hover:border-cyan-500/40 transition cursor-pointer block">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <p className="text-xs font-bold text-zinc-200">Cloud & Defense Hardening</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <p className="text-[10px] text-zinc-500 mt-0.5">AWS IAM, SIEM, DFIR Playbooks</p>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </Link>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <div className="flex-1">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <CTFFlagSubmit />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {/* Right Column (7 Cols) */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <div className="lg:col-span-7 flex flex-col">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <h2 className="text-xs font-bold text-cyan-400 flex items-center space-x-2 mb-3">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <Terminal className="w-4 h-4" />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          <span>LIVE CTF ATTACK SANDBOX</span>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </h2>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  <div className="flex-1 min-h-[440px]">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <CTFTerminal />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      {/* Leaderboard Section */}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <div className="pt-2">
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <Leaderboard />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      </div>
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            <StudentAIAssistant />
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </main>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  );
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  }
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
