@@ -5,17 +5,10 @@ import Link from 'next/link';
 import { 
   Search, 
   Filter, 
-  ShieldAlert, 
-  ExternalLink, 
-  AlertTriangle, 
-  CheckCircle2, 
+  Radio, 
   Copy, 
   Check, 
-  Flame, 
-  Terminal, 
-  Radio, 
-  Bug,
-  ShieldCheck
+  ShieldCheck 
 } from 'lucide-react';
 import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
 
@@ -107,6 +100,14 @@ const CVE_DATABASE: CVEItem[] = [
   }
 ];
 
+const NAV_BUTTONS = [
+  { name: 'ROADMAP', href: '/roadmap' },
+  { name: 'COURSES', href: '/courses' },
+  { name: 'WALKTHROUGH', href: '/walkthroughs' },
+  { name: 'CVE', href: '/cve' },
+  { name: 'CERTIFICATE', href: '/certificate' }
+];
+
 export default function CVETrackerPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [severityFilter, setSeverityFilter] = useState<string>('ALL');
@@ -118,169 +119,188 @@ export default function CVETrackerPage() {
     setTimeout(() => setCopiedCve(null), 2000);
   };
 
-  const filteredCVEs = CVE_DATABASE.filter(c => {
-    const matchesSearch = c.cveId.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          c.affectedSoftware.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredCVEs = CVE_DATABASE.filter((c) => {
+    const matchesSearch =
+      c.cveId.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.affectedSoftware.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesSeverity = severityFilter === 'ALL' || c.severity === severityFilter;
     return matchesSearch && matchesSeverity;
   });
 
   return (
-    <div className="min-h-screen bg-[#1b2234] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300">
+    <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 flex flex-col justify-between">
       
-      {/* 1. Global Header */}
-      <CyberSmokeHeader />
+      <div>
+        {/* 1. Global Smoke Header */}
+        <CyberSmokeHeader />
 
-      {/* 2. Top Navigation Sub-Header */}
-      <div className="bg-[#141b2b] border-b border-zinc-800/80 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
-          
-          <div className="flex items-center space-x-6 sm:space-x-8 text-xs font-mono tracking-wider font-bold">
-            <Link href="/roadmap" className="text-zinc-400 hover:text-zinc-200 py-4">ROADMAP</Link>
-            <Link href="/courses" className="text-zinc-400 hover:text-zinc-200 py-4">COURSES</Link>
-            <Link href="/walkthroughs" className="text-zinc-400 hover:text-zinc-200 py-4">WALKTHROUGHS</Link>
-          </div>
-
-          {/* Search Bar */}
-          <div className="flex items-center space-x-2">
-            <div className="relative w-48 sm:w-64 md:w-80">
-              <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="SEARCH_CVE_DATABASE..."
-                className="w-full pl-9 pr-3 py-1.5 bg-[#1a2338] border border-zinc-700/60 rounded-md text-xs font-mono text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-cyan-500 transition"
-              />
+        {/* 2. Top Navigation Sub-Header */}
+        <div className="bg-[#0f1422] border-b border-zinc-800/80 sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
+            
+            <div className="flex items-center space-x-4 sm:space-x-8 text-xs font-mono tracking-wider font-bold overflow-x-auto no-scrollbar">
+              {NAV_BUTTONS.map((btn) => {
+                const isActive = btn.name === 'CVE';
+                return (
+                  <Link
+                    key={btn.name}
+                    href={btn.href}
+                    className={`py-4 transition-all relative shrink-0 ${
+                      isActive 
+                        ? 'text-[#38bdf8] font-extrabold' 
+                        : 'text-zinc-400 hover:text-zinc-100'
+                    }`}
+                  >
+                    <span>{btn.name}</span>
+                    {isActive && (
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_10px_rgba(56,189,248,0.9)]"></div>
+                    )}
+                  </Link>
+                );
+              })}
             </div>
-          </div>
 
-        </div>
-      </div>
-
-      {/* 3. Hero Header & Filters */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-4">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-6 rounded-2xl bg-[#131929] border border-zinc-800">
-          <div>
-            <div className="flex items-center space-x-2 text-rose-400 text-xs font-mono font-bold uppercase mb-1">
-              <Radio className="w-3.5 h-3.5 animate-pulse" />
-              <span>LIVE VULNERABILITY INTELLIGENCE FEED // UPDATED 2026</span>
-            </div>
-            <h1 className="text-2xl sm:text-3xl font-black text-white">
-              Real-Time CVE Intelligence Tracker
-            </h1>
-            <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-2xl">
-              Track critical security vulnerabilities, zero-days, exploit payloads in the wild, and official remediation advisories verified by CyberMatrix Academy.
-            </p>
-          </div>
-
-          {/* Filter Buttons */}
-          <div className="flex items-center space-x-1.5 bg-[#0e1322] border border-zinc-800 p-1.5 rounded-xl font-mono text-xs">
-            {['ALL', 'CRITICAL', 'HIGH', 'MEDIUM'].map((sev) => (
-              <button
-                key={sev}
-                onClick={() => setSeverityFilter(sev)}
-                className={`px-3 py-1 rounded-lg font-bold transition ${
-                  severityFilter === sev
-                    ? 'bg-cyan-500 text-black shadow-[0_0_10px_rgba(6,182,212,0.4)]'
-                    : 'text-zinc-400 hover:text-white'
-                }`}
-              >
-                {sev}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* 4. CVE Cards Feed */}
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-6 pb-16 space-y-4">
-        {filteredCVEs.map((cve) => (
-          <div 
-            key={cve.id}
-            className="p-6 rounded-2xl bg-[#131a2e] border border-zinc-800 hover:border-cyan-500/40 transition-all duration-300 shadow-md space-y-4"
-          >
-            {/* CVE Header Row */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800">
-              <div className="flex items-center space-x-3">
-                <button
-                  onClick={() => handleCopy(cve.cveId)}
-                  className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-zinc-950 border border-zinc-700 text-cyan-300 font-mono font-black text-xs hover:border-cyan-400 transition"
-                  title="Copy CVE ID"
-                >
-                  <span>{cve.cveId}</span>
-                  {copiedCve === cve.cveId ? (
-                    <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  ) : (
-                    <Copy className="w-3.5 h-3.5 text-zinc-500" />
-                  )}
-                </button>
-
-                <span className={`text-[10px] font-mono font-black px-2.5 py-0.5 rounded border ${
-                  cve.severity === 'CRITICAL'
-                    ? 'text-rose-400 bg-rose-500/10 border-rose-500/30'
-                    : cve.severity === 'HIGH'
-                    ? 'text-amber-400 bg-amber-500/10 border-amber-500/30'
-                    : 'text-blue-400 bg-blue-500/10 border-blue-500/30'
-                }`}>
-                  CVSS {cve.cvssScore} // {cve.severity}
-                </span>
-
-                <span className={`text-[9.5px] font-mono px-2 py-0.5 rounded ${
-                  cve.pocStatus === 'IN_THE_WILD'
-                    ? 'text-red-400 bg-red-950/60 border border-red-800 animate-pulse'
-                    : cve.pocStatus === 'PUBLIC_POC'
-                    ? 'text-amber-400 bg-amber-950/40 border border-amber-800'
-                    : 'text-emerald-400 bg-emerald-950/40 border border-emerald-800'
-                }`}>
-                  {cve.pocStatus.replace(/_/g, ' ')}
-                </span>
+            <div className="flex items-center space-x-2 shrink-0">
+              <div className="relative w-36 sm:w-60 md:w-64">
+                <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="SEARCH_CVE_DATABASE..."
+                  className="w-full pl-9 pr-3 py-1.5 bg-[#171e30] border border-zinc-700/60 rounded-md text-xs font-mono text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#38bdf8] transition"
+                />
               </div>
-
-              <span className="text-[11px] font-mono text-zinc-500">
-                PUBLISHED: {cve.publishDate}
-              </span>
+              <button 
+                className="p-2 rounded-md bg-[#171e30] border border-zinc-700/60 text-zinc-400 hover:text-[#38bdf8] transition hover:border-[#38bdf8]/40 cursor-pointer"
+                title="Filter Matrix"
+              >
+                <Filter className="w-3.5 h-3.5" />
+              </button>
             </div>
 
-            {/* CVE Content */}
+          </div>
+        </div>
+
+        {/* 3. Hero Header & Severity Filter Pills */}
+        <div className="max-w-7xl mx-auto px-4 md:px-8 pt-8 pb-4">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 p-6 rounded-2xl bg-[#0f1524] border border-zinc-800">
             <div>
-              <h3 className="text-base sm:text-lg font-bold text-white mb-1.5">
-                {cve.title}
-              </h3>
-              <p className="text-xs text-zinc-300 leading-relaxed">
-                {cve.description}
+              <div className="flex items-center space-x-2 text-rose-400 text-xs font-mono font-bold uppercase mb-1">
+                <Radio className="w-3.5 h-3.5 animate-pulse" />
+                <span>LIVE VULNERABILITY INTELLIGENCE FEED</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-black text-white">
+                Real-Time CVE Intelligence Tracker
+              </h1>
+              <p className="text-xs sm:text-sm text-zinc-400 mt-1 max-w-2xl">
+                Track critical security vulnerabilities, zero-days, exploit payloads in the wild, and official remediation advisories verified by CyberMatrix Academy.
               </p>
             </div>
 
-            {/* Affected Software & Vector */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
-              <div className="p-3 rounded-xl bg-[#0f1424] border border-zinc-800/80">
-                <span className="text-zinc-500 block text-[10px] font-bold">AFFECTED SYSTEMS / PACKAGES:</span>
-                <span className="text-rose-300 font-semibold">{cve.affectedSoftware}</span>
-              </div>
-
-              <div className="p-3 rounded-xl bg-[#0f1424] border border-zinc-800/80">
-                <span className="text-zinc-500 block text-[10px] font-bold">CVSS VECTOR STRING:</span>
-                <span className="text-zinc-300 truncate block">{cve.vector}</span>
-              </div>
+            <div className="flex items-center space-x-1.5 bg-[#0a0e18] border border-zinc-800 p-1.5 rounded-xl font-mono text-xs">
+              {['ALL', 'CRITICAL', 'HIGH', 'MEDIUM'].map((sev) => (
+                <button
+                  key={sev}
+                  onClick={() => setSeverityFilter(sev)}
+                  className={`px-3 py-1 rounded-lg font-bold transition ${
+                    severityFilter === sev
+                      ? 'bg-[#38bdf8] text-black shadow-[0_0_10px_rgba(56,189,248,0.4)]'
+                      : 'text-zinc-400 hover:text-white'
+                  }`}
+                >
+                  {sev}
+                </button>
+              ))}
             </div>
-
-            {/* Mitigation / Patch Advisory */}
-            <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/30 flex items-start space-x-2.5 text-xs font-mono">
-              <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <div>
-                <span className="text-emerald-400 font-bold block">OFFICIAL MITIGATION / REMEDIATION:</span>
-                <span className="text-zinc-300">{cve.mitigation}</span>
-              </div>
-            </div>
-
           </div>
-        ))}
-      </main>
+        </div>
 
-      {/* Footer */}
-      <footer className="border-t border-zinc-800/60 bg-[#141b2b] py-6 text-center text-xs font-mono text-zinc-500">
+        {/* 4. CVE Feed List */}
+        <main className="max-w-7xl mx-auto px-4 md:px-8 py-6 pb-16 space-y-4">
+          {filteredCVEs.map((cve) => (
+            <div 
+              key={cve.id}
+              className="p-6 rounded-2xl bg-[#0f1524] border border-zinc-800 hover:border-[#38bdf8]/40 transition-all duration-300 shadow-md space-y-4"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-zinc-800">
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => handleCopy(cve.cveId)}
+                    className="flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-zinc-950 border border-zinc-700 text-cyan-300 font-mono font-black text-xs hover:border-cyan-400 transition cursor-pointer"
+                    title="Copy CVE ID"
+                  >
+                    <span>{cve.cveId}</span>
+                    {copiedCve === cve.cveId ? (
+                      <Check className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : (
+                      <Copy className="w-3.5 h-3.5 text-zinc-500" />
+                    )}
+                  </button>
+
+                  <span className={`text-[10px] font-mono font-black px-2.5 py-0.5 rounded border ${
+                    cve.severity === 'CRITICAL'
+                      ? 'text-rose-400 bg-rose-500/10 border-rose-500/30'
+                      : cve.severity === 'HIGH'
+                      ? 'text-amber-400 bg-amber-500/10 border-amber-500/30'
+                      : 'text-blue-400 bg-blue-500/10 border-blue-500/30'
+                  }`}>
+                    CVSS {cve.cvssScore} // {cve.severity}
+                  </span>
+
+                  <span className={`text-[9.5px] font-mono px-2 py-0.5 rounded ${
+                    cve.pocStatus === 'IN_THE_WILD'
+                      ? 'text-red-400 bg-red-950/60 border border-red-800 animate-pulse'
+                      : cve.pocStatus === 'PUBLIC_POC'
+                      ? 'text-amber-400 bg-amber-950/40 border border-amber-800'
+                      : 'text-emerald-400 bg-emerald-950/40 border border-emerald-800'
+                  }`}>
+                    {cve.pocStatus.replace(/_/g, ' ')}
+                  </span>
+                </div>
+
+                <span className="text-[11px] font-mono text-zinc-500">
+                  PUBLISHED: {cve.publishDate}
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-base sm:text-lg font-bold text-white mb-1.5">
+                  {cve.title}
+                </h3>
+                <p className="text-xs text-zinc-300 leading-relaxed">
+                  {cve.description}
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+                <div className="p-3 rounded-xl bg-[#141b2c] border border-zinc-800/80">
+                  <span className="text-zinc-500 block text-[10px] font-bold">AFFECTED SYSTEMS / PACKAGES:</span>
+                  <span className="text-rose-300 font-semibold">{cve.affectedSoftware}</span>
+                </div>
+
+                <div className="p-3 rounded-xl bg-[#141b2c] border border-zinc-800/80">
+                  <span className="text-zinc-500 block text-[10px] font-bold">CVSS VECTOR STRING:</span>
+                  <span className="text-zinc-300 truncate block">{cve.vector}</span>
+                </div>
+              </div>
+
+              <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/30 flex items-start space-x-2.5 text-xs font-mono">
+                <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <span className="text-emerald-400 font-bold block">OFFICIAL MITIGATION / REMEDIATION:</span>
+                  <span className="text-zinc-300">{cve.mitigation}</span>
+                </div>
+              </div>
+
+            </div>
+          ))}
+        </main>
+      </div>
+
+      {/* 5. Footer */}
+      <footer className="border-t border-zinc-800/60 bg-[#0d121e] py-8 text-center text-xs font-mono text-zinc-500">
         CYBERMATRIX ACADEMY // ARCHITECTED BY NINAD PAWAR // DEFENSE MATRIX ACTIVE
       </footer>
 
