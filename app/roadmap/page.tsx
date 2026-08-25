@@ -176,7 +176,10 @@ export default function GlassmorphismRoadmapPage() {
               ROADMAP
               <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,1)]"></div>
             </span>
-            
+            <Link href="/courses" className="text-zinc-400 hover:text-zinc-200 py-4">ROADMAP</Link>
+            <Link href="/courses" className="text-zinc-400 hover:text-zinc-200 py-4">COURSES</Link>
+            <Link href="/courses" className="text-zinc-400 hover:text-zinc-200 py-4">CVE</Link>
+
           </div>
 
           <div className="flex items-center space-x-2">
