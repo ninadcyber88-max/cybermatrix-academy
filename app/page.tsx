@@ -117,74 +117,7 @@ export default function DashboardPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 flex flex-col justify-between">
-      <div class="top-nav-container">
-          <!-- Left Side Brand / Lead Architect -->
-            <div class="brand-group">
-                <span class="brand-title">CYBERMATRIX ACADEMY</span>
-                    <span class="sub-title">BY NINAD PAWAR // LEAD ARCHITECT</span>
-                      </div>
-
-                        <!-- Centered Fast-Glowing Text -->
-                          <div class="center-glow-banner">
-                              <span class="glow-text">PROFESSIONAL WEBSITE DESIGNER</span>
-                                </div>
-
-                                  <!-- Right Side Status Bar -->
-                                    <div class="status-group">
-                                        <span class="time-stamp">10:12:36 AM | 25-08-2026</span>
-                                            <span class="status-badge">STATUS: DEFCON 5 // OPTIMAL</span>
-                                              </div>
-                                              </div>
-
-                                              /* Container Layout */
-                                              .top-nav-container {
-                                                display: flex;
-                                                  align-items: center;
-                                                    justify-content: space-between;
-                                                      width: 100%;
-                                                        padding: 12px 24px;
-                                                          background-color: #0b111e;
-                                                            border-bottom: 1px solid #1a2333;
-                                                              box-sizing: border-box;
-                                                              }
-
-                                                              /* Center Glowing Element */
-                                                              .center-glow-banner {
-                                                                flex: 1;
-                                                                  display: flex;
-                                                                    justify-content: center;
-                                                                      align-items: center;
-                                                                      }
-
-                                                                      .glow-text {
-                                                                        font-family: 'Inter', 'Segoe UI', sans-serif;
-                                                                          font-size: 0.95rem;
-                                                                            font-weight: 800;
-                                                                              letter-spacing: 2px;
-                                                                                text-transform: uppercase;
-                                                                                  color: #00e5ff;
-                                                                                    animation: fastNeonGlow 0.8s ease-in-out infinite alternate;
-                                                                                    }
-
-                                                                                    /* Fast Pulsing Glow Keyframes */
-                                                                                    @keyframes fastNeonGlow {
-                                                                                      0% {
-                                                                                          text-shadow: 
-                                                                                                0 0 2px #00e5ff,
-                                                                                                      0 0 6px #00e5ff,
-                                                                                                            0 0 12px #0077ff;
-                                                                                                                opacity: 0.85;
-                                                                                                                  }
-                                                                                                                    100% {
-                                                                                                                        text-shadow: 
-                                                                                                                              0 0 4px #ffffff,
-                                                                                                                                    0 0 10px #00e5ff,
-                                                                                                                                          0 0 22px #00e5ff,
-                                                                                                                                                0 0 35px #00b4d8;
-                                                                                                                                                    opacity: 1;
-                                                                                                                                                      }
-                                                                                                                                                      }
+        <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 flex flex-col justify-between">
       <div>
         {/* 1. Global Header */}
         <CyberSmokeHeader />
