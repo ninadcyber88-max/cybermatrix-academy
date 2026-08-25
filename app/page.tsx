@@ -16,6 +16,25 @@ import {
 } from 'lucide-react';
 import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
 
+import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
+import WebsiteUnderConstructionBanner from '@/components/WebsiteUnderConstructionBanner';
+
+export default function DashboardPage() {
+  return (
+      <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans flex flex-col justify-between">
+            <div>
+                    {/* 1. Global Header */}
+                            <CyberSmokeHeader />
+
+                                    {/* 2. Top Glowing Construction Banner */}
+                                            <WebsiteUnderConstructionBanner />
+
+                                                    {/* 3. Top Navigation Sub-Header */}
+                                                            <div className="bg-[#0f1422] border-b border-zinc-800/80 sticky top-0 z-40">
+                                                                      ...
+                                                                              </div>
+                                                                                    ...
+
 interface TrackCard {
   id: string;
   title: string;
