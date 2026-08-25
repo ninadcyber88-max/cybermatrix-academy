@@ -112,10 +112,7 @@ export default function CoursesPage() {
             <Link href="/roadmap" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
               ROADMAP
             </Link>
-            <button className="text-[#38bdf8] font-extrabold py-4 relative cursor-default">
-              COURSES
-              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_8px_rgba(56,189,248,0.8)]"></div>
-            </button>
+            
             <Link href="/walkthroughs" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
               WALKTHROUGHS
             </Link>
