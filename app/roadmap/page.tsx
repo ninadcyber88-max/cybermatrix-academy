@@ -176,9 +176,7 @@ export default function GlassmorphismRoadmapPage() {
               ROADMAP
               <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 shadow-[0_0_12px_rgba(34,211,238,1)]"></div>
             </span>
-            <span className="text-zinc-400 py-4 cursor-default">COURSES</span>
-            <span className="text-zinc-400 py-4 cursor-default">WALKTHROUGHS</span>
-            <span className="text-zinc-400 py-4 cursor-default">CVE</span>
+            
           </div>
 
           <div className="flex items-center space-x-2">
