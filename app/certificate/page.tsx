@@ -1,308 +1,126 @@
-/*'use client';
+'use client';
 
-import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
-import { Printer, ArrowLeft, ShieldCheck, ExternalLink, CheckCircle } from 'lucide-react';
+import { 
+  Lock, 
+  ShieldAlert, 
+  ArrowLeft, 
+  Search, 
+  Filter, 
+  AlertTriangle 
+} from 'lucide-react';
 import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
 
-function CertificateContent() {
-  const searchParams = useSearchParams();
-  const isViewOnly = searchParams.get('verify') === 'true' || searchParams.get('view') === 'only';
+const NAV_BUTTONS = [
+  { name: 'ROADMAP', href: '/roadmap' },
+  { name: 'COURSES', href: '/courses' },
+  { name: 'WALKTHROUGH', href: '/walkthroughs' },
+  { name: 'CVE', href: '/cve' },
+  { name: 'CERTIFICATE', href: '/certificate' }
+];
 
-  const [recipientName, setRecipientName] = useState('Ninad Pawar');
-  const [trackName, setTrackName] = useState('Certified Ethical Hacker');
-  const [certNumber, setCertNumber] = useState('ECC7498613205');
-  const [issueDate, setIssueDate] = useState('24 August, 2026');
-  const [expiryDate, setExpiryDate] = useState('23 August, 2029');
-
-  const verificationUrl = `https://cybermatrix-academy.vercel.app/certificate?verify=true&id=${certNumber}`;
-
-  const handlePrint = () => {
-    window.print();
-  };
-
+export default function CertificateDisabledPage() {
   return (
-    <div className={`min-h-screen bg-[#070a12] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 print:bg-black print:min-h-0 print:p-0 print:m-0 ${isViewOnly ? 'py-6 px-3 flex flex-col justify-center items-center' : ''}`}>
+    <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 flex flex-col justify-between">
       
-      {/* 1. Global Header & Controls (View-Only mode आणि Print mode मध्ये पूर्णपणे लपवले जातील) */}
-      {!isViewOnly && (
-        <div className="print:hidden">
-          <CyberSmokeHeader />
-        </div>
-      )}
+      <div>
+        {/* 1. Global Smoke Header */}
+        <CyberSmokeHeader />
 
-      <main className={`max-w-6xl mx-auto px-4 ${isViewOnly ? 'p-0 w-full' : 'py-8'} print:max-w-none print:p-0 print:m-0`}>
-        
-        {/* Navigation & Controls for Editor Mode */}
-        {!isViewOnly && (
-          <>
-            <div className="print:hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-4 border-b border-zinc-800">
-              <Link 
-                href="/" 
-                className="flex items-center space-x-2 text-xs font-mono text-zinc-400 hover:text-cyan-300 transition group"
-              >
-                <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                <span>RETURN TO ARENA DASHBOARD</span>
-              </Link>
-
-              <div className="flex items-center gap-3">
-                <Link
-                  href={`/certificate?verify=true&id=${certNumber}`}
-                  target="_blank"
-                  className="flex items-center space-x-1.5 px-4 py-2 rounded-xl bg-zinc-900 border border-cyan-500/40 hover:border-cyan-400 text-cyan-300 font-bold text-xs tracking-wider transition font-mono"
-                >
-                  <ExternalLink className="w-3.5 h-3.5" />
-                  <span>PUBLIC VERIFY LINK</span>
-                </Link>
-
-                <button
-                  onClick={handlePrint}
-                  className="flex items-center space-x-2 px-5 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-black font-black text-xs tracking-wider transition shadow-[0_0_20px_rgba(6,182,212,0.4)] cursor-pointer font-mono"
-                >
-                  <Printer className="w-4 h-4" />
-                  <span>PRINT CERTIFICATE</span>
-                </button>
-              </div>
-            </div>
-
-            {/* Dynamic Controls Box */}
-            <div className="print:hidden p-5 rounded-2xl bg-zinc-900/60 border border-cyan-500/30 mb-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-              <div>
-                <label className="block text-zinc-400 mb-1 font-bold">RECIPIENT NAME:</label>
-                <input 
-                  type="text" 
-                  value={recipientName} 
-                  onChange={(e) => setRecipientName(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-cyan-300 font-bold focus:border-cyan-400 outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-zinc-400 mb-1 font-bold">CERTIFICATION TITLE:</label>
-                <input 
-                  type="text" 
-                  value={trackName} 
-                  onChange={(e) => setTrackName(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-200 focus:border-cyan-400 outline-none"
-                />
-              </div>
-            </div>
-          </>
-        )}
-
-        {/* View-Only Verified Badge Banner */}
-        {isViewOnly && (
-          <div className="print:hidden max-w-4xl mx-auto mb-4 px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center justify-between text-xs font-mono">
-            <div className="flex items-center space-x-2 text-green-400">
-              <CheckCircle className="w-4 h-4" />
-              <span className="font-bold">OFFICIALLY VERIFIED CREDENTIAL // CYBER MATRIX REGISTRY</span>
-            </div>
-            <button
-              onClick={handlePrint}
-              className="flex items-center space-x-1 text-cyan-300 hover:underline"
-            >
-              <Printer className="w-3.5 h-3.5" />
-              <span>Print / Download PDF</span>
-            </button>
-          </div>
-        )}
-
-        {/* 2. OFFICIAL CYBER MATRIX CERTIFICATE TEMPLATE */}
-        <div className="cert-outer-wrapper">
-          <div className="certificate-card relative bg-[#0b0b0d] border border-zinc-800 text-white flex flex-col justify-between overflow-hidden select-none">
+        {/* 2. Top Navigation Sub-Header */}
+        <div className="bg-[#0f1422] border-b border-zinc-800/80 sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
             
-            {/* Background Texture & Watermark */}
-            <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-[0.06] pointer-events-none"></div>
-            <div className="absolute -left-20 top-1/4 w-96 h-96 rounded-full border border-zinc-700/20 pointer-events-none"></div>
-            <div className="absolute -left-10 top-1/4 w-[450px] h-[450px] rounded-full border border-zinc-700/10 pointer-events-none"></div>
-
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
-              <span className="text-[130px] font-black tracking-tighter">CYBER|MATRIX</span>
+            <div className="flex items-center space-x-4 sm:space-x-8 text-xs font-mono tracking-wider font-bold overflow-x-auto no-scrollbar">
+              {NAV_BUTTONS.map((btn) => {
+                const isActive = btn.name === 'CERTIFICATE';
+                return (
+                  <Link
+                    key={btn.name}
+                    href={btn.href}
+                    className={`py-4 transition-all relative shrink-0 ${
+                      isActive 
+                        ? 'text-[#38bdf8] font-extrabold' 
+                        : 'text-zinc-400 hover:text-zinc-100'
+                    }`}
+                  >
+                    <span>{btn.name}</span>
+                    {isActive && (
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_10px_rgba(56,189,248,0.9)]"></div>
+                    )}
+                  </Link>
+                );
+              })}
             </div>
 
-            {/* TOP BAR: ABSOLUTE CENTERED CYBER MATRIX & RIGHT CERT NUMBER */}
-            <div className="relative z-10 w-full px-8 pt-6 flex items-center justify-center min-h-[50px]">
-              <div className="text-center">
-                <h1 className="text-4xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#05CDF0] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
-                  CYBER MATRIX
-                </h1>
+            <div className="flex items-center space-x-2 shrink-0">
+              <div className="relative w-36 sm:w-60 md:w-64">
+                <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="SEARCH_DB..."
+                  disabled
+                  className="w-full pl-9 pr-3 py-1.5 bg-[#171e30] border border-zinc-700/60 rounded-md text-xs font-mono text-zinc-500 placeholder-zinc-600 cursor-not-allowed"
+                />
               </div>
-
-              <div className="absolute right-8 top-6 text-right">
-                <p className="text-[10px] text-zinc-400 font-sans">Certification Number</p>
-                <p className="text-xs sm:text-sm font-black text-white tracking-wider font-mono">{certNumber}</p>
-              </div>
-            </div>
-
-            {/* PERFECTLY CENTERED BLACK & GOLD ACCENT RIBBON */}
-            <div className="relative z-10 my-2">
-              <div className="w-full bg-[#121214] border-t-2 border-b-2 border-[#b8860b] py-2.5 px-6 flex items-center justify-center shadow-md">
-                
-                <div className="flex items-center justify-center space-x-6">
-                  {/* CEH Logo Badge */}
-                  <div className="flex items-center space-x-2 border-r-2 border-zinc-700 pr-6 shrink-0">
-                    <div className="flex items-center font-black tracking-tighter text-lg sm:text-xl">
-                      <span className="text-white">C</span>
-                      <span className="text-[#e61c24] mx-0.5 text-2xl font-light">|</span>
-                      <span className="text-white">MATRIX</span>
-                    </div>
-                    <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans text-left">
-                      <p>Cyber</p>
-                      <p>Matrix</p>
-                    </div>
-                  </div>
-
-                  {/* Centered Track Title */}
-                  <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white uppercase text-center">
-                    {trackName}
-                  </h2>
-                </div>
-
-              </div>
-
-              <div className="absolute left-1/2 -translate-x-1/2 -top-2 flex flex-col items-center">
-                <div className="w-16 h-4 bg-gradient-to-r from-amber-600 via-yellow-400 to-amber-600 rounded-b-md shadow-lg border border-amber-300"></div>
-              </div>
-            </div>
-
-            {/* MAIN CERTIFICATE BODY */}
-            <div className="relative z-10 px-8 py-2 text-center">
-              <p className="text-xs sm:text-sm text-zinc-400 font-serif italic">
-                This is to acknowledge that
-              </p>
-
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white my-1.5 tracking-wide font-sans">
-                {recipientName || 'Candidate Name'}
-              </h3>
-
-              <p className="text-[11px] sm:text-xs text-zinc-400 max-w-xl mx-auto leading-relaxed font-sans">
-                has successfully completed all requirements and criteria for
-              </p>
-
-              <h4 className="text-sm sm:text-base md:text-lg font-bold text-zinc-100 mt-1.5 mb-0.5 tracking-wider">
-                {trackName}
-              </h4>
-
-              <p className="text-[11px] sm:text-xs text-zinc-400 font-sans">
-                certification through examination administered by Cyber Matrix
-              </p>
-            </div>
-
-            {/* BOTTOM METRICS, SIGNATURES & CENTER ONLINE VERIFICATION LINK */}
-            <div className="relative z-10 px-8 pb-5 flex flex-col space-y-3">
-              
-              <div className="flex items-end justify-between text-xs">
-                {/* Left: ANSI Stamp & Issue Date */}
-                <div className="flex flex-col space-y-2 text-left">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-12 h-6 border-2 border-white rounded-full flex items-center justify-center font-black text-[9px] tracking-tight text-white">
-                      ANSI
-                    </div>
-                    <div className="text-[8px] text-zinc-400 uppercase leading-tight font-mono">
-                      <p className="font-bold text-zinc-200">ACCREDITED</p>
-                      <p>ISO/IEC 17024</p>
-                      <p>Personnel Certification</p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-[10px] text-zinc-400 font-sans">
-                      Issue Date: <span className="font-bold text-zinc-200">{issueDate}</span>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right: Expiry Date & President Signature */}
-                <div className="flex flex-col items-end space-y-1 text-right">
-                  <p className="text-[10px] text-zinc-400 font-sans mb-1">
-                    Expiry Date: <span className="font-bold text-zinc-200">{expiryDate}</span>
-                  </p>
-
-                  <div className="pt-1 text-center">
-                    <p className="font-serif italic text-base sm:text-lg text-cyan-300 leading-none">
-                      Ninad Pawar
-                    </p>
-                    <div className="w-40 h-[1px] bg-zinc-600 my-1"></div>
-                    <p className="text-[10px] font-bold text-zinc-300 font-sans">Ninad Pawar, President</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* EXACT CENTER OF BOTTOM: OFFICIAL ONLINE VERIFICATION LINK */}
-              <div className="pt-2 border-t border-zinc-800/80 text-center flex items-center justify-center space-x-1.5 text-[9.5px] text-zinc-400 font-mono">
-                <span className="text-zinc-500">Verify online at:</span>
-                <span className="text-cyan-400 underline font-semibold tracking-wide select-all">
-                  {verificationUrl}
-                </span>
-              </div>
-
+              <button 
+                disabled
+                className="p-2 rounded-md bg-[#171e30] border border-zinc-700/60 text-zinc-600 cursor-not-allowed"
+              >
+                <Filter className="w-3.5 h-3.5" />
+              </button>
             </div>
 
           </div>
         </div>
 
-      </main>
+        {/* 3. Main Disabled State Container */}
+        <main className="max-w-2xl mx-auto px-4 py-20 text-center">
+          <div className="p-8 sm:p-12 rounded-3xl bg-[#0f1524] border border-zinc-800 shadow-[0_0_50px_rgba(0,0,0,0.6)] relative overflow-hidden">
+            
+            {/* Ambient Red Glow */}
+            <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* STRICT 1-PAGE AUTO-FIT PRINT STYLING */}
-      <style jsx global>{`
-        .cert-outer-wrapper {
-          width: 100%;
-          max-width: 900px;
-          margin: 0 auto;
-        }
-        .certificate-card {
-          width: 100%;
-          min-height: 520px;
-          border-radius: 4px;
-        }
+            {/* Lock Shield Icon */}
+            <div className="w-20 h-20 mx-auto rounded-2xl bg-zinc-900/90 border border-zinc-700/80 flex items-center justify-center shadow-inner mb-6 relative">
+              <Lock className="w-10 h-10 text-rose-500 drop-shadow-[0_0_12px_rgba(244,63,94,0.7)]" />
+              <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-rose-500"></span>
+              </span>
+            </div>
 
-        @media print {
-          @page {
-            size: A4 landscape !important;
-            margin: 0 !important;
-          }
-          html, body {
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            background: #000000 !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            overflow: hidden !important;
-          }
-          .cert-outer-wrapper {
-            width: 100% !important;
-            max-width: none !important;
-            height: 100vh !important;
-            margin: 0 !important;
-            padding: 8mm !important;
-            box-sizing: border-box !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            page-break-inside: avoid !important;
-            page-break-after: avoid !important;
-          }
-          .certificate-card {
-            width: 100% !important;
-            max-height: 96vh !important;
-            border-radius: 0px !important;
-            border: 2px solid #333338 !important;
-            padding: 0 !important;
-            box-sizing: border-box !important;
-            page-break-inside: avoid !important;
-            page-break-after: avoid !important;
-          }
-        }
-      `}</style>
+            {/* Status Code & Title */}
+            <span className="text-[11px] font-mono font-bold px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 uppercase tracking-widest inline-block mb-3">
+              ACCESS STATUS: TEMPORARILY DISABLED
+            </span>
+
+            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-wide mb-3">
+              Certificate Vault Offline
+            </h1>
+
+            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-md mx-auto mb-8 font-light">
+              The automated certificate generation and verification registry is currently undergoing scheduled cryptographic key maintenance.
+            </p>
+
+            {/* Back to Dashboard Button */}
+            <Link
+              href="/courses"
+              className="inline-flex items-center space-x-2 px-6 py-2.5 rounded-xl bg-cyan-500/10 hover:bg-[#38bdf8] text-[#38bdf8] hover:text-black border border-cyan-500/30 text-xs font-mono font-bold transition shadow-lg"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              <span>RETURN TO COURSES</span>
+            </Link>
+
+          </div>
+        </main>
+      </div>
+
+      {/* 4. Footer */}
+      <footer className="border-t border-zinc-800/60 bg-[#0d121e] py-8 text-center text-xs font-mono text-zinc-500">
+        CYBERMATRIX ACADEMY // ARCHITECTED BY NINAD PAWAR // DEFENSE MATRIX ACTIVE
+      </footer>
+
     </div>
-  );
-}
-
-export default function CertificatePage() {
-  return (
-    <Suspense fallback={<div className="min-h-screen bg-black text-cyan-400 flex items-center justify-center font-mono">LOADING CYBER MATRIX VERIFIER...</div>}>
-      <CertificateContent />
-    </Suspense>
   );
 }
