@@ -4,9 +4,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { 
   Search, 
+  Filter, 
   Signal, 
+  Terminal, 
   ShieldAlert, 
-  Terminal,
   ArrowRight
 } from 'lucide-react';
 import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
@@ -88,6 +89,14 @@ const COURSES_DATA: TrackCard[] = [
   }
 ];
 
+const NAV_BUTTONS = [
+  { name: 'ROADMAP', href: '/roadmap' },
+  { name: 'COURSES', href: '/courses' },
+  { name: 'WALKTHROUGH', href: '/walkthroughs' },
+  { name: 'CVE', href: '/cve' },
+  { name: 'CERTIFICATE', href: '/certificate' }
+];
+
 export default function CoursesPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -98,94 +107,116 @@ export default function CoursesPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300">
+    <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 flex flex-col justify-between">
       
-      {/* 1. Global Header */}
-      <CyberSmokeHeader />
+      <div>
+        {/* 1. Global Header */}
+        <CyberSmokeHeader />
 
-      {/* 2. Top Blueprint Sub-Header */}
-      <div className="bg-[#0f1422] border-b border-zinc-800/80 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
-          
-          {/* Sub Navigation Links */}
-          <div className="flex items-center space-x-6 sm:space-x-8 text-xs font-mono tracking-wider font-bold">
-            <Link href="/roadmap" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
-              ROADMAP
-            </Link>
+        {/* 2. Top Navigation Sub-Header */}
+        <div className="bg-[#0f1422] border-b border-zinc-800/80 sticky top-0 z-40">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
             
-            <Link href="/walkthroughs" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
-              WALKTHROUGHS
-            </Link>
-            <Link href="/cve" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
-              CVE
-            </Link>
-            <Link href="/certificate" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
-              CERTIFICATES
-            </Link>
-          </div>
+            <div className="flex items-center space-x-4 sm:space-x-8 text-xs font-mono tracking-wider font-bold overflow-x-auto no-scrollbar">
+              {NAV_BUTTONS.map((btn) => {
+                const isActive = btn.name === 'COURSES';
+                return (
+                  <Link
+                    key={btn.name}
+                    href={btn.href}
+                    className={`py-4 transition-all relative shrink-0 ${
+                      isActive 
+                        ? 'text-[#38bdf8] font-extrabold' 
+                        : 'text-zinc-400 hover:text-zinc-100'
+                    }`}
+                  >
+                    <span>{btn.name}</span>
+                    {isActive && (
+                      <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#38bdf8] shadow-[0_0_10px_rgba(56,189,248,0.9)]"></div>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
 
-          {/* Search Box */}
-          <div className="relative w-48 sm:w-64">
-            <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="SEARCH_DB..."
-              className="w-full pl-9 pr-3 py-1.5 bg-[#171e30] border border-zinc-700/60 rounded-md text-xs font-mono text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#38bdf8] transition"
-            />
-          </div>
-
-        </div>
-      </div>
-
-      {/* 3. Main Course Cards 2x2 Grid */}
-      <main className="max-w-6xl mx-auto px-4 md:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-          {filteredCourses.map((course) => (
-            <Link
-              key={course.id}
-              href={course.link}
-              className="group flex flex-col justify-between rounded-2xl bg-[#0f1524] border border-zinc-800/90 overflow-hidden hover:border-[#38bdf8]/40 hover:shadow-[0_0_35px_rgba(0,0,0,0.6)] transition-all duration-300 cursor-pointer"
-            >
-              
-              {/* Top Banner Artwork */}
-              <div className={`h-56 w-full ${course.bannerGradient} flex items-center justify-center relative overflow-hidden border-b border-black/40`}>
-                {course.bannerArtwork}
+            {/* Search Box & Filter Icon */}
+            <div className="flex items-center space-x-2 shrink-0">
+              <div className="relative w-36 sm:w-60 md:w-64">
+                <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="SEARCH_DB..."
+                  className="w-full pl-9 pr-3 py-1.5 bg-[#171e30] border border-zinc-700/60 rounded-md text-xs font-mono text-zinc-200 placeholder-zinc-500 focus:outline-none focus:border-[#38bdf8] transition"
+                />
               </div>
+              <button 
+                className="p-2 rounded-md bg-[#171e30] border border-zinc-700/60 text-zinc-400 hover:text-[#38bdf8] transition hover:border-[#38bdf8]/40 cursor-pointer"
+                title="Filter Courses"
+              >
+                <Filter className="w-3.5 h-3.5" />
+              </button>
+            </div>
 
-              {/* Bottom Information */}
-              <div className="p-6 flex flex-col justify-between flex-1">
-                <div>
-                  <h3 className="text-base sm:text-lg font-black text-white tracking-wider group-hover:text-[#38bdf8] transition">
-                    {course.title}
-                  </h3>
-                  <p className="text-xs text-zinc-400 mt-2.5 leading-relaxed">
-                    {course.description}
-                  </p>
-                </div>
+          </div>
+        </div>
 
-                {/* Footer Controls: Start Module & Level Indicator */}
-                <div className="mt-7 pt-4 border-t border-zinc-800/80 flex items-center justify-between">
-                  <span className="text-xs font-mono font-medium text-zinc-400 group-hover:text-[#38bdf8] transition flex items-center space-x-1">
-                    <span>Start Module</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                  </span>
-
-                  <div className="flex items-center space-x-1.5">
-                    <Signal className={`w-3.5 h-3.5 ${course.levelColor}`} />
-                    <span className={`text-[11px] font-black tracking-wider ${course.levelColor}`}>
-                      {course.level}
-                    </span>
+        {/* 3. Main 2x2 Course Grid */}
+        <main className="max-w-6xl mx-auto px-4 md:px-8 py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+            {filteredCourses.map((course) => (
+              <div
+                key={course.id}
+                className="group flex flex-col justify-between rounded-2xl bg-[#0f1524] border border-zinc-800/90 overflow-hidden hover:border-[#38bdf8]/40 hover:shadow-[0_0_35px_rgba(0,0,0,0.6)] transition-all duration-300"
+              >
+                
+                {/* Artwork Banner */}
+                <Link href={course.link} className="block relative">
+                  <div className={`h-56 w-full ${course.bannerGradient} flex items-center justify-center relative overflow-hidden border-b border-black/40`}>
+                    {course.bannerArtwork}
+                    <div className="absolute inset-0 bg-black/5 hover:bg-transparent transition-colors"></div>
                   </div>
+                </Link>
+
+                {/* Content */}
+                <div className="p-6 flex flex-col justify-between flex-1">
+                  <div>
+                    <Link href={course.link} className="block">
+                      <h3 className="text-base sm:text-lg font-black text-white tracking-wider group-hover:text-[#38bdf8] transition">
+                        {course.title}
+                      </h3>
+                    </Link>
+                    <p className="text-xs text-zinc-400 mt-2.5 leading-relaxed">
+                      {course.description}
+                    </p>
+                  </div>
+
+                  {/* Footer Actions */}
+                  <div className="mt-7 pt-4 border-t border-zinc-800/80 flex items-center justify-between gap-3">
+                    <Link
+                      href={course.link}
+                      className="px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-[#38bdf8] text-cyan-300 hover:text-black border border-cyan-500/30 text-xs font-mono font-bold transition flex items-center space-x-1.5 shadow-sm"
+                    >
+                      <span>Start Module</span>
+                      <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+                    </Link>
+
+                    <div className="flex items-center space-x-1.5">
+                      <Signal className={`w-3.5 h-3.5 ${course.levelColor}`} />
+                      <span className={`text-[11px] font-black tracking-wider ${course.levelColor}`}>
+                        {course.level}
+                      </span>
+                    </div>
+                  </div>
+
                 </div>
 
               </div>
-
-            </Link>
-          ))}
-        </div>
-      </main>
+            ))}
+          </div>
+        </main>
+      </div>
 
       {/* 4. Footer */}
       <footer className="border-t border-zinc-800/60 bg-[#0d121e] py-8 text-center text-xs font-mono text-zinc-500">
