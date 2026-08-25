@@ -118,10 +118,6 @@ export default function HomePage() {
             <Link href="/roadmap" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
               ROADMAP
             </Link>
-            <button className="text-cyan-400 font-extrabold py-4 relative">
-              COURSES
-              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"></div>
-            </button>
             <Link href="/walkthroughs" className="text-zinc-400 hover:text-zinc-200 py-4 transition">
               WALKTHROUGHS
             </Link>

@@ -140,10 +140,6 @@ export default function CVETrackerPage() {
             <Link href="/roadmap" className="text-zinc-400 hover:text-zinc-200 py-4">ROADMAP</Link>
             <Link href="/courses" className="text-zinc-400 hover:text-zinc-200 py-4">COURSES</Link>
             <Link href="/walkthroughs" className="text-zinc-400 hover:text-zinc-200 py-4">WALKTHROUGHS</Link>
-            <button className="text-cyan-400 font-extrabold py-4 relative">
-              CVE
-              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.8)]"></div>
-            </button>
           </div>
 
           {/* Search Bar */}
