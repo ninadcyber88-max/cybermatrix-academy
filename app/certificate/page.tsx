@@ -19,7 +19,7 @@ const NAV_BUTTONS = [
   { name: 'CERTIFICATE', href: '/certificate' }
 ];
 
-export default function CertificateDisabledPage() {
+export default function CertificateEnabledPage() {
   return (
     <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 flex flex-col justify-between">
       
@@ -59,12 +59,12 @@ export default function CertificateDisabledPage() {
                 <input
                   type="text"
                   placeholder="SEARCH_DB..."
-                  disabled
+                  enabled
                   className="w-full pl-9 pr-3 py-1.5 bg-[#171e30] border border-zinc-700/60 rounded-md text-xs font-mono text-zinc-500 placeholder-zinc-600 cursor-not-allowed"
                 />
               </div>
               <button 
-                disabled
+                enabled
                 className="p-2 rounded-md bg-[#171e30] border border-zinc-700/60 text-zinc-600 cursor-not-allowed"
               >
                 <Filter className="w-3.5 h-3.5" />
@@ -96,7 +96,7 @@ export default function CertificateDisabledPage() {
             </span>
 
             <h1 className="text-2xl sm:text-3xl font-black text-white tracking-wide mb-3">
-              Certificate Vault Offline
+              Certificate Vault Online
             </h1>
 
             <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-md mx-auto mb-8 font-light">
