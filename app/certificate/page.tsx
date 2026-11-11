@@ -1,9 +1,9 @@
 'use client';
 
-import { useState, useEffect, Suspense } from 'react';
+import { useState, Suspense } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Printer, ArrowLeft, ShieldCheck, ExternalLink, CheckCircle } from 'lucide-react';
+import { Printer, ArrowLeft, ExternalLink, CheckCircle } from 'lucide-react';
 import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
 
 function CertificateContent() {
@@ -25,7 +25,7 @@ function CertificateContent() {
   return (
     <div className={`min-h-screen bg-[#070a12] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 print:bg-black print:min-h-0 print:p-0 print:m-0 ${isViewOnly ? 'py-6 px-3 flex flex-col justify-center items-center' : ''}`}>
       
-      {/* 1. Global Header & Controls (View-Only mode आणि Print mode मध्ये पूर्णपणे लपवले जातील) */}
+      {/* 1. Global Header */}
       {!isViewOnly && (
         <div className="print:hidden">
           <CyberSmokeHeader />
@@ -34,7 +34,7 @@ function CertificateContent() {
 
       <main className={`max-w-6xl mx-auto px-4 ${isViewOnly ? 'p-0 w-full' : 'py-8'} print:max-w-none print:p-0 print:m-0`}>
         
-        {/* Navigation & Controls for Editor Mode */}
+        {/* Navigation & Controls */}
         {!isViewOnly && (
           <>
             <div className="print:hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-4 border-b border-zinc-800">
@@ -111,19 +111,15 @@ function CertificateContent() {
         <div className="cert-outer-wrapper">
           <div className="certificate-card relative bg-[#0b0b0d] border border-zinc-800 text-white flex flex-col justify-between overflow-hidden select-none">
             
-            {/* Background Texture & Watermark */}
             <div className="absolute inset-0 bg-[radial-gradient(#ffffff_1.2px,transparent_1.2px)] [background-size:20px_20px] opacity-[0.06] pointer-events-none"></div>
-            <div className="absolute -left-20 top-1/4 w-96 h-96 rounded-full border border-zinc-700/20 pointer-events-none"></div>
-            <div className="absolute -left-10 top-1/4 w-[450px] h-[450px] rounded-full border border-zinc-700/10 pointer-events-none"></div>
 
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
               <span className="text-[130px] font-black tracking-tighter">CYBER|MATRIX</span>
             </div>
 
-            {/* TOP BAR: ABSOLUTE CENTERED CYBER MATRIX & RIGHT CERT NUMBER */}
             <div className="relative z-10 w-full px-8 pt-6 flex items-center justify-center min-h-[50px]">
               <div className="text-center">
-                <h1 className="text-4xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#05CDF0] uppercase drop-shadow-[0_2px_10px_rgba(230,28,36,0.3)]">
+                <h1 className="text-4xl sm:text-3xl md:text-4xl font-black tracking-wider text-[#05CDF0] uppercase">
                   CYBER MATRIX
                 </h1>
               </div>
@@ -134,77 +130,44 @@ function CertificateContent() {
               </div>
             </div>
 
-            {/* PERFECTLY CENTERED BLACK & GOLD ACCENT RIBBON */}
             <div className="relative z-10 my-2">
               <div className="w-full bg-[#121214] border-t-2 border-b-2 border-[#b8860b] py-2.5 px-6 flex items-center justify-center shadow-md">
-                
                 <div className="flex items-center justify-center space-x-6">
-                  {/* CEH Logo Badge */}
                   <div className="flex items-center space-x-2 border-r-2 border-zinc-700 pr-6 shrink-0">
                     <div className="flex items-center font-black tracking-tighter text-lg sm:text-xl">
                       <span className="text-white">C</span>
                       <span className="text-[#e61c24] mx-0.5 text-2xl font-light">|</span>
                       <span className="text-white">MATRIX</span>
                     </div>
-                    <div className="text-[8px] leading-tight text-zinc-400 uppercase font-sans text-left">
-                      <p>Cyber</p>
-                      <p>Matrix</p>
-                    </div>
                   </div>
-
-                  {/* Centered Track Title */}
                   <h2 className="text-base sm:text-xl md:text-2xl font-bold tracking-wide text-white uppercase text-center">
                     {trackName}
                   </h2>
                 </div>
-
-              </div>
-
-              <div className="absolute left-1/2 -translate-x-1/2 -top-2 flex flex-col items-center">
-                <div className="w-16 h-4 bg-gradient-to-r from-amber-600 via-yellow-400 to-amber-600 rounded-b-md shadow-lg border border-amber-300"></div>
               </div>
             </div>
 
-            {/* MAIN CERTIFICATE BODY */}
             <div className="relative z-10 px-8 py-2 text-center">
-              <p className="text-xs sm:text-sm text-zinc-400 font-serif italic">
-                This is to acknowledge that
-              </p>
-
+              <p className="text-xs sm:text-sm text-zinc-400 font-serif italic">This is to acknowledge that</p>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white my-1.5 tracking-wide font-sans">
                 {recipientName || 'Candidate Name'}
               </h3>
-
               <p className="text-[11px] sm:text-xs text-zinc-400 max-w-xl mx-auto leading-relaxed font-sans">
                 has successfully completed all requirements and criteria for
               </p>
-
               <h4 className="text-sm sm:text-base md:text-lg font-bold text-zinc-100 mt-1.5 mb-0.5 tracking-wider">
                 {trackName}
               </h4>
-
-              <p className="text-[11px] sm:text-xs text-zinc-400 font-sans">
-                certification through examination administered by Cyber Matrix
-              </p>
             </div>
 
-            {/* BOTTOM METRICS, SIGNATURES & CENTER ONLINE VERIFICATION LINK */}
             <div className="relative z-10 px-8 pb-5 flex flex-col space-y-3">
-              
               <div className="flex items-end justify-between text-xs">
-                {/* Left: ANSI Stamp & Issue Date */}
                 <div className="flex flex-col space-y-2 text-left">
                   <div className="flex items-center space-x-2">
-                    <div className="w-12 h-6 border-2 border-white rounded-full flex items-center justify-center font-black text-[9px] tracking-tight text-white">
+                    <div className="w-12 h-6 border-2 border-white rounded-full flex items-center justify-center font-black text-[9px] text-white">
                       ANSI
                     </div>
-                    <div className="text-[8px] text-zinc-400 uppercase leading-tight font-mono">
-                      <p className="font-bold text-zinc-200">ACCREDITED</p>
-                      <p>ISO/IEC 17024</p>
-                      <p>Personnel Certification</p>
-                    </div>
                   </div>
-
                   <div>
                     <p className="text-[10px] text-zinc-400 font-sans">
                       Issue Date: <span className="font-bold text-zinc-200">{issueDate}</span>
@@ -212,88 +175,33 @@ function CertificateContent() {
                   </div>
                 </div>
 
-                {/* Right: Expiry Date & President Signature */}
                 <div className="flex flex-col items-end space-y-1 text-right">
                   <p className="text-[10px] text-zinc-400 font-sans mb-1">
                     Expiry Date: <span className="font-bold text-zinc-200">{expiryDate}</span>
                   </p>
-
                   <div className="pt-1 text-center">
-                    <p className="font-serif italic text-base sm:text-lg text-cyan-300 leading-none">
-                      Ninad Pawar
-                    </p>
+                    <p className="font-serif italic text-base sm:text-lg text-cyan-300 leading-none">Ninad Pawar</p>
                     <div className="w-40 h-[1px] bg-zinc-600 my-1"></div>
                     <p className="text-[10px] font-bold text-zinc-300 font-sans">Ninad Pawar, President</p>
                   </div>
                 </div>
               </div>
 
-              {/* EXACT CENTER OF BOTTOM: OFFICIAL ONLINE VERIFICATION LINK */}
               <div className="pt-2 border-t border-zinc-800/80 text-center flex items-center justify-center space-x-1.5 text-[9.5px] text-zinc-400 font-mono">
                 <span className="text-zinc-500">Verify online at:</span>
                 <span className="text-cyan-400 underline font-semibold tracking-wide select-all">
                   {verificationUrl}
                 </span>
               </div>
-
             </div>
 
           </div>
         </div>
-
       </main>
 
-      {/* STRICT 1-PAGE AUTO-FIT PRINT STYLING */}
       <style jsx global>{`
-        .cert-outer-wrapper {
-          width: 100%;
-          max-width: 900px;
-          margin: 0 auto;
-        }
-        .certificate-card {
-          width: 100%;
-          min-height: 520px;
-          border-radius: 4px;
-        }
-
-        @media print {
-          @page {
-            size: A4 landscape !important;
-            margin: 0 !important;
-          }
-          html, body {
-            height: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            background: #000000 !important;
-            -webkit-print-color-adjust: exact !important;
-            print-color-adjust: exact !important;
-            overflow: hidden !important;
-          }
-          .cert-outer-wrapper {
-            width: 100% !important;
-            max-width: none !important;
-            height: 100vh !important;
-            margin: 0 !important;
-            padding: 8mm !important;
-            box-sizing: border-box !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            page-break-inside: avoid !important;
-            page-break-after: avoid !important;
-          }
-          .certificate-card {
-            width: 100% !important;
-            max-height: 96vh !important;
-            border-radius: 0px !important;
-            border: 2px solid #333338 !important;
-            padding: 0 !important;
-            box-sizing: border-box !important;
-            page-break-inside: avoid !important;
-            page-break-after: avoid !important;
-          }
-        }
+        .cert-outer-wrapper { width: 100%; max-width: 900px; margin: 0 auto; }
+        .certificate-card { width: 100%; min-height: 520px; border-radius: 4px; }
       `}</style>
     </div>
   );
@@ -301,8 +209,8 @@ function CertificateContent() {
 
 export default function CertificatePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen bg-black text-cyan-400 flex items-center justify-center font-mono">LOADING CYBER MATRIX VERIFIER...</div>}>
+    <Suspense fallback={<div className="min-h-screen bg-black text-cyan-400 flex items-center justify-center font-mono">LOADING...</div>}>
       <CertificateContent />
     </Suspense>
   );
-        }
+}
