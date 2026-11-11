@@ -13,8 +13,36 @@ function CertificateContent() {
   const [recipientName, setRecipientName] = useState('Ninad Pawar');
   const [trackName, setTrackName] = useState('Certified Ethical Hacker');
   const [certNumber, setCertNumber] = useState('ECC-' + Math.floor(100000 + Math.random() * 900000));
-  const [issueDate, setIssueDate] = useState('24 August, 2026');
-  const [expiryDate, setExpiryDate] = useState('23 August, 2029');
+  
+  // Default dates in YYYY-MM-DD format for date inputs
+  const [issueDate, setIssueDate] = useState('2026-08-24');
+  const [expiryDate, setExpiryDate] = useState('2029-08-24');
+
+  // Function to auto-calculate expiry date (+3 Years) when issue date changes
+  const handleIssueDateChange = (e) => {
+    const newIssueDate = e.target.value;
+    setIssueDate(newIssueDate);
+
+    if (newIssueDate) {
+      const dateObj = new Date(newIssueDate);
+      dateObj.setFullYear(dateObj.getFullYear() + 3); // Add 3 years
+      
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      
+      setExpiryDate(`${year}-${month}-${day}`);
+    }
+  };
+
+  // Helper to format date nicely for the certificate display (e.g., 24 August, 2026)
+  const formatDisplayDate = (dateStr) => {
+    if (!dateStr) return '';
+    const [y, m, d] = dateStr.split('-');
+    if (!y || !m || !d) return dateStr;
+    const dateObj = new Date(y, m - 1, d);
+    return dateObj.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
 
   const verificationUrl = `https://cybermatrix-academy.vercel.app/certificate?verify=true&id=${certNumber}`;
 
@@ -25,7 +53,6 @@ function CertificateContent() {
   return (
     <div className={`min-h-screen bg-[#070a12] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 print:bg-black print:min-h-0 print:p-0 print:m-0 ${isViewOnly ? 'py-6 px-3 flex flex-col justify-center items-center' : ''}`}>
       
-      {/* 1. Global Header */}
       {!isViewOnly && (
         <div className="print:hidden">
           <CyberSmokeHeader />
@@ -34,7 +61,6 @@ function CertificateContent() {
 
       <main className={`max-w-6xl mx-auto px-4 ${isViewOnly ? 'p-0 w-full' : 'py-8'} print:max-w-none print:p-0 print:m-0`}>
         
-        {/* Navigation & Controls for Admin/Editor Mode */}
         {!isViewOnly && (
           <>
             <div className="print:hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-4 border-b border-zinc-800">
@@ -66,7 +92,7 @@ function CertificateContent() {
               </div>
             </div>
 
-            {/* Admin Dynamic Issue Controls Box */}
+            {/* Admin Controls with Auto Expiry Calculation */}
             <div className="print:hidden p-5 rounded-2xl bg-zinc-900/60 border border-cyan-500/30 mb-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
               <div>
                 <label className="block text-zinc-400 mb-1 font-bold">RECIPIENT NAME:</label>
@@ -101,27 +127,26 @@ function CertificateContent() {
               <div>
                 <label className="block text-zinc-400 mb-1 font-bold">ISSUE DATE:</label>
                 <input 
-                  type="text" 
+                  type="date" 
                   value={issueDate} 
-                  onChange={(e) => setIssueDate(e.target.value)}
+                  onChange={handleIssueDateChange}
                   className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-200 focus:border-cyan-400 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-zinc-400 mb-1 font-bold">EXPIRY DATE (3 YRS):</label>
+                <label className="block text-zinc-400 mb-1 font-bold">EXPIRY DATE (AUTO +3 YRS):</label>
                 <input 
-                  type="text" 
+                  type="date" 
                   value={expiryDate} 
-                  onChange={(e) => setExpiryDate(e.target.value)}
-                  className="w-full bg-zinc-950 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-200 focus:border-cyan-400 outline-none"
+                  readOnly
+                  className="w-full bg-zinc-950 border border-zinc-700/60 rounded-lg px-3 py-2 text-zinc-400 outline-none cursor-not-allowed"
                 />
               </div>
             </div>
           </>
         )}
 
-        {/* View-Only Verified Badge Banner */}
         {isViewOnly && (
           <div className="print:hidden max-w-4xl mx-auto mb-4 px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center justify-between text-xs font-mono">
             <div className="flex items-center space-x-2 text-green-400">
@@ -138,7 +163,7 @@ function CertificateContent() {
           </div>
         )}
 
-        {/* 2. OFFICIAL CYBER MATRIX CERTIFICATE TEMPLATE */}
+        {/* Certificate Card Render */}
         <div className="cert-outer-wrapper">
           <div className="certificate-card relative bg-[#0b0b0d] border border-zinc-800 text-white flex flex-col justify-between overflow-hidden select-none">
             
@@ -201,14 +226,14 @@ function CertificateContent() {
                   </div>
                   <div>
                     <p className="text-[10px] text-zinc-400 font-sans">
-                      Issue Date: <span className="font-bold text-zinc-200">{issueDate}</span>
+                      Issue Date: <span className="font-bold text-zinc-200">{formatDisplayDate(issueDate)}</span>
                     </p>
                   </div>
                 </div>
 
                 <div className="flex flex-col items-end space-y-1 text-right">
                   <p className="text-[10px] text-zinc-400 font-sans mb-1">
-                    Expiry Date: <span className="font-bold text-zinc-200">{expiryDate}</span>
+                    Expiry Date: <span className="font-bold text-zinc-200">{formatDisplayDate(expiryDate)}</span>
                   </p>
                   <div className="pt-1 text-center">
                     <p className="font-serif italic text-base sm:text-lg text-cyan-300 leading-none">Ninad Pawar</p>
