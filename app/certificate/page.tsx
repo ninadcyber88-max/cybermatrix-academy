@@ -25,7 +25,6 @@ function CertificateContent() {
   return (
     <div className={`min-h-screen bg-[#070a12] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 print:bg-black print:min-h-0 print:p-0 print:m-0 ${isViewOnly ? 'py-6 px-3 flex flex-col justify-center items-center' : ''}`}>
       
-      {/* 1. Global Header */}
       {!isViewOnly && (
         <div className="print:hidden">
           <CyberSmokeHeader />
@@ -34,7 +33,6 @@ function CertificateContent() {
 
       <main className={`max-w-6xl mx-auto px-4 ${isViewOnly ? 'p-0 w-full' : 'py-8'} print:max-w-none print:p-0 print:m-0`}>
         
-        {/* Navigation & Controls */}
         {!isViewOnly && (
           <>
             <div className="print:hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6 pb-4 border-b border-zinc-800">
@@ -66,7 +64,6 @@ function CertificateContent() {
               </div>
             </div>
 
-            {/* Dynamic Controls Box */}
             <div className="print:hidden p-5 rounded-2xl bg-zinc-900/60 border border-cyan-500/30 mb-8 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
               <div>
                 <label className="block text-zinc-400 mb-1 font-bold">RECIPIENT NAME:</label>
@@ -90,7 +87,6 @@ function CertificateContent() {
           </>
         )}
 
-        {/* View-Only Verified Badge Banner */}
         {isViewOnly && (
           <div className="print:hidden max-w-4xl mx-auto mb-4 px-4 py-2 rounded-xl bg-green-500/10 border border-green-500/30 flex items-center justify-between text-xs font-mono">
             <div className="flex items-center space-x-2 text-green-400">
@@ -107,7 +103,6 @@ function CertificateContent() {
           </div>
         )}
 
-        {/* 2. OFFICIAL CYBER MATRIX CERTIFICATE TEMPLATE */}
         <div className="cert-outer-wrapper">
           <div className="certificate-card relative bg-[#0b0b0d] border border-zinc-800 text-white flex flex-col justify-between overflow-hidden select-none">
             
