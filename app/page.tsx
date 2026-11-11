@@ -9,31 +9,9 @@ import {
   Signal, 
   Terminal, 
   ShieldAlert, 
-  ArrowRight,
-  ExternalLink,
-  Zap,
-  BookOpen
+  ArrowRight 
 } from 'lucide-react';
 import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
-
-import { CyberSmokeHeader } from '@/components/CyberSmokeHeader';
-import WebsiteUnderConstructionBanner from '@/components/WebsiteUnderConstructionBanner';
-
-export default function DashboardPage() {
-  return (
-      <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans flex flex-col justify-between">
-            <div>
-                    {/* 1. Global Header */}
-                            <CyberSmokeHeader />
-
-                                    {/* 2. Top Glowing Construction Banner */}
-                                            <WebsiteUnderConstructionBanner />
-
-                                                    {/* 3. Top Navigation Sub-Header */}
-                                                            <div className="bg-[#0f1422] border-b border-zinc-800/80 sticky top-0 z-40">
-                                                                      ...
-                                                                              </div>
-                                                                                    ...
 
 interface TrackCard {
   id: string;
@@ -136,16 +114,13 @@ export default function DashboardPage() {
   );
 
   return (
-        <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#141b2c] text-zinc-100 font-sans selection:bg-cyan-500/30 selection:text-cyan-300 flex flex-col justify-between">
       <div>
-        {/* 1. Global Header */}
         <CyberSmokeHeader />
 
-        {/* 2. Top Navigation Sub-Header With Interactive Links & Buttons */}
         <div className="bg-[#0f1422] border-b border-zinc-800/80 sticky top-0 z-40">
           <div className="max-w-7xl mx-auto px-4 md:px-8 h-14 flex items-center justify-between gap-4">
             
-            {/* Sub Navigation Bar Buttons */}
             <div className="flex items-center space-x-4 sm:space-x-8 text-xs font-mono tracking-wider font-bold overflow-x-auto no-scrollbar">
               {NAV_BUTTONS.map((btn) => {
                 const isActive = (pathname === btn.href) || (btn.name === 'COURSES' && pathname === '/');
@@ -168,7 +143,6 @@ export default function DashboardPage() {
               })}
             </div>
 
-            {/* Search Box & Filter Action */}
             <div className="flex items-center space-x-2 shrink-0">
               <div className="relative w-36 sm:w-60 md:w-64">
                 <Search className="w-3.5 h-3.5 text-zinc-500 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -191,17 +165,13 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* 3. Main Dashboard Course Grid (2x2) */}
         <main className="max-w-6xl mx-auto px-4 md:px-8 py-12">
-          
           <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
             {filteredCourses.map((course) => (
               <div
                 key={course.id}
                 className="group flex flex-col justify-between rounded-2xl bg-[#0f1524] border border-zinc-800/90 overflow-hidden hover:border-[#38bdf8]/40 hover:shadow-[0_0_35px_rgba(0,0,0,0.6)] transition-all duration-300"
               >
-                
-                {/* Top Banner Artwork */}
                 <Link href={course.link} className="block relative">
                   <div className={`h-56 w-full ${course.bannerGradient} flex items-center justify-center relative overflow-hidden border-b border-black/40`}>
                     {course.bannerArtwork}
@@ -209,7 +179,6 @@ export default function DashboardPage() {
                   </div>
                 </Link>
 
-                {/* Information Body */}
                 <div className="p-6 flex flex-col justify-between flex-1">
                   <div>
                     <Link href={course.link} className="block">
@@ -222,10 +191,7 @@ export default function DashboardPage() {
                     </p>
                   </div>
 
-                  {/* Dynamic Action Buttons & Signal Indicators */}
                   <div className="mt-7 pt-4 border-t border-zinc-800/80 flex items-center justify-between gap-3">
-                    
-                    {/* Direct Launch Action Button */}
                     <Link
                       href={course.link}
                       className="px-4 py-2 rounded-lg bg-cyan-500/10 hover:bg-[#38bdf8] text-cyan-300 hover:text-black border border-cyan-500/30 text-xs font-mono font-bold transition flex items-center space-x-1.5 shadow-sm"
@@ -234,7 +200,6 @@ export default function DashboardPage() {
                       <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                     </Link>
 
-                    {/* Level Badge Indicator */}
                     <div className="flex items-center space-x-1.5">
                       <Signal className={`w-3.5 h-3.5 ${course.levelColor}`} />
                       <span className={`text-[11px] font-black tracking-wider ${course.levelColor}`}>
@@ -243,7 +208,6 @@ export default function DashboardPage() {
                     </div>
 
                   </div>
-
                 </div>
 
               </div>
@@ -252,7 +216,6 @@ export default function DashboardPage() {
         </main>
       </div>
 
-      {/* 4. Footer */}
       <footer className="border-t border-zinc-800/60 bg-[#0d121e] py-8 text-center text-xs font-mono text-zinc-500">
         CYBERMATRIX ACADEMY // ARCHITECTED BY NINAD PAWAR // ALL CHANNELS OPERATIONAL
       </footer>
